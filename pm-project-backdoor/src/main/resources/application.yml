@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 这里存放你的MySQL的URL
+    username: 这里存放你的MySQL账号
+    password: 这里存放你的MySQL密码
+
+mybatis:
+  type-aliases-package: cn.edu.xjtu.stu.orangesoft.backdoor.bean
+  mapper-locations: classpath:mapping/*Mapping.xml
+
+

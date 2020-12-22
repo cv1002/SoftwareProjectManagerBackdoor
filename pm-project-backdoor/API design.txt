@@ -1,0 +1,203 @@
+接口设计
+版本：ver 0.0
+日期：2020-11-27
+说明：	暂时的设计，应该还没弄完，以及有待优化完善。url前面是服务器域名，先不管。method方法类型；param传递的参数		；返回值类型 application/json 自己先了解；这些值要参照数据库设计（现在还没完全做完
+要求：看懂下面的内容，不懂就问，然后可以提一下优化方案。如上所说这是未完成的，比如像login里的返回值finish，如果登陆成功，其内容是什么，如果失败又是什么，这些还没有完全确定（举例：成功返回“yes”，失败返回“no 100（错误码） adajshd（错误描述）”。
+
+URL: /login
+method: 推荐POST
+param: UserID + UserPassword
+return application/json
+{
+    "finish" : string,
+    "loginType" : string,
+    "TeamID" : int,
+    "TeamName" : string,
+    "RoleName" : string
+}
+
+URL: /file/$fileID
+method: GET
+param: 路由中就有的$fileID以及用cookie传递的UserID、UserPassword
+return 一个文件，文件类型可以取：图片、Office全家桶的各种格式的文件、压缩包
+
+URL: /file
+method: GET
+param: UserID、UserPassword、TeamID
+return application/json
+{
+    "finish" : string,
+    "files" : [
+        {
+            "fileID" : int,
+            "fileRealName" : string,
+            "fileType" : string,
+            "uploadTime" : string
+            "uploadPersonID" : int
+        }
+    ]
+}
+URL: /file
+method: POST
+param: 一个文件、UserID、UserPassword
+return application/json
+{
+    "finish" : string
+}
+
+URL: /file
+method: PUT
+param: 文件ID、一个文件、UserID、UserPassword
+return application/json
+{
+    "finish" : string
+}
+
+URL: /file
+method: DELETE
+param: 文件ID、UserID、UserPassword
+return application/json
+{
+    "finish" : string
+}
+
+
+URL: /task
+method: GET
+param: TeamID以及用cookie传递的UserID、UserPassword
+return application/json
+{
+    "finish" : string,
+    "tasks" : [
+        {
+            "taskID" : int,
+            "taskName" : string,
+            "taskFinishType" : string,
+            "taskStartTime" : string,
+            "taskDeadline" : string,
+            "taskHandlerID" : int,
+            "taskHandlerName" : string,
+            "taskPublisherID" : int,
+            "taskPublisherName" : string
+            "taskDescription" :string
+        }
+    ]
+}
+
+URL: /task
+method: POST
+param: TeamID以及UserID、UserPassword、还要有一个task
+    task的格式： {
+            "taskName" : string,
+            "taskDeadline" : string,
+            "taskDescription" :string
+    }
+return application/json
+{
+    "finish" : string
+}
+
+URL: /task
+method: PUT
+param: TeamID以及UserID、UserPassword、还要有一个task
+        task的格式：{
+            "taskID" : int,
+            "taskName" : string,
+            "taskFinishType" : string,
+            "taskDeadline" : string,
+            "taskHandlerID" : int
+            "taskDescription" :string
+        }
+return application/json
+{
+    "finish" : string
+}
+
+URL: /task
+method: DELETE
+param: TeamID以及UserID、UserPassword、还要有一个Task
+        task的格式：{
+            "taskID" : int
+        }
+return application/json
+{
+    "finish" : string
+}
+
+URL:/milestone
+method:GET
+param:TeamID
+return application/json
+{
+    "fileID": int,
+    "milestoneName" : string,
+    "milestonDescription" : string
+}
+
+URL:/comunication
+method:GET
+param:TeamID
+return {
+    "fileID" : int,
+    "context" : string,
+    "UserID" : int,
+    "UserName" : string
+}
+URL:/comunication
+method:POST
+param: TeamID, fileID(nullable), context, UserID, UserName
+return {
+    "finish" : string
+}
+
+/////// 这是老师评价体系，只有老师能评价，评价输入为userID+userPassword+评价的事物或人，后端检查是否是老师
+/////// 而GET是所有人都能查询的，输入是查询的事物，返回是查询结果
+URL:/studentAccess
+method:GET
+
+URL:/studentAccess
+method:POST
+
+URL:/groupAccess
+method:GET
+
+URL:/groupAccess
+method:POST
+
+URL:/fileAccess
+method:GET
+
+URL:/postAccess
+method:POST
+
+URL:/project/$userID
+method:GET
+return {
+    "projectID" : int,
+    "projectDescription" : string
+}
+
+URL:/project
+method:POST
+param: userID,userPassword,projectID,projectDescription
+return {
+    "finish" : string
+}
+
+URL:/projects
+method:GET
+return {
+    "projects" : [
+        "projectID" : int,
+        "projectDescription" : string
+    ]
+}
+
+URL:/projectAssignment/$projectID
+method:GET
+return {
+    "teamID" : int,
+    "projectStartTime" : string,
+    "projectDeadLine" : string
+}
+日期格式：2020/12/21
