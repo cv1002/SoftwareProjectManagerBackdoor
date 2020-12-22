@@ -14,7 +14,8 @@ public class RoleController {
     //有问题就new对象
     @Autowired
     private RoleMapper rolemapper;
-
+    //nanana
+    //nananana
     //注解标记方法类型（postMapping,getMapping等），value是URl，花括号中对应参数，用PathVariable引入。produces= content-type/json
     //加了/json会自动转换为json
     @GetMapping(value = "/getRole/{RoleID}", produces = "application/json;charset=UTF-8")
