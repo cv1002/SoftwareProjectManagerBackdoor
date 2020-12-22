@@ -10,7 +10,7 @@ public class RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    public Role Sel(Integer RoleID){
-        return roleMapper.Sel(RoleID);
+    public Role GetRoleByID(Integer RoleID) {
+        return roleMapper.GetRoleByID(RoleID);
     }
 }

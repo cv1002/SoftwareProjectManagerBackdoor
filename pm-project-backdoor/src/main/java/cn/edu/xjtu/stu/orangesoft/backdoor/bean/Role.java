@@ -11,15 +11,19 @@ public class Role {
         return RoleID;
     }
 
+    public Integer getRoleID() {
+        return RoleID;
+    }
+
+    public void setRoleID(Integer roleID) {
+        RoleID = roleID;
+    }
+
     public String getRoleName() {
         return RoleName;
     }
 
-//    @Override
-//    public String toString() {
-//        return "{" +
-//                "\"RoleID\" : " + RoleID + "\n" +
-//                "\"RoleName=\" : " + RoleName + "\n" +
-//                "}";
-//    }
+    public void setRoleName(String roleName) {
+        RoleName = roleName;
+    }
 }

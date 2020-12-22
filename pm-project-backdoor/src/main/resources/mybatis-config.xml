@@ -4,7 +4,7 @@
 
 <configuration>
 
-<!--    <mappers>-->
-<!--        <mapper resource="./mapping/RoleMapping.xml"/>-->
-<!--    </mappers>-->
+    <!--    <mappers>-->
+    <!--        <mapper resource="./mapping/RoleMapping.xml"/>-->
+    <!--    </mappers>-->
 </configuration>
