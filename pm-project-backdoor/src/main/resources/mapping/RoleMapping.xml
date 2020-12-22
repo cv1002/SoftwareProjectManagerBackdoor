@@ -5,7 +5,7 @@
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RoleMapper">
     <select id="Sel" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.bean.Role">
         select *
-        from role
+        from Role
         where RoleID=#{arg0}
     </select>
 </mapper>
