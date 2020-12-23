@@ -20,7 +20,7 @@ public class LoginService {
     StudentMapper studentmapper;
 
     // TODO 半成品
-    public Login login(Integer UserID, String UserPassword) {
+    public LoginResult login(Integer UserID, String UserPassword) {
         User user = null;
         Role role = null;
         Team team = null;
@@ -33,7 +33,7 @@ public class LoginService {
                 team = teammapper.GetTeamByTeamID(student.getTeamID());
             }
         }
-        Login loginResult = new Login();
+        LoginResult loginResult = new LoginResult();
         loginResult.setFinish("Finish");
         loginResult.setLoginType("Student");
         if (team != null) {

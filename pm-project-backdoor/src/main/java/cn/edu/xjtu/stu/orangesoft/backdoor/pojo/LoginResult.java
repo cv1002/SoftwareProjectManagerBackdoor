@@ -3,7 +3,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Login {
+public class LoginResult {
     private String Finish;
     private String LoginType;
     private int TeamID;
