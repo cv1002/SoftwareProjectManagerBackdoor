@@ -21,18 +21,28 @@ public class LoginService {
 
     // TODO 半成品
     public Login login(Integer UserID, String UserPassword) {
-        User user = usermapper.GetUserByIDAndPassword(UserID, UserPassword);
-        Role role = rolemapper.GetRoleByID(user.getRoleID());
-        Student student = studentmapper.GetStudentDataByUserID(user.getUserID());
-        Team team = teammapper.GetTeamByTeamID(student.getTeamID());
+        User user = null;
+        Role role = null;
+        Team team = null;
 
+        user = usermapper.GetUserByIDAndPassword(UserID, UserPassword);
+        if (user != null) {
+            role = rolemapper.GetRoleByID(user.getRoleID());
+            Student student = studentmapper.GetStudentDataByUserID(user.getUserID());
+            if (student != null) {
+                team = teammapper.GetTeamByTeamID(student.getTeamID());
+            }
+        }
         Login loginResult = new Login();
         loginResult.setFinish("Finish");
         loginResult.setLoginType("Student");
-        loginResult.setTeamID(team.getTeamID());
-        loginResult.setTeamName(team.getTeamName());
-        loginResult.setRoleName(role.getRoleName());
-
+        if (team != null) {
+            loginResult.setTeamID(team.getTeamID());
+            loginResult.setTeamName(team.getTeamName());
+        }
+        if (role != null) {
+            loginResult.setRoleName(role.getRoleName());
+        }
         return loginResult;
     }
 }
