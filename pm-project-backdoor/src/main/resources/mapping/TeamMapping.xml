@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper">
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper">
     <select id="GetTeamByUserIDAndUserPassword" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team">
         select *
-        from User
-        where UserID=#{id} and UserPassword=#{password}
+        from Team
+        where TeamID=#{id}
     </select>
 </mapper>

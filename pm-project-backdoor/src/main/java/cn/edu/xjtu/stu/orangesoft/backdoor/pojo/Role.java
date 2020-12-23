@@ -1,4 +1,4 @@
-package cn.edu.xjtu.stu.orangesoft.backdoor.bean;
+package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 
 import org.springframework.stereotype.Component;
 
