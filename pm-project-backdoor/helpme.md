@@ -9,7 +9,7 @@
 > 本项目使用了MVC设计模式，其中M、V、C三个模块以及测试的分工如下：
 - M - Mybatis 2同学
 - V - 前端 3个同学
-- C - SpringBoot的RestController 2同学
+- C - SpringBoot的RestController和Service 2同学
 - 测试 - 2同学
 ## 我们需要建造很多POJO类
 > 因为Java里面所有的数据都必须对应一个类，前后端的通信依赖于JSON格式\
