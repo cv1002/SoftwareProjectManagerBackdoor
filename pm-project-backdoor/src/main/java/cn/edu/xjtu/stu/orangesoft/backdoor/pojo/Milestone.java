@@ -16,19 +16,19 @@ public class Milestone {
         MilestoneID = milestoneID;
     }
 
-    public void setMilestoneName(String milestoneName) {
-        MilestoneName = milestoneName;
-    }
-
-    public void setMilestoneDescription(String milestoneDescription) {
-        MilestoneDescription = milestoneDescription;
-    }
-
     public String getMilestoneName() {
         return MilestoneName;
     }
 
+    public void setMilestoneName(String milestoneName) {
+        MilestoneName = milestoneName;
+    }
+
     public String getMilestoneDescription() {
         return MilestoneDescription;
+    }
+
+    public void setMilestoneDescription(String milestoneDescription) {
+        MilestoneDescription = milestoneDescription;
     }
 }
