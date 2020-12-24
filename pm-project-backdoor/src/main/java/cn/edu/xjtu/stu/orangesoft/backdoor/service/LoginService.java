@@ -31,7 +31,8 @@ public class LoginService {
         {
             loginResult.setFinish("user not found");//找不到用户
         }
-        else if (user != null) {                    //若找到了用户
+        else {
+            //若找到了用户
             if(UserPassword.compareTo(user.getUserPassword())!=0)//判断密码是否正确
             {
                 loginResult.setFinish("wrong password");
@@ -50,6 +51,7 @@ public class LoginService {
                 if (role != null) {
                     loginResult.setRoleName(role.getRoleName());
                 }
+                loginResult.setFinish("success");
             }
 
         }
