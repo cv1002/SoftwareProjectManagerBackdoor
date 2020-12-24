@@ -6,6 +6,7 @@
     <select id="GetTeamByUserIDAndUserPassword" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team">
         select *
         from User
-        where UserID=#{id} and UserPassword=#{password}
+        where UserID = #{id}
+          and UserPassword = #{password}
     </select>
 </mapper>

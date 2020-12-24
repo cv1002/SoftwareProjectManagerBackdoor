@@ -6,6 +6,6 @@
     <select id="GetStudentDataByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student">
         select *
         from Student
-        where StudentID=#{id}
+        where StudentID = #{id}
     </select>
 </mapper>
