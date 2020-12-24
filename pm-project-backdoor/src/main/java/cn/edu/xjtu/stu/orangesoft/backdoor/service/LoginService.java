@@ -6,7 +6,10 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
 
 @Service
 public class LoginService {
@@ -29,8 +32,7 @@ public class LoginService {
         user = usermapper.GetUserByIDAndPassword(UserID, null);
         if (user == null) {
             loginResult.setFinish("user not found");//找不到用户
-        }
-        else {
+        } else {
             //若找到了用户
             if(UserPassword.compareTo(user.getUserPassword())!=0) {
                 //判断密码是否正确

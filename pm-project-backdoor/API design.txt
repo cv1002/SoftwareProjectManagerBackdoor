@@ -21,6 +21,8 @@ method: GET
 param: 路由中就有的$fileID以及用cookie传递的UserID、UserPassword
 return 一个文件，文件类型可以取：图片、Office全家桶的各种格式的文件、压缩包
 
+//Files     PermissionConfig
+
 URL: /file
 method: GET
 param: UserID、UserPassword、TeamID
@@ -37,6 +39,9 @@ return application/json
         }
     ]
 }
+
+//Files     PermissionConfig
+
 URL: /file
 method: POST
 param: 一个文件、UserID、UserPassword
@@ -44,6 +49,8 @@ return application/json
 {
     "finish" : string
 }
+
+//Files     PermissionConfig
 
 URL: /file
 method: PUT
@@ -53,6 +60,8 @@ return application/json
     "finish" : string
 }
 
+//Files     PermissionConfig
+
 URL: /file
 method: DELETE
 param: 文件ID、UserID、UserPassword
@@ -61,10 +70,11 @@ return application/json
     "finish" : string
 }
 
+//Files     PermissionConfig
 
 URL: /task
 method: GET
-param: TeamID以及用cookie传递的UserID、UserPassword
+param: UserID、UserPassword
 return application/json
 {
     "finish" : string,
@@ -84,18 +94,27 @@ return application/json
     ]
 }
 
+//Task      Student     PermissionConfig
+
 URL: /task
 method: POST
-param: TeamID以及UserID、UserPassword、还要有一个task
+param: TaskID,UserID、UserPassword、还要有一个task
     task的格式： {
-            "taskName" : string,
-            "taskDeadline" : string,
-            "taskDescription" :string
+        "taskID" : int,
+        "taskName" : string,
+        "taskFinishType" : string,
+        "taskStartTime" : string,
+        "taskDeadline" : string,
+        "taskHandlerID" : int,
+        "taskPublisherID" : int
+        "taskDescription" :string
     }
 return application/json
 {
     "finish" : string
 }
+
+//Task     PermissionConfig
 
 URL: /task
 method: PUT
@@ -113,6 +132,8 @@ return application/json
     "finish" : string
 }
 
+//Task      Student     PermissionConfig
+
 URL: /task
 method: DELETE
 param: TeamID以及UserID、UserPassword、还要有一个Task
@@ -124,51 +145,149 @@ return application/json
     "finish" : string
 }
 
+//Task     PermissionConfig
+
 URL:/milestone
 method:GET
-param:TeamID
+param:TeamID,UserID,UserPassword
 return application/json
 {
     "fileID": int,
     "milestoneName" : string,
-    "milestonDescription" : string
+    "milestoneDescription" : string
+    "milestoneTime":datetime//需要在数据库加上
 }
+
+//Milestone
+
+URL:/milestone
+method:POST
+param:TeamID,UserID,UserPassword,一个milestone
+return application/json
+{
+    "finish" : string
+}
+
+//Milestone     PermissionConfig
+
+URL:/milestone
+method:PUT
+param:TeamID,UserID,UserPassword,一个milestone
+return application/json
+{
+    "finish" : string
+}
+
+//Milestone     PermissionConfig
+
+URL:/milestone
+method:DELETE
+param:TeamID,UserID,UserPassword,MilestoneID
+return application/json
+{
+    "finish" : string
+}
+
+//Milestone     PermissionConfig
 
 URL:/comunication
 method:GET
-param:TeamID
+param:TeamID,UserID,UserPassword
 return {
     "fileID" : int,
     "context" : string,
     "UserID" : int,
     "UserName" : string
 }
+
+//Student       Group       Files       Comunication
+
 URL:/comunication
 method:POST
-param: TeamID, fileID(nullable), context, UserID, UserName
+param: TeamID, fileID(nullable), context, UserID,UserPassword
 return {
     "finish" : string
 }
 
+//PermissionConfig      Files
+
+URL:/comunication
+method:PUT
+param: TeamID, fileID(nullable), context, UserID,UserPassword
+return {
+    "finish" : string
+}
+
+//PermissionConfig       Files
+
+URL:/comunication
+method:DELETE
+param: TeamID, fileID(nullable),UserID,UserPassword
+return {
+    "finish" : string
+}
+
+//RolePowerAssignment       Files
+
 /////// 这是老师评价体系，只有老师能评价，评价输入为userID+userPassword+评价的事物或人，后端检查是否是老师
-/////// 而GET是所有人都能查询的，输入是查询的事物，返回是查询结果
+/////// 而GET是查询功能，输入是查询的事物，返回是查询结果。查询时需要先查找PermissionConfig中Permission值是否为1
 URL:/studentAccess
 method:GET
+param:StudentID,UserID,UserPassword
+return{
+    "StudentUserID":int
+    "StudentID":int
+    "UserName":String
+    "Score":int
+}
+//PermissionConfig      Student     User        StudentAssess
 
 URL:/studentAccess
 method:POST
+param:StudentID,UserID,UserPassword,一个StudentAssess表
+return{
+    "finish" : string
+}
+
+//PermissionConfig      StudentAssess
 
 URL:/groupAccess
 method:GET
+param:TeamID,UserID,UserPassword
+return{
+    "TeamID":int
+    "Score":int
+}
+//PermissionConfig      GroupAssess       Group
 
 URL:/groupAccess
 method:POST
+param:TeamID,UserID,UserPassword，一个GroupAssess表
+return{
+    "finish":String
+}
+
+//PermissionConfig      GroupAssess
 
 URL:/fileAccess
 method:GET
+param:FileID,UserID,UserPassword
+return{
+    "FileID":int
+    "FileRealName":String
+    "FileAssess":char
+}
 
-URL:/postAccess
+//PermissionConfig      Files
+
+URL:/fileAccess
 method:POST
+param:FileID,UserID,UserPassword,一个FileAssess表
+return{
+    "finish":String
+}
+
+//PermissionConfig      Files
 
 URL:/project/$userID
 method:GET
@@ -177,12 +296,16 @@ return {
     "projectDescription" : string
 }
 
+//Project       PermissionConfig
+
 URL:/project
 method:POST
 param: userID,userPassword,projectID,projectDescription
 return {
     "finish" : string
 }
+
+//Project       PermissionConfig
 
 URL:/projects
 method:GET
@@ -193,6 +316,8 @@ return {
     ]
 }
 
+//Project         PermissionConfig
+
 URL:/projectAssignment/$projectID
 method:GET
 return {
@@ -200,4 +325,6 @@ return {
     "projectStartTime" : string,
     "projectDeadLine" : string
 }
+
+//ProjectAssignment     Project
 日期格式：2020/12/21

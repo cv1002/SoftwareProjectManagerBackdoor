@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper">
-    <select id="GetTeamByUserIDAndUserPassword" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team">
+    <select id="GetTeamByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team">
         select *
         from Team
         where TeamID = #{id}
