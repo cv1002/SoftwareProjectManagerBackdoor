@@ -16,7 +16,11 @@ def formatTime():
 
 
 def log(fileName, response):
-    with open('./tests/log/'+ fileName.split('/')[-1] + '.log', 'a') as log:
+    if fileName.split('\\')[-1] == fileName:
+        fileName = './tests/log/' + fileName.split('/')[-1]
+    else:
+        fileName = './log/' + fileName.split('\\')[-1]
+    with open(fileName + '.log', 'a') as log:
         (year, month, day, hour, min) = formatTime()
         log.write('request when: \n')
         log.write(' ' * 4 + year + '/' + month + '/' + day + ' ' + hour + ':' + min + '\n')
