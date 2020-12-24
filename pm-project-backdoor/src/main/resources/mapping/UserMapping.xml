@@ -6,6 +6,9 @@
     <select id="GetUserByIDAndPassword" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User">
         select *
         from User
-        where UserID=#{id} and UserPassword=#{password}
+        where UserID=#{id}
+        <if test="password != null">
+            and UserPassword=#{password}
+        </if>
     </select>
 </mapper>
