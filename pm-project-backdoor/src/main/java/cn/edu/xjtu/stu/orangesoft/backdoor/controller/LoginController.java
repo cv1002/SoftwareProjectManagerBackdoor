@@ -12,7 +12,7 @@ public class LoginController {
 
     // TODO 半成品
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
-    public LoginResult login(@RequestParam(name="UserID") Integer UserID, @RequestParam(name="UserPassword") String UserPassword) {
+    public LoginResult login(@RequestParam(name = "UserID") Integer UserID, @RequestParam(name = "UserPassword") String UserPassword) {
         return loginService.login(UserID, UserPassword);
     }
 }
