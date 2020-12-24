@@ -29,6 +29,7 @@ public class LoginService {
         user = usermapper.GetUserByIDAndPassword(UserID, null);
         if (user == null) {
             loginResult.setFinish("user not found");//找不到用户
+        }
         else {
             //若找到了用户
             if(UserPassword.compareTo(user.getUserPassword())!=0) {
