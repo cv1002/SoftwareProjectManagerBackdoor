@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileMapper">
+    <select id="GetFileByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        select *
+        from Files
+        where FileID = #{fileid}
+    </select>
+    <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        select *
+        from Files
+        where TeamID = #{teamid}
+    </select>
+</mapper>
