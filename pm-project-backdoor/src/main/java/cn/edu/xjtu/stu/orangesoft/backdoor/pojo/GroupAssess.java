@@ -3,11 +3,11 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GroupAccess {
+public class GroupAssess {
     private int TeamID;
     private int Score;
-    private String TeamAccess;
-    private int AccessorID;
+    private String TeamAssess;
+    private int AssessorID;
 
     public int getTeamID() {
         return TeamID;
@@ -25,19 +25,19 @@ public class GroupAccess {
         Score = score;
     }
 
-    public String getTeamAccess() {
-        return TeamAccess;
+    public String getTeamAssess() {
+        return TeamAssess;
     }
 
-    public void setTeamAccess(String teamAccess) {
-        TeamAccess = teamAccess;
+    public void setTeamAssess(String teamAssess) {
+        TeamAssess = teamAssess;
     }
 
-    public int getAccessorID() {
-        return AccessorID;
+    public int getAssessorID() {
+        return AssessorID;
     }
 
-    public void setAccessorID(int accessorID) {
-        AccessorID = accessorID;
+    public void setAssessorID(int assessorID) {
+        AssessorID = assessorID;
     }
 }
