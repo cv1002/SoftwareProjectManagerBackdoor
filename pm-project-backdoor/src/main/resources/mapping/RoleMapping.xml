@@ -6,6 +6,6 @@
     <select id="GetRoleByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Role">
         select *
         from Role
-        where RoleID=#{id}
+        where RoleID = #{id}
     </select>
 </mapper>

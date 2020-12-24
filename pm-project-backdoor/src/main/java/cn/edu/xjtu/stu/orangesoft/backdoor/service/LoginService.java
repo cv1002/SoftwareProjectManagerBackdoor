@@ -26,19 +26,15 @@ public class LoginService {
         Team team = null;
 
         LoginResult loginResult = new LoginResult();
-        user = usermapper.GetUserByIDAndPassword(UserID, UserPassword);
-        if(user == null)
-        {
+        user = usermapper.GetUserByIDAndPassword(UserID, null);
+        if (user == null) {
             loginResult.setFinish("user not found");//找不到用户
-        }
         else {
             //若找到了用户
-            if(UserPassword.compareTo(user.getUserPassword())!=0)//判断密码是否正确
-            {
+            if(UserPassword.compareTo(user.getUserPassword())!=0) {
+                //判断密码是否正确
                 loginResult.setFinish("wrong password");
-            }
-            else
-            {
+            } else {
                 role = rolemapper.GetRoleByID(user.getRoleID());
                 Student student = studentmapper.GetStudentDataByUserID(user.getUserID());
                 if (student != null) {
