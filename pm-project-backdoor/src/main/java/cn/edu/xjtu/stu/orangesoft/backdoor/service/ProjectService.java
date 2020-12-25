@@ -37,18 +37,15 @@ public class ProjectService {
      */
     public List<Projects> FindAllProjects(Integer UserID,
                                           String UserPassword, Operation operation, Object object) {
-        User user = userMapper.GetUserByIDAndPassword(UserID, UserPassword);
-        if (user != null) {
-            if (rbacService.CheckPermission(user.getRoleID(), object, operation)) {
-                List<Project> allProject = projectMapper.GetAllProjects();//查询到的对象列表
-                List<Projects> allProjects = new ArrayList<>();//要返回的对象列表
-                allProject.forEach((e) -> {
-                    projects.setProjectID(e.getProjectID());
-                    projects.setProjectDescription(e.getProjectDescription());
-                    allProjects.add(projects);
-                });
-                return allProjects;
-            }
+        if (rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+            List<Project> allProject = projectMapper.GetAllProjects();//查询到的对象列表
+            List<Projects> allProjects = new ArrayList<>();//要返回的对象列表
+            allProject.forEach((e) -> {
+                projects.setProjectID(e.getProjectID());
+                projects.setProjectDescription(e.getProjectDescription());
+                allProjects.add(projects);
+            });
+            return allProjects;
         }
         return null;
     }
@@ -66,19 +63,16 @@ public class ProjectService {
     public List<ProjectAssignmentResult> FindTeamByProject(Integer UserID,
                                                            String UserPassword, Operation operation,
                                                            Object object, int projectID) {
-        User user = userMapper.GetUserByIDAndPassword(UserID, UserPassword);
-        if (user != null) {
-            if (rbacService.CheckPermission(user.getRoleID(), object, operation)) {
-                List<ProjectAssignment> origin = projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
-                List<ProjectAssignmentResult> results = new ArrayList<>();
-                origin.forEach((e) -> {
-                    projectAssignmentResult.setTeamID(e.getTeamID());
-                    projectAssignmentResult.setProjectStartTime(e.getProjectStartTime());
-                    projectAssignmentResult.setProjectDeadline(e.getProjectDeadline());
-                    results.add(projectAssignmentResult);
-                });
-                return results;
-            }
+        if (rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+            List<ProjectAssignment> origin = projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
+            List<ProjectAssignmentResult> results = new ArrayList<>();
+            origin.forEach((e) -> {
+                projectAssignmentResult.setTeamID(e.getTeamID());
+                projectAssignmentResult.setProjectStartTime(e.getProjectStartTime());
+                projectAssignmentResult.setProjectDeadline(e.getProjectDeadline());
+                results.add(projectAssignmentResult);
+            });
+            return results;
         }
         return null;
     }
