@@ -12,7 +12,18 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
-    // TODO 半成品
+    /**
+     * LoginController 负责Login方面的URL引导
+     * @param UserID UserID
+     * @param UserPassword UserPassword
+     * @return LoginResult: {
+     *     "Finish": String,
+     *     "LoginType": String,
+     *     "TeamID": Integer,
+     *     "TeamName": String,
+     *     "RoleName": String
+     * }
+     */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
     public LoginResult login(@RequestParam(name = "UserID") Integer UserID,
                              @RequestParam(name = "UserPassword") String UserPassword) {

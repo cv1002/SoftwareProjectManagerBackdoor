@@ -19,7 +19,18 @@ public class LoginService {
     @Autowired
     StudentMapper studentmapper;
 
-    // TODO 半成品
+    /**
+     * LoginService的主要方法，输入UserID、UserPassword，返回user、role、team相关的信息
+     * @param UserID UserID
+     * @param UserPassword UserPassword
+     * @return LoginResult: {
+     *     "Finish": String,
+     *     "LoginType": String,
+     *     "TeamID": Integer,
+     *     "TeamName": String,
+     *     "RoleName": String
+     * }
+     */
     public LoginResult login(Integer UserID, String UserPassword) {
         User user = null;
         Role role = null;
