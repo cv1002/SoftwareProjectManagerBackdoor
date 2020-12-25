@@ -6,10 +6,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.Cookie;
 
 @Service
 public class LoginService {
@@ -22,7 +19,19 @@ public class LoginService {
     @Autowired
     StudentMapper studentmapper;
 
-    // TODO 半成品
+    /**
+     * LoginService的主要方法，输入UserID、UserPassword，返回user、role、team相关的信息
+     *
+     * @param UserID       UserID
+     * @param UserPassword UserPassword
+     * @return LoginResult: {
+     * "Finish": String,
+     * "LoginType": String,
+     * "TeamID": Integer,
+     * "TeamName": String,
+     * "RoleName": String
+     * }
+     */
     public LoginResult login(Integer UserID, String UserPassword) {
         User user = null;
         Role role = null;
@@ -34,7 +43,7 @@ public class LoginService {
             loginResult.setFinish("user not found");//找不到用户
         } else {
             //若找到了用户
-            if(UserPassword.compareTo(user.getUserPassword())!=0) {
+            if (UserPassword.compareTo(user.getUserPassword()) != 0) {
                 //判断密码是否正确
                 loginResult.setFinish("wrong password");
             } else {
