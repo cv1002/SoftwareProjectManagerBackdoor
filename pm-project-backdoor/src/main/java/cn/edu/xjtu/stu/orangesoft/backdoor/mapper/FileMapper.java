@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 // todo
 public interface FileMapper {
     Files GetFileByID(Integer FileID);
+
     Files GetFileByTeamID(@Param("TeamID") Integer TeamID);
 }

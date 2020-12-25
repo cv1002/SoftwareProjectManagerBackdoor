@@ -4,8 +4,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Object;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ProjectAssignmentResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Projects;
-import cn.edu.xjtu.stu.orangesoft.backdoor.service.FindAllProjectsService;
-import cn.edu.xjtu.stu.orangesoft.backdoor.service.FindTeamByProjectService;
+import cn.edu.xjtu.stu.orangesoft.backdoor.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +16,7 @@ import java.util.List;
 @RestController
 public class ProjectController {
     @Autowired
-    FindAllProjectsService findAllProjectsService;
-    @Autowired
-    FindTeamByProjectService findTeamByProjectService;
+    ProjectService projectService;
     @Autowired
     Operation operation;
     @Autowired
@@ -30,7 +27,7 @@ public class ProjectController {
                                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("Get");
         object.setObjectName("FindAllProjects");
-        return findAllProjectsService.FindAllProjects(Integer.parseInt(UserID), UserPassword, operation, object);
+        return projectService.FindAllProjects(Integer.parseInt(UserID), UserPassword, operation, object);
     }
 
     @GetMapping(value = "/projectAssignment/", produces = "application/json;charset=UTF-8")
@@ -39,6 +36,6 @@ public class ProjectController {
                                                                      @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("Get");
         object.setObjectName("FindTeamByProject");
-        return findTeamByProjectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectID);
+        return projectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectID);
     }
 }

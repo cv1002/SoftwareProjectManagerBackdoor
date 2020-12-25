@@ -14,14 +14,15 @@ public class LoginController {
 
     /**
      * LoginController 负责Login方面的URL引导
-     * @param UserID UserID
+     *
+     * @param UserID       UserID
      * @param UserPassword UserPassword
      * @return LoginResult: {
-     *     "Finish": String,
-     *     "LoginType": String,
-     *     "TeamID": Integer,
-     *     "TeamName": String,
-     *     "RoleName": String
+     * "Finish": String,
+     * "LoginType": String,
+     * "TeamID": Integer,
+     * "TeamName": String,
+     * "RoleName": String
      * }
      */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
