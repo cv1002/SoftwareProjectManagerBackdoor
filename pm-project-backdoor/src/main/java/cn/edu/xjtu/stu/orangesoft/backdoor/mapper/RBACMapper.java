@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface RBACMapper {
     List<PermissionConfig> GetPermissionConfigsByRoleID(@Param("RoleID")Integer RoleID);
-    PermissionConfig CheckPermission(@Param("Object")Object object,
+    PermissionConfig CheckPermission(@Param("RoleID")Integer roleID,
+                                     @Param("Object")Object object,
                                      @Param("Operation")Operation operation);
 }

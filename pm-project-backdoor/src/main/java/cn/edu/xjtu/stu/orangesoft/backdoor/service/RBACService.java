@@ -12,8 +12,8 @@ public class RBACService {
     @Autowired
     RBACMapper rbacMapper;
 
-    public boolean CheckPermission(Object object, Operation operation) {
-        PermissionConfig config = rbacMapper.CheckPermission(object, operation);
+    public boolean CheckPermission(Integer roleID, Object object, Operation operation) {
+        PermissionConfig config = rbacMapper.CheckPermission(roleID, object, operation);
         return config.getPermission() != 0;
     }
 }
