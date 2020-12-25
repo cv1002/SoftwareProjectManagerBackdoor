@@ -23,7 +23,7 @@ public class ProjectController {
     Object object;
 
     @GetMapping(value = "/projects", produces = "application/json;charset=UTF-8")
-    public List<Projects> FindAllProjectsController(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
+    public List<Projects> FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
         object.setObjectName("FindAllProjects");
@@ -31,7 +31,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/projectAssignment/", produces = "application/json;charset=UTF-8")
-    public List<ProjectAssignmentResult> FindTeamByProjectController(@RequestParam(name = "ProjectID") Integer ProjectID,
+    public List<ProjectAssignmentResult> FindTeamByProject(@RequestParam(name = "ProjectID") Integer ProjectID,
                                                                      @CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                                                      @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
