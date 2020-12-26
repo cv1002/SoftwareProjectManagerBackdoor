@@ -43,8 +43,8 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project",produces = "application/json;charset=UTF-8")
-    public ResultStatus BuildNewProject(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
-                                        @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword,
+    public ResultStatus BuildNewProject(@RequestParam(value = "UserID", defaultValue = "0") String UserID,
+                                        @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                         @RequestParam(name = "ProjectName")String ProjectName,
                                         @RequestParam(name = "Description")String Description){
         operation.setOperationDescription("POST");
