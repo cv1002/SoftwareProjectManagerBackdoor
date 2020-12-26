@@ -7,7 +7,7 @@ public class FileAssess {
     private int FileID;
     private String FileAssess;
     private int AssesserID;
-    private String AssessTime;
+    private String AccessTime;
 
     public int getFileID() {
         return FileID;
@@ -33,11 +33,11 @@ public class FileAssess {
         AssesserID = assesserID;
     }
 
-    public String getAssessTime() {
-        return AssessTime;
+    public String getAccessTime() {
+        return AccessTime;
     }
 
-    public void setAssessTime(String assessTime) {
-        AssessTime = assessTime;
+    public void setAccessTime(String accessTime) {
+        AccessTime = accessTime;
     }
 }
