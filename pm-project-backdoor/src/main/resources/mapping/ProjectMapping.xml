@@ -23,7 +23,7 @@
     <insert id="BuildNewProject" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project"
             useGeneratedKeys="true">
         insert into Project(ProjectID,ProjectName, ProjectDescription)
-        values (#{ProjectID},#{ProjectName}, #{ProjectDescription})
+        values (#{ProjectID}, #{ProjectName}, #{ProjectDescription})
 
         <selectKey keyProperty="ProjectID" order="AFTER" resultType="int">
             SELECT @@IDENTITY as ProjectID
