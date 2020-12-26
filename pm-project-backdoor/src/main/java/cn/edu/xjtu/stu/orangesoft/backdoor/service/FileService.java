@@ -2,8 +2,8 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FilesResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class FileService {
     FileMapper fileMapper;
 
     public  Files getFilesByID(Integer FileID) {
-        if(FileID == null) {
+        if( FileID==null ) {
             return null;
         }
         else{
@@ -28,15 +28,15 @@ public class FileService {
         }
 
     }
-    public FilesResult getFileByTeamID(Integer TeamID){
-        FilesResult filesResult = new FilesResult();
+    public FileResult getFileByTeamID(Integer TeamID){
+        FileResult filesResult = new FileResult();
         if(TeamID == null){
             filesResult.setFinish("teamID not found");
         }
         else{
             filesResult.setFinish("success");
             List<Files> files = fileMapper.GetFileByTeamID(TeamID);
-            filesResult.setFiles(files);
+            filesResult.setFile(files);
         }
         return filesResult;
     }

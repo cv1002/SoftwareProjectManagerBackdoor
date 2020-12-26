@@ -7,7 +7,7 @@ formdata = {
     "FileID": 1
 }
 cookies = {
-    "userID": "1",
+    "userID": 1,
     "userPassword": "123456"
 }
 #response = requests.get(r'http://localhost:8080/login', data=formdata)
