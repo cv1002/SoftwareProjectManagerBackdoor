@@ -18,7 +18,11 @@ public class RBACService {
 
     public boolean CheckPermission(Integer userID, String userPassword, Object object, Operation operation) {
         User user = userMapper.GetUserByIDAndPassword(userID, userPassword);
-        return CheckPermission(user.getRoleID(), object, operation);
+        if (user == null) {
+            return false;
+        } else {
+            return CheckPermission(user.getRoleID(), object, operation);
+        }
     }
 
     public boolean CheckPermission(Integer roleID, Object object, Operation operation) {
