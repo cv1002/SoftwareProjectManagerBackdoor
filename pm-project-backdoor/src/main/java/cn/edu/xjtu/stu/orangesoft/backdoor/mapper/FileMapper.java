@@ -15,4 +15,5 @@ public interface FileMapper {
     List<Files> GetFileByTeamID(@Param("TeamID") Integer TeamID);
     Integer PostFiles(Files file);
     Integer PutFiles(Files file);
+    Integer DeleteFiles(@Param("FIleID") Integer FileID);
 }

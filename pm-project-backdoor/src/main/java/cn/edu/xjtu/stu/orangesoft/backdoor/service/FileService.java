@@ -80,7 +80,7 @@ public class FileService {
             }
         }
     }
-    public String putFile(Integer FileID) {
+    public String deleteFile(Integer FileID) {
         int k;
         k= fileMapper.DeleteFiles(FileID);
         if(k==0) {

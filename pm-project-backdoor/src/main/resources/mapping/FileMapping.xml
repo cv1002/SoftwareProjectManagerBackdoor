@@ -27,6 +27,9 @@
         UploadTime = #{UpLoadTime}
         where FileID = #{FileID}
     </update>
-    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files"
+    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        delete FROM FileContent and Files
+        WHERE  FileID =#{FileID}
+    </delete>
 
 </mapper>

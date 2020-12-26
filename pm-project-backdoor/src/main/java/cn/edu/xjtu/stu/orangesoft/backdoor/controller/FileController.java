@@ -5,7 +5,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.service.FileService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.google.gson.Gson;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,36 +15,37 @@ import java.util.List;
 public class FileController {
     @Autowired
     FileService fileService;
+    @Autowired
+    Gson gson;
     //TODO
     Objects object = new Objects();
     Operation operation = new Operation();
     RBACService rbacService = new RBACService();
     @GetMapping(value = "/file/{fileID}", produces = "application/json;charset=UTF-8")//等RBAC验证功能
-    public Files getFile(@PathVariable("fileID") Integer FileID,
+    public String getFile(@PathVariable("fileID") Integer FileID,
                           @CookieValue("userID") Integer UserID,
                           @CookieValue("userPassword") String UserPassword) {
         object.setObjectName("getFileByID");
         operation.setOperationDescription("GET");
         if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
-            return fileService.getFilesByID(FileID);
+            return gson.toJson(fileService.getFilesByID(FileID));
         }
         else{
-            return null;
+            return gson.toJson("no permission");
         }
     }
     @GetMapping(value = "/file", produces = "application/json;charset=UTF-8")
-    public FileResult getFiles(HttpServletRequest request,
+    public String getFiles(HttpServletRequest request,
                                @CookieValue("userID") Integer UserID,
                                @CookieValue("userPassword") String UserPassword) {
         Integer TeamID = Integer.parseInt(request.getParameter("TeamID"));
         object.setObjectName("getFileByTeamID");
         FileResult fileResult = new FileResult();
         if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
-            return fileService.getFileByTeamID(TeamID);
+            return gson.toJson(fileService.getFileByTeamID(TeamID));
         }
         else{
-            fileResult.setFinish("no permission");
-            return fileResult;
+            return gson.toJson("no permission");
         }
     }
     @PostMapping(value = "/file" , produces = "application/json;charset=UTF-8")
@@ -53,12 +54,12 @@ public class FileController {
                             @CookieValue("userPassword") String UserPassword) {//具体怎么获取文件信息尚不清楚,fileassess？
         Files file = fileService.buildFile();
         object.setObjectName("postFile");
-        operation.setOperationDescription("UPDATE");
+        operation.setOperationDescription("POST");
         if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
-            return fileService.postFile(file);
+            return gson.toJson(fileService.postFile(file));
         }
         else{
-         return "no permission";
+         return gson.toJson("no permission");
         }
     }
     @PutMapping(value = "/file" , produces = "application/json;charset=UTF-8")
@@ -68,12 +69,28 @@ public class FileController {
         Files file = fileService.buildFile();
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
         file.setFileID(FileID);
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation))
-        return fileService.putFile(file);
+        object.setObjectName("putFiles");
+        operation.setOperationDescription("UPDATE");
+        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+            return gson.toJson(fileService.postFile(file));
+        }
+        else{
+            return gson.toJson("no permission");
+        }
+
     }
     @DeleteMapping(value = "/file" , produces = "application/json;charset=UTF-8")
-    public String deleteFiles(HttpServletRequest request){
+    public String deleteFiles(HttpServletRequest request,
+                              @CookieValue("userID") Integer UserID,
+                              @CookieValue("userPassword") String UserPassword){
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
-        return fileService.deleteFile(FileID);
+        object.setObjectName("deleteFile");
+        operation.setOperationDescription("DELETE");
+        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+            return gson.toJson(fileService.deleteFile(FileID));
+        }
+        else{
+            return gson.toJson("no permission");
+        }
     }
 }
