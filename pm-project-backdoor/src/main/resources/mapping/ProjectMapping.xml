@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper">
+    <select id="GetAllProjects" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project">
+        select *
+        from Project
+    </select>
+
+    <select id="GetProjectByUser" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project">
+        select *
+        from Project
+        where ProjectID = (
+            select ProjectID
+            from ProjectAssignment
+            where TeamID =
+                  (select TeamID
+                   from Student
+                   where StudentUserID = #{UserID}))
+    </select>
+
+    <insert id="BuildNewProject" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project"
+            useGeneratedKeys="true">
+        insert into Project(ProjectID,ProjectName, ProjectDescription)
+        values (#{ProjectID}, #{ProjectName}, #{ProjectDescription})
+
+        <selectKey keyProperty="ProjectID" order="AFTER" resultType="int">
+            SELECT @@IDENTITY as ProjectID
+        </selectKey>
+    </insert>
+</mapper>

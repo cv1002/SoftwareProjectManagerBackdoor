@@ -76,12 +76,4 @@ public class FileController {
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
         return fileService.deleteFile(FileID);
     }
-
-
-
-
-
-
-
-
 }

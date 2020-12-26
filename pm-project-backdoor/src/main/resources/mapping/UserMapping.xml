@@ -11,4 +11,9 @@
             and UserPassword=#{password}
         </if>
     </select>
+    <select id="GetUserByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User">
+        select *
+        from User
+        where UserID = #{id}
+    </select>
 </mapper>
