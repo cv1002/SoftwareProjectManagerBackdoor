@@ -1,7 +1,5 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.mapper;
 
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.PermissionConfig;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

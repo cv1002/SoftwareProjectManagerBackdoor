@@ -3,7 +3,6 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectAssignmentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class ProjectService {
      * @param UserID       查询发起人id，来自cookie
      * @param UserPassword 查询发起人密码，来自cookie
      * @param operation    操作，即接口类型
-     * @param objects       对象，即接口
+     * @param objects      对象，即接口
      * @return null 或者 projects列表
      */
     public List<Projects> FindAllProjects(Integer UserID,
@@ -60,7 +59,7 @@ public class ProjectService {
      * @param UserID       查询发起人id，来自cookie
      * @param UserPassword 查询发起人密码，来自cookie
      * @param operation    操作，即接口类型
-     * @param objects       对象，即接口
+     * @param objects      对象，即接口
      * @param projectID    目标项目
      * @return null或者ProjectAssignmentResult列表
      */

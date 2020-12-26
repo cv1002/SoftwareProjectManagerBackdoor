@@ -3,11 +3,15 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FindTaskResult;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Tasks;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO 缺少RBAC
 @Service
