@@ -6,6 +6,11 @@
     <select id="GetStudentDataByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student">
         select *
         from Student
+        where StudentUserID = #{id}
+    </select>
+    <select id="GetStudentByStudentID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student">
+        select *
+        from Student
         where StudentID = #{id}
     </select>
 </mapper>

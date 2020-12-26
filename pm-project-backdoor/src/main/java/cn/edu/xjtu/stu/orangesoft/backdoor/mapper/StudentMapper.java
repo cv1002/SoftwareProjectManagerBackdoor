@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentMapper {
     Student GetStudentDataByUserID(@Param("id") Integer UserID);
+    Student GetStudentByStudentID(@Param("id") Integer StudentID);
 }

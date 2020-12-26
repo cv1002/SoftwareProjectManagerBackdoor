@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper">
+
+    <select id="GetTaskByTaskID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        select *
+        from Task
+        where TaskID = #{id}
+    </select>
+    <select id="GetTaskByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        select *
+        from Task
+        where TaskPublisherID = #{id}
+    </select>
+    <update id="UpdateTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        update Task
+        SET TaskHandlerID = #{taskHandlerID},
+            TaskName = #{taskName},
+            TaskDeadline = #{taskDeadline},
+            TaskStartTime = #{taskStartTime},
+            TaskFinishType = #{taskFinishType},
+            TaskDescription = #{taskDescription}
+        where TaskID = #{id}
+    </update>
+    <insert id="UpdateTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        insert into Task
+            (TaskID, TaskHandlerID, TaskName, TaskDeadline, TaskStartTime, TaskFinishType, TaskDescription, TaskPublisherID)
+            VALUES
+            (#{id}, #{taskHandlerID}, #{taskName}, #{taskDeadline}, #{taskStartTime}, #{taskFinishType}, #{taskDescription}, #{taskPublisherID})
+    </insert>
+</mapper>
