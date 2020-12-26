@@ -25,6 +25,10 @@ public class ProjectService {
     ProjectMapper projectMapper;
     @Autowired
     Projects projects;
+    @Autowired
+    ResultStatus resultStatus;
+    @Autowired
+    Project project = new Project();
 
     /**
      * 查询所有项目，只有老师有权限
@@ -81,5 +85,36 @@ public class ProjectService {
             }
         }
         return null;
+    }
+
+    /**
+     * 根据UserID查找所属项目
+     * @return 项目对象
+     */
+    public Project FindProjectByUser(Integer UserID, String UserPassword, Operation operation, Object object){
+        if(rbacService.CheckPermission(UserID,UserPassword,object,operation)){
+            return projectMapper.GetProjectByUser(UserID);
+        }
+        return null;
+    }
+
+    /**
+     * 新建项目
+     * @param ProjectName 新建项目名
+     * @param Description 项目描述
+     * @return 失败返回null，成功返回ResultStatus对象，status为创建项目的ID，description为完成状态“yes”
+     */
+    public ResultStatus BulidNewProject(Integer UserID, String UserPassword, Operation operation, Object object,
+                                        String ProjectName, String Description) {
+        if(rbacService.CheckPermission(UserID,UserPassword,object,operation)){
+            project.setProjectID(0);
+            project.setProjectName(ProjectName);
+            project.setProjectDescription(Description);
+            projectMapper.BuildNewProject(project);
+            if(project.getProjectID() != 0){
+                resultStatus.setFinish("yes");
+            }
+        }
+        return resultStatus;
     }
 }
