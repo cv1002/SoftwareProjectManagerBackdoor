@@ -1,9 +1,11 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LoginResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {

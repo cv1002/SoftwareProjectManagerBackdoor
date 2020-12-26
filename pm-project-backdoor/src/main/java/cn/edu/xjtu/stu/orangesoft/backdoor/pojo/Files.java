@@ -12,59 +12,59 @@ public class Files {
     private int StudentUserID;
     private String UpLoadTime;
 
-    public void setFileID(int fileID) {
-        FileID = fileID;
-    }
-
-    public void setFileRealName(String fileRealName) {
-        FileRealName = fileRealName;
-    }
-
-    public void setFileType(String fileType) {
-        FileType = fileType;
-    }
-
-    public void setFileLocation(String fileLocation) {
-        FileLocation = fileLocation;
-    }
-
-    public void setTeamID(int teamID) {
-        TeamID = teamID;
-    }
-
-    public void setStudentUserID(int studentUserID) {
-        StudentUserID = studentUserID;
-    }
-
-    public void setUpLoadTime(String upLoadTime) {
-        UpLoadTime = upLoadTime;
-    }
-
     public int getFileID() {
         return FileID;
+    }
+
+    public void setFileID(int fileID) {
+        FileID = fileID;
     }
 
     public String getFileRealName() {
         return FileRealName;
     }
 
+    public void setFileRealName(String fileRealName) {
+        FileRealName = fileRealName;
+    }
+
     public String getFileType() {
         return FileType;
+    }
+
+    public void setFileType(String fileType) {
+        FileType = fileType;
     }
 
     public String getFileLocation() {
         return FileLocation;
     }
 
+    public void setFileLocation(String fileLocation) {
+        FileLocation = fileLocation;
+    }
+
     public int getTeamID() {
         return TeamID;
+    }
+
+    public void setTeamID(int teamID) {
+        TeamID = teamID;
     }
 
     public int getStudentUserID() {
         return StudentUserID;
     }
 
+    public void setStudentUserID(int studentUserID) {
+        StudentUserID = studentUserID;
+    }
+
     public String getUpLoadTime() {
         return UpLoadTime;
+    }
+
+    public void setUpLoadTime(String upLoadTime) {
+        UpLoadTime = upLoadTime;
     }
 }
