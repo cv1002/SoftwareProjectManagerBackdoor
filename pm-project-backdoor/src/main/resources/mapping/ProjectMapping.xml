@@ -4,7 +4,29 @@
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper">
     <select id="GetAllProjects" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project">
-        selet *
+        select *
         from Project
     </select>
+
+    <select id="GetProjectByUser" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project">
+        select *
+        from Project
+        where ProjectID =(
+            select ProjectID
+            from ProjectAssignment
+            where TeamID=
+                (select TeamID
+                from Student
+                where StudentUserID = #{UserID}))
+    </select>
+
+    <insert id="BuildNewProject" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project"
+            useGeneratedKeys="true">
+        insert into Project(ProjectName, ProjectDescription)
+        values (#{ProjectName}, #{Description})
+
+        <selectKey keyProperty="ProjectID" order="AFTER" resultType="int">
+            SELECT @@IDENTITY as ProjectID
+        </selectKey>
+    </insert>
 </mapper>
