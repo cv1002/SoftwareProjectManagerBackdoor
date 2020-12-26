@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResultInfo {
-    String resultInfo = "no";
+    String resultInfo;
 
     public String getResultInfo() {
         return resultInfo;
