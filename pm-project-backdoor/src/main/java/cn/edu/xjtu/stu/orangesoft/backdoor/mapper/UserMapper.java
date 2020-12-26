@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     User GetUserByIDAndPassword(@Param("id") Integer UserID,
                                 @Param("password") String UserPassword);
+
+    User GetUserByUserID(@Param("id") Integer UserID);
 }

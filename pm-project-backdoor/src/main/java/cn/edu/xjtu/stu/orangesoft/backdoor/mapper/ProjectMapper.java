@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface ProjectMapper {
     List<Project> GetAllProjects();
+
     Project GetProjectByUser(Integer UserID);
+
     Integer BuildNewProject(Project project);
 }

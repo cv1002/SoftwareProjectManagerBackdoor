@@ -3,7 +3,6 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectAssignmentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Object;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +35,12 @@ public class ProjectService {
      * @param UserID       查询发起人id，来自cookie
      * @param UserPassword 查询发起人密码，来自cookie
      * @param operation    操作，即接口类型
-     * @param object       对象，即接口
+     * @param objects      对象，即接口
      * @return null 或者 projects列表
      */
     public List<Projects> FindAllProjects(Integer UserID,
-                                          String UserPassword, Operation operation, Object object) {
-        if (rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+                                          String UserPassword, Operation operation, Objects objects) {
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             List<Project> allProject = projectMapper.GetAllProjects();//查询到的对象列表
             List<Projects> allProjects = new ArrayList<>();//要返回的对象列表
             allProject.forEach((e) -> {
@@ -60,14 +59,14 @@ public class ProjectService {
      * @param UserID       查询发起人id，来自cookie
      * @param UserPassword 查询发起人密码，来自cookie
      * @param operation    操作，即接口类型
-     * @param object       对象，即接口
+     * @param objects      对象，即接口
      * @param projectID    目标项目
      * @return null或者ProjectAssignmentResult列表
      */
     public List<ProjectAssignmentResult> FindTeamByProject(Integer UserID,
                                                            String UserPassword, Operation operation,
-                                                           Object object, int projectID) {
-        if (rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+                                                           Objects objects, int projectID) {
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             List<ProjectAssignment> origin = projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
             List<ProjectAssignmentResult> results = new ArrayList<>();
             origin.forEach((e) -> {
@@ -83,10 +82,11 @@ public class ProjectService {
 
     /**
      * 根据UserID查找所属项目
+     *
      * @return 项目对象
      */
-    public Project FindProjectByUser(Integer UserID, String UserPassword, Operation operation, Object object){
-        if(rbacService.CheckPermission(UserID,UserPassword,object,operation)){
+    public Project FindProjectByUser(Integer UserID, String UserPassword, Operation operation, Objects objects) {
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             return projectMapper.GetProjectByUser(UserID);
         }
         return null;
@@ -94,18 +94,19 @@ public class ProjectService {
 
     /**
      * 新建项目
+     *
      * @param ProjectName 新建项目名
      * @param Description 项目描述
      * @return 失败返回null，成功返回ResultStatus对象，status为创建项目的ID，description为完成状态“yes”
      */
-    public ResultStatus BulidNewProject(Integer UserID, String UserPassword, Operation operation, Object object,
+    public ResultStatus BulidNewProject(Integer UserID, String UserPassword, Operation operation, Objects objects,
                                         String ProjectName, String Description) {
-        if(rbacService.CheckPermission(UserID,UserPassword,object,operation)){
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             project.setProjectID(0);
             project.setProjectName(ProjectName);
             project.setProjectDescription(Description);
             projectMapper.BuildNewProject(project);
-            if(project.getProjectID() != 0){
+            if (project.getProjectID() != 0) {
                 resultStatus.setFinish("yes");
             }
         }
