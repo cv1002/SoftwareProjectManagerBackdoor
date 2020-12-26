@@ -3,7 +3,9 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectAssignmentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ProjectAssignment;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
