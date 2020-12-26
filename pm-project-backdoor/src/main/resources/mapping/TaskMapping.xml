@@ -3,7 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper">
-
+    <select id="GetTasksByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Tasks">
+        select Task.TaskID,
+               Task.TaskName,
+               Task.TaskDeadline,
+               TaskFinishType,
+               Task.TaskStartTime,
+               Task.TaskHandlerID,
+               Task.TaskPublisherID,
+               Task.TaskDescription,
+               User.UserName,
+               User.UserName
+        from Task,
+             Student,
+             User
+        where (Task.TaskPublisherID = #{id})
+    </select>
     <select id="GetTaskByTaskID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         select *
         from Task
@@ -16,18 +31,24 @@
     </select>
     <update id="UpdateTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         update Task
-        SET TaskHandlerID = #{taskHandlerID},
-            TaskName = #{taskName},
-            TaskDeadline = #{taskDeadline},
-            TaskStartTime = #{taskStartTime},
-            TaskFinishType = #{taskFinishType},
-            TaskDescription = #{taskDescription}
+        SET TaskHandlerID   = #{taskHandlerID},
+            TaskName        = #{taskName},
+            TaskDeadline    = #{taskDeadline},
+            TaskStartTime   = #{taskStartTime},
+            TaskFinishType  = #{taskFinishType},
+            TaskDescription = #{taskDescription},
+            TaskPublisherID = #{taskPublisherID}
         where TaskID = #{id}
     </update>
-    <insert id="UpdateTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+    <insert id="AddTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         insert into Task
-            (TaskID, TaskHandlerID, TaskName, TaskDeadline, TaskStartTime, TaskFinishType, TaskDescription, TaskPublisherID)
-            VALUES
-            (#{id}, #{taskHandlerID}, #{taskName}, #{taskDeadline}, #{taskStartTime}, #{taskFinishType}, #{taskDescription}, #{taskPublisherID})
+        (TaskID, TaskHandlerID, TaskName, TaskDeadline, TaskStartTime, TaskFinishType, TaskDescription, TaskPublisherID)
+        VALUES (#{id}, #{taskHandlerID}, #{taskName}, #{taskDeadline}, #{taskStartTime}, #{taskFinishType},
+                #{taskDescription}, #{taskPublisherID})
     </insert>
+    <delete id="DeleteTask" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        delete
+        from Task
+        where TaskID = #{id}
+    </delete>
 </mapper>

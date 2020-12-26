@@ -34,21 +34,21 @@ public class ProjectController {
         return projectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectID);
     }
 
-    @GetMapping(value = "/project",produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/project", produces = "application/json;charset=UTF-8")
     public Project FindProjectByUser(@RequestParam(name = "UserID") Integer UserID,
-                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword){
+                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
         object.setObjectName("FindProjectByUser");
-        return projectService.FindProjectByUser(UserID,UserPassword,operation,object);
+        return projectService.FindProjectByUser(UserID, UserPassword, operation, object);
     }
 
-    @PostMapping(value = "/project",produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/project", produces = "application/json;charset=UTF-8")
     public ResultStatus BuildNewProject(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                         @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword,
-                                        @RequestParam(name = "ProjectName")String ProjectName,
-                                        @RequestParam(name = "Description")String Description){
+                                        @RequestParam(name = "ProjectName") String ProjectName,
+                                        @RequestParam(name = "Description") String Description) {
         operation.setOperationDescription("POST");
         object.setObjectName("BuildNewProject");
-        return projectService.BulidNewProject(Integer.parseInt(UserID),UserPassword,operation,object,ProjectName,Description);
+        return projectService.BulidNewProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectName, Description);
     }
 }
