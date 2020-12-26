@@ -7,7 +7,6 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,19 +14,15 @@ public class ProjectService {
     @Autowired
     ProjectAssignmentMapper projectAssignmentMapper;
     @Autowired
-    ProjectAssignmentResult projectAssignmentResult;
-    @Autowired
     UserMapper userMapper;
     @Autowired
     RBACService rbacService;
     @Autowired
     ProjectMapper projectMapper;
     @Autowired
-    Projects projects;
-    @Autowired
     ResultStatus resultStatus;
     @Autowired
-    Project project = new Project();
+    Project project;
 
     /**
      * 查询所有项目，只有老师有权限
@@ -36,19 +31,12 @@ public class ProjectService {
      * @param UserPassword 查询发起人密码，来自cookie
      * @param operation    操作，即接口类型
      * @param objects      对象，即接口
-     * @return null 或者 projects列表
+     * @return null 或者 project列表
      */
-    public List<Projects> FindAllProjects(Integer UserID,
-                                          String UserPassword, Operation operation, Objects objects) {
+    public List<Project> FindAllProjects(Integer UserID,
+                                         String UserPassword, Operation operation, Objects objects) {
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            List<Project> allProject = projectMapper.GetAllProjects();//查询到的对象列表
-            List<Projects> allProjects = new ArrayList<>();//要返回的对象列表
-            allProject.forEach((e) -> {
-                projects.setProjectID(e.getProjectID());
-                projects.setProjectDescription(e.getProjectDescription());
-                allProjects.add(projects);
-            });
-            return allProjects;
+            return projectMapper.GetAllProjects();
         }
         return null;
     }
@@ -63,19 +51,11 @@ public class ProjectService {
      * @param projectID    目标项目
      * @return null或者ProjectAssignmentResult列表
      */
-    public List<ProjectAssignmentResult> FindTeamByProject(Integer UserID,
-                                                           String UserPassword, Operation operation,
-                                                           Objects objects, int projectID) {
+    public List<ProjectAssignment> FindTeamByProject(Integer UserID,
+                                                     String UserPassword, Operation operation,
+                                                     Objects objects, int projectID) {
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            List<ProjectAssignment> origin = projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
-            List<ProjectAssignmentResult> results = new ArrayList<>();
-            origin.forEach((e) -> {
-                projectAssignmentResult.setTeamID(e.getTeamID());
-                projectAssignmentResult.setProjectStartTime(e.getProjectStartTime());
-                projectAssignmentResult.setProjectDeadline(e.getProjectDeadline());
-                results.add(projectAssignmentResult);
-            });
-            return results;
+            return projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
         }
         return null;
     }

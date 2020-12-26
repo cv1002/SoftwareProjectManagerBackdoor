@@ -17,17 +17,17 @@ public class ProjectController {
     Objects objects;
 
     @GetMapping(value = "/projects", produces = "application/json;charset=UTF-8")
-    public List<Projects> FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
-                                          @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+    public List<Project> FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
+                                         @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
         objects.setObjectName("FindAllProjects");
         return projectService.FindAllProjects(Integer.parseInt(UserID), UserPassword, operation, objects);
     }
 
     @GetMapping(value = "/projectAssignment/", produces = "application/json;charset=UTF-8")
-    public List<ProjectAssignmentResult> FindTeamByProject(@RequestParam(name = "ProjectID") Integer ProjectID,
-                                                           @CookieValue(value = "UserID", defaultValue = "0") String UserID,
-                                                           @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+    public List<ProjectAssignment> FindTeamByProject(@RequestParam(name = "ProjectID") Integer ProjectID,
+                                                     @CookieValue(value = "UserID", defaultValue = "0") String UserID,
+                                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
         objects.setObjectName("FindTeamByProject");
         return projectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, objects, ProjectID);
