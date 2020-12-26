@@ -1,7 +1,7 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Object;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,14 @@ public class ProjectController {
     @Autowired
     Operation operation;
     @Autowired
-    Object object;
+    Objects objects;
 
     @GetMapping(value = "/projects", produces = "application/json;charset=UTF-8")
     public List<Projects> FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                           @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
-        object.setObjectName("FindAllProjects");
-        return projectService.FindAllProjects(Integer.parseInt(UserID), UserPassword, operation, object);
+        objects.setObjectName("FindAllProjects");
+        return projectService.FindAllProjects(Integer.parseInt(UserID), UserPassword, operation, objects);
     }
 
     @GetMapping(value = "/projectAssignment/", produces = "application/json;charset=UTF-8")
@@ -30,16 +30,16 @@ public class ProjectController {
                                                            @CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                                            @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
-        object.setObjectName("FindTeamByProject");
-        return projectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectID);
+        objects.setObjectName("FindTeamByProject");
+        return projectService.FindTeamByProject(Integer.parseInt(UserID), UserPassword, operation, objects, ProjectID);
     }
 
     @GetMapping(value = "/project", produces = "application/json;charset=UTF-8")
     public Project FindProjectByUser(@RequestParam(name = "UserID") Integer UserID,
                                      @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         operation.setOperationDescription("GET");
-        object.setObjectName("FindProjectByUser");
-        return projectService.FindProjectByUser(UserID, UserPassword, operation, object);
+        objects.setObjectName("FindProjectByUser");
+        return projectService.FindProjectByUser(UserID, UserPassword, operation, objects);
     }
 
     @PostMapping(value = "/project", produces = "application/json;charset=UTF-8")
@@ -48,7 +48,7 @@ public class ProjectController {
                                         @RequestParam(name = "ProjectName") String ProjectName,
                                         @RequestParam(name = "Description") String Description) {
         operation.setOperationDescription("POST");
-        object.setObjectName("BuildNewProject");
-        return projectService.BulidNewProject(Integer.parseInt(UserID), UserPassword, operation, object, ProjectName, Description);
+        objects.setObjectName("BuildNewProject");
+        return projectService.BulidNewProject(Integer.parseInt(UserID), UserPassword, operation, objects, ProjectName, Description);
     }
 }
