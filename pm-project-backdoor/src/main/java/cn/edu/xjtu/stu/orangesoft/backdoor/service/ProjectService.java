@@ -20,44 +20,27 @@ public class ProjectService {
     @Autowired
     ProjectMapper projectMapper;
     @Autowired
-    ResultStatus resultStatus;
+    ResultInfo resultInfo;
     @Autowired
     Project project;
 
     /**
      * 查询所有项目，只有老师有权限
      *
-     * @param UserID       查询发起人id，来自cookie
-     * @param UserPassword 查询发起人密码，来自cookie
-     * @param operation    操作，即接口类型
-     * @param objects      对象，即接口
-     * @return null 或者 project列表
+     * @return project列表
      */
-    public List<Project> FindAllProjects(Integer UserID,
-                                         String UserPassword, Operation operation, Objects objects) {
-        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            return projectMapper.GetAllProjects();
-        }
-        return null;
+    public List<Project> FindAllProjects() {
+        return projectMapper.GetAllProjects();
     }
 
     /**
      * 根据projectID查找所有选择该项目的小组信息
      *
-     * @param UserID       查询发起人id，来自cookie
-     * @param UserPassword 查询发起人密码，来自cookie
-     * @param operation    操作，即接口类型
-     * @param objects      对象，即接口
-     * @param projectID    目标项目
-     * @return null或者ProjectAssignmentResult列表
+     * @param projectID 目标项目
+     * @return ProjectAssignmentResult列表
      */
-    public List<ProjectAssignment> FindTeamByProject(Integer UserID,
-                                                     String UserPassword, Operation operation,
-                                                     Objects objects, int projectID) {
-        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            return projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
-        }
-        return null;
+    public List<ProjectAssignment> FindTeamByProject(int projectID) {
+        return projectAssignmentMapper.getProjectAssignmentByProjectID(projectID);
     }
 
     /**
@@ -65,11 +48,8 @@ public class ProjectService {
      *
      * @return 项目对象
      */
-    public Project FindProjectByUser(Integer UserID, String UserPassword, Operation operation, Objects objects) {
-        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            return projectMapper.GetProjectByUser(UserID);
-        }
-        return null;
+    public Project FindProjectByUser(Integer UserID) {
+        return projectMapper.GetProjectByUser(UserID);
     }
 
     /**
@@ -77,19 +57,16 @@ public class ProjectService {
      *
      * @param ProjectName 新建项目名
      * @param Description 项目描述
-     * @return 失败返回null，成功返回ResultStatus对象，status为创建项目的ID，description为完成状态“yes”
+     * @return ResultInfo
      */
-    public ResultStatus BulidNewProject(Integer UserID, String UserPassword, Operation operation, Objects objects,
-                                        String ProjectName, String Description) {
-        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            project.setProjectID(0);
-            project.setProjectName(ProjectName);
-            project.setProjectDescription(Description);
-            projectMapper.BuildNewProject(project);
-            if (project.getProjectID() != 0) {
-                resultStatus.setFinish("yes");
-            }
+    public ResultInfo BulidNewProject(String ProjectName, String Description) {
+        project.setProjectID(0);
+        project.setProjectName(ProjectName);
+        project.setProjectDescription(Description);
+        projectMapper.BuildNewProject(project);
+        if (project.getProjectID() != 0) {
+            resultInfo.setResultInfo("成功！！");
         }
-        return resultStatus;
+        return resultInfo;
     }
 }
