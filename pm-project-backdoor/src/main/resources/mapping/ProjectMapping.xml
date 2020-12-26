@@ -11,13 +11,13 @@
     <select id="GetProjectByUser" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project">
         select *
         from Project
-        where ProjectID =(
+        where ProjectID = (
             select ProjectID
             from ProjectAssignment
-            where TeamID=
-                (select TeamID
-                from Student
-                where StudentUserID = #{UserID}))
+            where TeamID =
+                  (select TeamID
+                   from Student
+                   where StudentUserID = #{UserID}))
     </select>
 
     <insert id="BuildNewProject" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Project"
