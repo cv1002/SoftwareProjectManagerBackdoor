@@ -1,16 +1,12 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 
+import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
+@Data
 public class Objects {
     private String ObjectName;
-
-    public String getObjectName() {
-        return ObjectName;
-    }
-
-    public void setObjectName(String objectName) {
-        ObjectName = objectName;
-    }
 }
