@@ -18,15 +18,11 @@ public class RBACService {
 
     public boolean CheckPermission(Integer userID, String userPassword, Objects objects, Operation operation) {
         User user = userMapper.GetUserByIDAndPassword(userID, userPassword);
-        if (user == null) {
-            return false;
-        } else {
-            return CheckPermission(user.getRoleID(), objects, operation);
-        }
+        return user != null && CheckPermission(user.getRoleID(), objects, operation);
     }
 
     public boolean CheckPermission(Integer roleID, Objects objects, Operation operation) {
         PermissionConfig config = rbacMapper.CheckPermission(roleID, objects.getObjectName(), operation.getOperationDescription());
-        return config.getPermission() != 0;
+        return config != null && config.getPermission() != 0;
     }
 }

@@ -58,7 +58,7 @@ public class FileController {
         Integer TeamID = Integer.parseInt(request.getParameter("TeamID"));
         object.setObjectName("file");
         operation.setOperationDescription("GET");
-        FileResult fileResult = new FileResult();
+        FileResult fileResult = DIUtil.getBean(FileResult.class);
         if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
             return gson.toJson(fileService.getFileByTeamID(TeamID));
         }
