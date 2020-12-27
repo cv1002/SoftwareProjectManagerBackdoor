@@ -1,30 +1,25 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.core;
 
-import org.springframework.context.ApplicationContext;
-
+/**
+ * 用于依赖注入的静态工具类，由于ApplicationContext是线程安全的，所以DIUtil是线程安全的
+ */
 public class DIUtil {
-    private static ApplicationContext applicationContext;
-
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    protected static void setApplicationContext(ApplicationContext applicationContext) {
-        if (applicationContext != null) {
-            DIUtil.applicationContext = applicationContext;
-        }
+    /**
+     * 单例模式：防止实例化
+     */
+    private DIUtil() {
     }
 
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) {
-        return (T) getApplicationContext().getBean(name);
+        return (T) ContextUtil.getApplicationContext().getBean(name);
     }
 
     public static <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
+        return ContextUtil.getApplicationContext().getBean(clazz);
     }
 
     public static <T> T getBean(String name, Class<T> clazz) {
-        return getApplicationContext().getBean(name, clazz);
+        return ContextUtil.getApplicationContext().getBean(name, clazz);
     }
 }

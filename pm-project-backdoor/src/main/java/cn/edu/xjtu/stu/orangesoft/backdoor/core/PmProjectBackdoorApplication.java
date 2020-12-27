@@ -8,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {"cn.edu.xjtu.stu.orangesoft.backdoor"})
 public class PmProjectBackdoorApplication {
     public static void main(String[] args) {
-        DIUtil.setApplicationContext(SpringApplication.run(PmProjectBackdoorApplication.class, args));
+        ContextUtil.setApplicationContext(SpringApplication.run(PmProjectBackdoorApplication.class, args));
     }
 }
