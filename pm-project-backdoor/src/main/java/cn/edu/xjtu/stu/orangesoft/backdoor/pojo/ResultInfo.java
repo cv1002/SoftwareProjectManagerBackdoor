@@ -2,7 +2,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component(value = "ResultInfo")
 public class ResultInfo {
     String resultInfo;
 
