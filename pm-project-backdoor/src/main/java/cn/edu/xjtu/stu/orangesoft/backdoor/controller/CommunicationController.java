@@ -1,12 +1,10 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
-import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.CommunicationMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.CommunicationService;
-import cn.edu.xjtu.stu.orangesoft.backdoor.service.MilestoneService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ public class CommunicationController {
     RBACService rbacService;
     @Autowired
     Gson gson;
+
     /**
      * 查看交流信息
      *
@@ -35,8 +34,8 @@ public class CommunicationController {
      */
     @GetMapping(value = "/communication", produces = "application/json;charset=UTF-8")
     public String GetCommunication(@RequestParam(name = "UserID") Integer UserID,
-                                        @RequestParam(name = "UserPassword") String UserPassword,
-                                        @RequestParam(name = "TeamID") Integer TeamID) {
+                                   @RequestParam(name = "UserPassword") String UserPassword,
+                                   @RequestParam(name = "TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         objects.setObjectName("communication");
@@ -62,10 +61,10 @@ public class CommunicationController {
      * "resultInfo": String
      * }
      */
-    @PostMapping (value = "/communication", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/communication", produces = "application/json;charset=UTF-8")
     public String PostCommunication(@RequestParam(name = "UserID") Integer UserID,
-                                   @RequestParam(name = "UserPassword") String UserPassword,
-                                   @RequestParam(name = "TeamID") Integer TeamID,
+                                    @RequestParam(name = "UserPassword") String UserPassword,
+                                    @RequestParam(name = "TeamID") Integer TeamID,
                                     @RequestParam(name = "Context") String Context,
                                     @RequestParam(name = "FileID") Integer FileID) {
         Objects objects = DIUtil.getBean(Objects.class);
@@ -74,7 +73,7 @@ public class CommunicationController {
         objects.setObjectName("communication");
         operation.setOperationDescription("POST");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-             resultInfo = communicationService.PostCommunication(UserID,TeamID,Context,FileID);
+            resultInfo = communicationService.PostCommunication(UserID, TeamID, Context, FileID);
         } else {
             resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
