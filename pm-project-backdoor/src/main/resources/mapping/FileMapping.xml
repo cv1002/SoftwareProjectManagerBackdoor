@@ -18,11 +18,6 @@
         from Files
         where TeamID = #{TeamID}
     </select>
-    <select id="GetFileContentByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
-        select *
-        from FileContent
-        where TeamID = #{TeamID}
-    </select>
     <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files" useGeneratedKeys="true" keyProperty="FileID">
         INSERT INTO Files( FileRealName , FileType , FileLocation , TeamID , StudentUserID , UploadTime)
         value ( #{FileRealName} , #{FileType} , #{FileLocation} , #{TeamID} , #{StudentUserID} , str_to_date(#{UpLoadTime} , '%Y-%m-%d %H:%i:%s'))
@@ -42,13 +37,18 @@
         where FileID = #{FileID}
     </update>
     <update id="PutFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
-        update  Files set
-        FileContent = #{FileContant}
+        update  FileContent set
+        FileContent = #{FileContent}
         where FileID = #{FileID}
     </update>
-    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
-        delete FROM FileContent and Files
-        WHERE  FileID =#{FileID}
+    <delete id="DeleteFileContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        delete FROM FileContent
+        WHERE  FileID = #{FileID}
     </delete>
+    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        delete from Files
+        WHERE  FileID = #{FileID}
+    </delete>
+
 
 </mapper>

@@ -38,7 +38,7 @@ public class FileController {
                           @CookieValue("userPassword") String UserPassword) {
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        object.setObjectName("getFileByID");
+        object.setObjectName("file");
         operation.setOperationDescription("GET");
         Integer userID = Integer.parseInt(UserID);
         if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
@@ -56,13 +56,15 @@ public class FileController {
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         Integer TeamID = Integer.parseInt(request.getParameter("TeamID"));
-        object.setObjectName("getFileByTeamID");
+        object.setObjectName("file");
+        operation.setOperationDescription("GET");
         FileResult fileResult = new FileResult();
         if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
             return gson.toJson(fileService.getFileByTeamID(TeamID));
         }
         else{
-            return gson.toJson("no permission");
+            fileResult.setFinish("no permission");
+            return gson.toJson(fileResult);
         }
     }
     @PostMapping(value = "/file" , produces = "application/json;charset=UTF-8")
@@ -72,14 +74,16 @@ public class FileController {
                             @CookieValue("userPassword") String UserPassword) throws IOException {//具体怎么获取文件信息尚不清楚,fileassess？
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        object.setObjectName("postFile");
+        object.setObjectName("file");
         operation.setOperationDescription("POST");
         Integer userID = Integer.parseInt(UserID);
 
         Files saveFile = new Files();
         saveFile.setFileRealName(file.getOriginalFilename());
         saveFile.setFileLocation(request.getSession().getServletContext().getRealPath("/"));
-        saveFile.setFileType(file.getContentType());
+        int begin = file.getOriginalFilename().indexOf(".");
+        int last = file.getOriginalFilename().length();
+        saveFile.setFileType(file.getOriginalFilename().substring(begin, last));
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         saveFile.setUpLoadTime(df.format(date));
@@ -104,7 +108,7 @@ public class FileController {
 
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        object.setObjectName("putFiles");
+        object.setObjectName("file");
         Integer userID = Integer.parseInt(UserID);
         operation.setOperationDescription("UPDATE");
 
@@ -137,7 +141,7 @@ public class FileController {
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        object.setObjectName("deleteFile");
+        object.setObjectName("File");
         operation.setOperationDescription("DELETE");
         Integer userID = Integer.parseInt(UserID);
         if(rbacService.CheckPermission(userID, UserPassword, object, operation)) {

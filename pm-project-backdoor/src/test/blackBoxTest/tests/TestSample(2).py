@@ -2,10 +2,12 @@ import requests
 import logger
 
 formdata = {
+    "FileID" : 1
+
 
 }
 file = {
-    "files" : open("E:/114514.txt" , "rb")
+    "files" : open("E:/2020.txt" , "rb")
 }
 cookies = {
     "userID": "1",

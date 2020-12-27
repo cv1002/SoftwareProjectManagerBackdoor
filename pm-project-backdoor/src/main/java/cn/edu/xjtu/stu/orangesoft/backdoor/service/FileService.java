@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 //todo
@@ -36,16 +37,22 @@ public class FileService {
     }
     public FileResult getFileByTeamID(Integer TeamID){
         FileResult filesResult = new FileResult();
+        Integer j;
         if(TeamID == null){
             filesResult.setFinish("teamID not found");
         }
         else{
             filesResult.setFinish("success");
             List<Files> files = fileMapper.GetFileByTeamID(TeamID);
-            List<FileContent> fileContents = fileMapper.GetFileContentByTeamID(TeamID);
+            List<FileContent> fileContents = new ArrayList<FileContent>();
+            for(int i = 0; i<files.size(); i++) {
+                j = files.get(i).getFileID();
+                fileContents.addAll(fileMapper.GetFileContentByID(j));
+            }
             filesResult.setFiles(files);
             filesResult.setFileContents(fileContents);
             filesResult.setFinish("get file success");
+            System.out.println(filesResult);
         }
         return filesResult;
     }
@@ -95,11 +102,13 @@ public class FileService {
     }
     public String deleteFile(Integer FileID) {
         int k;
-        k= fileMapper.DeleteFiles(FileID);
-        if(k==0) {
+        k = fileMapper.DeleteFileContent(FileID);
+
+        if(k == 0) {
             return "no such file or delete error";
         }
         else{
+            k = fileMapper.DeleteFiles(FileID);
             return "delete file success";
         }
     }
