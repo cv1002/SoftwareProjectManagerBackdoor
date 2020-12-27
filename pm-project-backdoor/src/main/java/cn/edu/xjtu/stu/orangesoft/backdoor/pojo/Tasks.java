@@ -1,8 +1,12 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.pojo;
 
+import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
+@Data
 public class Tasks {
     private int TaskID;
     private String TaskName;
@@ -14,84 +18,4 @@ public class Tasks {
     private String TaskDescription;
     private String TaskHandlerName;
     private String TaskPublisherName;
-
-    public int getTaskID() {
-        return TaskID;
-    }
-
-    public void setTaskID(int taskID) {
-        TaskID = taskID;
-    }
-
-    public String getTaskName() {
-        return TaskName;
-    }
-
-    public void setTaskName(String taskName) {
-        TaskName = taskName;
-    }
-
-    public String getTaskDeadline() {
-        return TaskDeadline;
-    }
-
-    public void setTaskDeadline(String taskDeadline) {
-        TaskDeadline = taskDeadline;
-    }
-
-    public int getTaskHandlerID() {
-        return TaskHandlerID;
-    }
-
-    public void setTaskHandlerID(int taskHandlerID) {
-        TaskHandlerID = taskHandlerID;
-    }
-
-    public int getTaskFinishType() {
-        return TaskFinishType;
-    }
-
-    public void setTaskFinishType(int taskFinishType) {
-        TaskFinishType = taskFinishType;
-    }
-
-    public String getTaskStartTime() {
-        return TaskStartTime;
-    }
-
-    public void setTaskStartTime(String taskStartTime) {
-        TaskStartTime = taskStartTime;
-    }
-
-    public int getTaskPublisherID() {
-        return TaskPublisherID;
-    }
-
-    public void setTaskPublisherID(int taskPublisherID) {
-        TaskPublisherID = taskPublisherID;
-    }
-
-    public String getTaskDescription() {
-        return TaskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        TaskDescription = taskDescription;
-    }
-
-    public String getTaskHandlerName() {
-        return TaskHandlerName;
-    }
-
-    public void setTaskHandlerName(String taskHandlerName) {
-        TaskHandlerName = taskHandlerName;
-    }
-
-    public String getTaskPublisherName() {
-        return TaskPublisherName;
-    }
-
-    public void setTaskPublisherName(String taskPublisherName) {
-        TaskPublisherName = taskPublisherName;
-    }
 }
