@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileAssessMapper">
+    <select id="GetFileAssessByFileID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileAssess">
+        select *
+        from FileAssess
+        where FileID = #{Fileid}
+    </select>
+
+    <insert id="BuildNewFileAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileAssess"
+            useGeneratedKeys="true">
+        insert into FileAssess(FileAssess)
+        values (#{FileAssess.FileAssess})
+    </insert>
+</mapper>

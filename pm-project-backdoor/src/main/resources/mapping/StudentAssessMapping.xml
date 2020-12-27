@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentAssessMapper">
+    <select id="GetStudentScoreByStudentID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.StudentAssess">
+        select *
+        from StudentAssess
+        where StudentUserID = #{StudentUserid}
+    </select>
+    <insert id="BuildStudentAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.StudentAssess"
+            useGeneratedKeys="true">
+        insert into StudentAssess(Assess)
+        values (#{Assess})
+    </insert>
+</mapper>
