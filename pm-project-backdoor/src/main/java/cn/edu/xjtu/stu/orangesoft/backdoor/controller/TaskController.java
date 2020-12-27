@@ -45,9 +45,9 @@ public class TaskController {
                           @RequestParam(name = "TaskHandlerID") Integer taskHandlerID,
                           @RequestParam(name = "TaskPublisherID") Integer taskPublisherID,
                           @RequestParam(name = "TaskDescription") String taskDescription) {
-        Objects objects = DIUtil.getBean(Objects.class);;
+        Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
-        Operation operation = DIUtil.getBean(Operation.class);;
+        Operation operation = DIUtil.getBean(Operation.class);
         operation.setOperationDescription("POST");
         if (rbacService.CheckPermission(userID, userPassword, objects, operation)) {
             return gson.toJson(taskService.AddTask(
@@ -58,7 +58,7 @@ public class TaskController {
                     taskPublisherID, taskDescription
             ));
         } else {
-            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);;
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
             return gson.toJson(resultInfo);
         }
@@ -86,7 +86,7 @@ public class TaskController {
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             return gson.toJson(taskService.GetTaskByUserID(UserID));
         } else {
-            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);;
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
             return gson.toJson(resultInfo);
         }
@@ -108,12 +108,12 @@ public class TaskController {
                              @RequestParam("TaskID") Integer taskID) {
         Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
-        Operation operation = DIUtil.getBean(Operation.class);;
+        Operation operation = DIUtil.getBean(Operation.class);
         operation.setOperationDescription("DELETE");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             return gson.toJson(taskService.DeleteTask(taskID));
         } else {
-            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);;
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
             return gson.toJson(resultInfo);
         }
@@ -151,7 +151,7 @@ public class TaskController {
                              @RequestParam(name = "TeamID") Integer teamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
-        Operation operation = DIUtil.getBean(Operation.class);;
+        Operation operation = DIUtil.getBean(Operation.class);
         operation.setOperationDescription("PUT");
         if (rbacService.CheckPermission(userID, userPassword, objects, operation)) {
             return gson.toJson(taskService.TaskUpdate(
@@ -161,7 +161,7 @@ public class TaskController {
                     taskPublisherID, taskDescription
             ));
         } else {
-            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);;
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
             return gson.toJson(resultInfo);
         }
