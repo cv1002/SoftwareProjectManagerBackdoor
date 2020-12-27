@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
@@ -23,9 +24,9 @@ public class GroupAssessController {
     public String FindGroupScoreBySTeamID(@RequestParam(name = "TeamID") Integer teamID,
                                           @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                           @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("groupAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -36,7 +37,7 @@ public class GroupAssessController {
                 return gson.toJson(groupAssessService.FindGroupScoreBySTeamID(teamID));
             }
         } else {
-            resultInfo.setResultInfo("无权访问!!");
+            resultInfo.setResultInfo("无权访问！！");
             return gson.toJson(resultInfo);
         }
     }
@@ -48,9 +49,9 @@ public class GroupAssessController {
                                       @RequestParam(name = "Assess") String assess,
                                       @RequestParam(name = "Team") Team team,
                                       @RequestParam(name = "Score") Integer score) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("groupAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
