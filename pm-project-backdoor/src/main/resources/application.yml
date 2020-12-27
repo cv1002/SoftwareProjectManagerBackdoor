@@ -9,7 +9,7 @@ spring:
     password: orangesoft
 
 mybatis:
-  type-aliases-package: cn.edu.xjtu.stu.orangesoft.backdoor.bean
+  type-aliases-package: cn.edu.xjtu.stu.orangesoft.backdoor.pojo
   mapper-locations: classpath:mapping/*Mapping.xml
 
 
