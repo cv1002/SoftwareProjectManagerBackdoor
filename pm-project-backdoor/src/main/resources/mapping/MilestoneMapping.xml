@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.MilestoneMapper">
+    <select id="GetCompletionByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ProjectCompletion">
+        select *
+        from ProjectCompletion
+        where TeamID = #{id}
+    </select>
+
+    <select id="GetCompletionByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ProjectCompletion">
+        select *
+        from ProjectCompletion
+        where CompletionID = #{id}
+    </select>
+
+    <insert id="InsertCompletion">
+        insert into ProjectCompletion(FileID, CompletionID, TeamID, MilestoneID)
+        values (#{Completion.FileID}, #{Completion.CompletionID}, #{Completion.TeamID}, #{Completion.MilestoneID});
+    </insert>
+
+    <delete id="DeleteMilestone">
+        delete
+        from ProjectCompletion
+        where MilestoneID = #{MilestoneID}
+    </delete>
+
+    <update id="UpdateMilestone">
+        update ProjectCompletion
+        set CompletionID = #{Completion.CompletionID},
+            FileID       = #{Completion.FileID},
+            MilestoneID  = #{Completion.MilestoneID},
+            TeamID       = #{Completion.TeamID}
+        where CompletionID = #{CompletionID}
+    </update>
+
+
+</mapper>
