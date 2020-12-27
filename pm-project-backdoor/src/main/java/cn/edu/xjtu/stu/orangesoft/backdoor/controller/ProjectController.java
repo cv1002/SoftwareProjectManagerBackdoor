@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
@@ -21,9 +22,9 @@ public class ProjectController {
     @GetMapping(value = "/projects", produces = "application/json;charset=UTF-8")
     public String FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                   @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("FindAllProjects");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
@@ -43,9 +44,9 @@ public class ProjectController {
     public String FindTeamByProject(@RequestParam(name = "ProjectID") Integer ProjectID,
                                     @CookieValue(value = "UserID", defaultValue = "0") String UserID,
                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("FindTeamByProject");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
@@ -64,9 +65,9 @@ public class ProjectController {
     @GetMapping(value = "/project", produces = "application/json;charset=UTF-8")
     public String FindProjectByUser(@RequestParam(name = "UserID") Integer UserID,
                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("FindProjectByUser");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -87,9 +88,9 @@ public class ProjectController {
                                   @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                   @RequestParam(name = "ProjectName") String ProjectName,
                                   @RequestParam(name = "Description") String Description) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("BuildNewProject");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {

@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
@@ -23,9 +24,9 @@ public class FileAssessController {
     public String FindFileAssessByFileID(@RequestParam(name = "FileID") Integer fileID,
                                          @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                          @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("fileAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -46,9 +47,9 @@ public class FileAssessController {
                                      @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                      @RequestParam(name = "Assess") String assess,
                                      @RequestParam(name = "Files") Files files) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("fileAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {

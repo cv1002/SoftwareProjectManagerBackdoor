@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
@@ -23,9 +24,9 @@ public class StudentAssessController {
     public String FindStudentScoreByStudentID(@RequestParam(name = "StudentUserID") Integer StudentUserID,
                                               @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                               @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("studentAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -47,9 +48,9 @@ public class StudentAssessController {
                                         @RequestParam(name = "Assess") String assess,
                                         @RequestParam(name = "Score") Integer score,
                                         @RequestParam(name = "Student") String studentInfo) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("studentAssess");
         Student student = gson.fromJson(studentInfo, Student.class);

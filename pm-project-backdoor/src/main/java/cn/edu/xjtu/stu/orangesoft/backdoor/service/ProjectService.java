@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectAssignmentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
@@ -59,7 +60,7 @@ public class ProjectService {
      */
     public ResultInfo BulidNewProject(String ProjectName, String Description) {
         ResultInfo resultInfo = new ResultInfo();
-        Project project = new Project();
+        Project project = DIUtil.getBean(Project.class);
         project.setProjectID(0);
         project.setProjectName(ProjectName);
         project.setProjectDescription(Description);
