@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.CommunicationMapper">
+    <select id="GetCommunication" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Communication">
+        select *
+        from Communication
+        where Communication.TeamID = #{TeamID}
+    </select>
+
+    <insert id="PostCommunication">
+        insert into Communication
+            (CommunicationID, UserID, TeamID, Context, FileID)
+        values (#{Communication.CommunicationID}, #{Communication.UserID}, #{Communication.TeamID},
+                #{Communication.Context}, #{Communication.FileID})
+    </insert>
+</mapper>
