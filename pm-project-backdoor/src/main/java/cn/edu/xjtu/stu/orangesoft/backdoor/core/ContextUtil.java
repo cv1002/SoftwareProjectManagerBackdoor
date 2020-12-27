@@ -3,7 +3,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.core;
 import org.springframework.context.ApplicationContext;
 
 /**
- * 用于给Core包的工具类获取ApplicationContext的工具类，采用了单例模式，由于ApplicationContext是线程安全的，所以ContextUtil是线程安全的
+ * 用于获取ApplicationContext的工具类，采用了单例模式，由于ApplicationContext是线程安全的，所以ContextUtil是线程安全的
  */
 public class ContextUtil {
     private static ApplicationContext applicationContext;
@@ -14,7 +14,7 @@ public class ContextUtil {
     private ContextUtil() {
     }
 
-    protected static ApplicationContext getApplicationContext() {
+    public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
