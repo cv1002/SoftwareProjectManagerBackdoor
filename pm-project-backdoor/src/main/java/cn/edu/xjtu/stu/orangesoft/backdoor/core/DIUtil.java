@@ -19,5 +19,10 @@ public class DIUtil {
     public static <T> T getBean(String name) {
         return (T) getApplicationContext().getBean(name);
     }
-
+    public static <T> T getBean(Class<T> clazz) {
+        return getApplicationContext().getBean(clazz);
+    }
+    public static <T> T getBean(String name, Class<T> clazz) {
+        return getApplicationContext().getBean(name, clazz);
+    }
 }
