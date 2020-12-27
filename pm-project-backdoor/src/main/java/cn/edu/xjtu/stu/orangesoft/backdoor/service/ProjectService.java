@@ -21,10 +21,6 @@ public class ProjectService {
     RBACService rbacService;
     @Autowired
     ProjectMapper projectMapper;
-//    @Autowired
-//    ResultInfo resultInfo;
-//    @Autowired
-//    Project project;
 
     /**
      * 查询所有项目，只有老师有权限
