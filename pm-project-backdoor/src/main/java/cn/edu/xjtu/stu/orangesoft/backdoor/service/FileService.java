@@ -2,6 +2,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,7 @@ public class FileService {
         }
         return filesResult;
     }
-    public Files buildFile() {//后面用来生成file
-        Files file=new Files();
-        file.setFileLocation("1111");
-        file.setFileType("txt");
-        file.setFileRealName("C#");
-        file.setTeamID(1);
-        file.setStudentUserID(1);
-        file.setUpLoadTime("2020-12-12");
-        return file;
-    }
-    public String postFile(Files file) {
+    public String postFile(Files file, byte[] bytes) {
         int k;
         if(file == null){
             return "file not found";
@@ -58,9 +49,16 @@ public class FileService {
         else{
             k= fileMapper.PostFiles(file);
             if(k==0) {
-                return "post file failed";
+                return "fail when trying to post file";
             }
             else{
+                FileContent fileContent = new FileContent();
+                fileContent.setFileContent(bytes);
+                fileContent.setFileID(file.getFileID());
+                k = fileMapper.PostFilesContent(fileContent);
+                if(k == 0){
+                    return "fail when trying to post filecontent";
+                }
                 return "post file success";
             }
         }

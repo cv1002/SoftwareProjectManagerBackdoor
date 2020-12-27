@@ -14,8 +14,12 @@
         where TeamID = #{TeamID}
     </select>
     <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files" useGeneratedKeys="true" keyProperty="FileID">
-        INSERT INTO Files( FileRealName , FIleType , FIleLocation , TeamID , StudentUserID , UploadTime)
-        value ( #{FileRealName} , #{FileType} , #{FileLocation} , #{TeamID} , #{StudentUserID} ,#{UpLoadTime})
+        INSERT INTO Files( FileRealName , FileType , FileLocation , TeamID , StudentUserID , UploadTime)
+        value ( #{FileRealName} , #{FileType} , #{FileLocation} , #{TeamID} , #{StudentUserID} , str_to_date(#{UpLoadTime} , '%Y-%m-%d %H:%i:%s'))
+    </insert>
+    <insert id="PostFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent" useGeneratedKeys="true" keyProperty="FileID">
+        INSERT INTO FileContent( FileID , FileContent)
+            value ( #{FileID} , #{FileContent})
     </insert>
     <update id="PutFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
         update  Files set
