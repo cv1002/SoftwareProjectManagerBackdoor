@@ -43,9 +43,9 @@ public class TaskService {
             tasks.setTaskHandlerName(usermapper.GetUserByUserID(tempTask.getTaskPublisherID()).getUserName());
             tasksResult.add(tasks);
         }
-        findTaskResult.SetFinish("成功！！");
-        findTaskResult.SetTasks(tasksResult);
-        System.out.println(findTaskResult.GetFinish());
+        findTaskResult.setFinish("成功！！");
+        findTaskResult.setTasks(tasksResult);
+        System.out.println(findTaskResult.getFinish());
         return findTaskResult;
     }
 
