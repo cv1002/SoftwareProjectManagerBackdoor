@@ -8,9 +8,19 @@
         from Files
         where FileID = #{fileid}
     </select>
+    <select id="GetFileContentByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        select *
+        from FileContent
+        where FileID = #{fileid}
+    </select>
     <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
         select *
         from Files
+        where TeamID = #{TeamID}
+    </select>
+    <select id="GetFileContentByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        select *
+        from FileContent
         where TeamID = #{TeamID}
     </select>
     <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files" useGeneratedKeys="true" keyProperty="FileID">
@@ -29,6 +39,11 @@
         TeamID = #{TeamID},
         StudentUSerID = #{StudentUserID},
         UploadTime = #{UpLoadTime}
+        where FileID = #{FileID}
+    </update>
+    <update id="PutFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        update  Files set
+        FileContent = #{FileContant}
         where FileID = #{FileID}
     </update>
     <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">

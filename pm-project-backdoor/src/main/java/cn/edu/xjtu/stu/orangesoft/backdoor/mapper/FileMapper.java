@@ -12,10 +12,13 @@ import java.util.List;
 @Repository
 // todo
 public interface FileMapper {
-    Files GetFileByID(Integer FileID);
+    List<Files>  GetFileByID(@Param("fileid") Integer FileID);
+    List<FileContent> GetFileContentByID(@Param("fileid") Integer FileID);
     List<Files> GetFileByTeamID(@Param("TeamID") Integer TeamID);
+    List<FileContent> GetFileContentByTeamID(@Param("TeamID") Integer TeamID);
     Integer PostFiles(Files file);
     Integer PostFilesContent(FileContent fileContent);
     Integer PutFiles(Files file);
+    Integer PutFilesContent(FileContent fileContent);
     Integer DeleteFiles(@Param("FIleID") Integer FileID);
 }

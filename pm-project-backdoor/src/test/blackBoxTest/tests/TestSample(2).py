@@ -5,10 +5,10 @@ formdata = {
 
 }
 file = {
-    "cat" : open("E:\猫猫.bmp" , "rb")
+    "files" : open("E:/114514.txt" , "rb")
 }
 cookies = {
-    "userID": 1,
+    "userID": "1",
     "userPassword": "114514"
 }
 #response = requests.get(r'http://localhost:8080/login', data=formdata)

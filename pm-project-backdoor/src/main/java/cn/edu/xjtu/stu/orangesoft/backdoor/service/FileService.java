@@ -19,13 +19,18 @@ public class FileService {
     @Autowired
     FileMapper fileMapper;
 
-    public  Files getFilesByID(Integer FileID) {
-        if( FileID==null ) {
+    public  FileResult getFilesByID(Integer FileID) {
+        if( FileID == null ) {
             return null;
         }
         else{
-            Files file = fileMapper.GetFileByID(FileID);
-            return file;
+            FileResult fileResult = new FileResult();
+            List<Files> files = fileMapper.GetFileByID(FileID);
+            List<FileContent> fileContents = fileMapper.GetFileContentByID(FileID);
+            fileResult.setFiles(files);
+            fileResult.setFileContents(fileContents);
+            fileResult.setFinish("get file success");
+            return fileResult;
         }
 
     }
@@ -37,7 +42,10 @@ public class FileService {
         else{
             filesResult.setFinish("success");
             List<Files> files = fileMapper.GetFileByTeamID(TeamID);
-            filesResult.setFile(files);
+            List<FileContent> fileContents = fileMapper.GetFileContentByTeamID(TeamID);
+            filesResult.setFiles(files);
+            filesResult.setFileContents(fileContents);
+            filesResult.setFinish("get file success");
         }
         return filesResult;
     }
@@ -48,7 +56,7 @@ public class FileService {
         }
         else{
             k= fileMapper.PostFiles(file);
-            if(k==0) {
+            if(k == 0) {
                 return "fail when trying to post file";
             }
             else{
@@ -63,17 +71,24 @@ public class FileService {
             }
         }
     }
-    public String putFile(Files file) {
+    public String putFile(Files file, byte[] bytes) {
         int k;
-        if(file==null){
+        if(file == null){
             return "file not found";
         }
         else{
             k= fileMapper.PutFiles(file);
-            if(k==0) {
+            if(k == 0) {
                 return "update file failed";
             }
             else{
+                FileContent fileContent = new FileContent();
+                fileContent.setFileContent(bytes);
+                fileContent.setFileID(file.getFileID());
+                k = fileMapper.PutFilesContent(fileContent);
+                if(k == 0){
+                    return "fail when trying to put filecontent";
+                }
                 return "update file success";
             }
         }

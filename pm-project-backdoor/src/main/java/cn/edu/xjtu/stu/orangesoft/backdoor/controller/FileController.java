@@ -1,5 +1,7 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RBACMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
@@ -27,17 +29,19 @@ public class FileController {
     Gson gson;
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    RBACService rbacService;
     //TODO
     @GetMapping(value = "/file/{fileID}", produces = "application/json;charset=UTF-8")//等RBAC验证功能
     public String getFile(@PathVariable("fileID") Integer FileID,
-                          @CookieValue("userID") Integer UserID,
+                          @CookieValue("userID") String UserID,
                           @CookieValue("userPassword") String UserPassword) {
-        Objects object = new Objects();
-        Operation operation = new Operation();
-        RBACService rbacService = new RBACService();
+        Objects object = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
         object.setObjectName("getFileByID");
         operation.setOperationDescription("GET");
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
+        Integer userID = Integer.parseInt(UserID);
+        if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
             return gson.toJson(fileService.getFilesByID(FileID));
         }
         else{
@@ -46,15 +50,15 @@ public class FileController {
     }
     @GetMapping(value = "/file", produces = "application/json;charset=UTF-8")
     public String getFiles(HttpServletRequest request,
-                               @CookieValue("userID") Integer UserID,
+                               @CookieValue("userID") String UserID,
                                @CookieValue("userPassword") String UserPassword) {
-        Objects object = new Objects();
-        Operation operation = new Operation();
-        RBACService rbacService = new RBACService();
+        Integer userID = Integer.parseInt(UserID);
+        Objects object = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
         Integer TeamID = Integer.parseInt(request.getParameter("TeamID"));
         object.setObjectName("getFileByTeamID");
         FileResult fileResult = new FileResult();
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
+        if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
             return gson.toJson(fileService.getFileByTeamID(TeamID));
         }
         else{
@@ -63,14 +67,14 @@ public class FileController {
     }
     @PostMapping(value = "/file" , produces = "application/json;charset=UTF-8")
     public String postFiles(HttpServletRequest request,
-                            @RequestParam(name = "file") MultipartFile file,
-                            @CookieValue("userID") Integer UserID,
+                            @RequestParam(name = "files") MultipartFile file,
+                            @CookieValue("userID") String UserID,
                             @CookieValue("userPassword") String UserPassword) throws IOException {//具体怎么获取文件信息尚不清楚,fileassess？
-        Objects object = new Objects();
-        Operation operation = new Operation();
-        RBACService rbacService = new RBACService();
+        Objects object = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
         object.setObjectName("postFile");
         operation.setOperationDescription("POST");
+        Integer userID = Integer.parseInt(UserID);
 
         Files saveFile = new Files();
         saveFile.setFileRealName(file.getOriginalFilename());
@@ -79,11 +83,11 @@ public class FileController {
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         saveFile.setUpLoadTime(df.format(date));
-        saveFile.setStudentUserID(UserID);
-        Student student = studentMapper.GetStudentDataByUserID(UserID);
+        saveFile.setStudentUserID(userID);
+        Student student = studentMapper.GetStudentDataByUserID(userID);
         saveFile.setTeamID(student.getTeamID());
         byte [] bytes = file.getBytes();
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)){
+        if(rbacService.CheckPermission(userID, UserPassword, object, operation)){
             String result = fileService.postFile(saveFile, bytes);
             return gson.toJson(result);
         }
@@ -91,36 +95,52 @@ public class FileController {
          return gson.toJson("no permission");
         }
     }
-    /*@PutMapping(value = "/file" , produces = "application/json;charset=UTF-8")
+    @PutMapping(value = "/file" , produces = "application/json;charset=UTF-8")
     public String putFiles(HttpServletRequest request,
-                           @CookieValue("userID") Integer UserID,
-                           @CookieValue("userPassword") String UserPassword){
+                           @RequestParam(name = "files") MultipartFile file,
+                           @CookieValue("userID") String UserID,
+                           @CookieValue("userPassword") String UserPassword) throws IOException {
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
-        file.setFileID(FileID);
-        Objects object = new Objects();
-        Operation operation = new Operation();
-        RBACService rbacService = new RBACService();
+
+        Objects object = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
         object.setObjectName("putFiles");
+        Integer userID = Integer.parseInt(UserID);
         operation.setOperationDescription("UPDATE");
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
-            return gson.toJson(fileService.putFile(file));
+
+        Files saveFile = new Files();
+        saveFile.setFileRealName(file.getOriginalFilename());
+        saveFile.setFileLocation(request.getSession().getServletContext().getRealPath("/"));
+        saveFile.setFileType(file.getContentType());
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        saveFile.setUpLoadTime(df.format(date));
+        saveFile.setStudentUserID(userID);
+        Student student = studentMapper.GetStudentDataByUserID(userID);
+        saveFile.setTeamID(student.getTeamID());
+        saveFile.setFileID(FileID);
+        byte [] bytes = file.getBytes();
+
+
+        if(rbacService.CheckPermission(userID, UserPassword, object, operation)) {
+            return gson.toJson(fileService.putFile(saveFile, bytes));
         }
         else{
             return gson.toJson("no permission");
         }
 
-    }*/
+    }
     @DeleteMapping(value = "/file" , produces = "application/json;charset=UTF-8")
     public String deleteFiles(HttpServletRequest request,
-                              @CookieValue("userID") Integer UserID,
+                              @CookieValue("userID") String UserID,
                               @CookieValue("userPassword") String UserPassword){
         Integer FileID = Integer.parseInt(request.getParameter("FileID"));
-        Objects object = new Objects();
-        Operation operation = new Operation();
-        RBACService rbacService = new RBACService();
+        Objects object = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
         object.setObjectName("deleteFile");
         operation.setOperationDescription("DELETE");
-        if(rbacService.CheckPermission(UserID, UserPassword, object, operation)) {
+        Integer userID = Integer.parseInt(UserID);
+        if(rbacService.CheckPermission(userID, UserPassword, object, operation)) {
             return gson.toJson(fileService.deleteFile(FileID));
         }
         else{
