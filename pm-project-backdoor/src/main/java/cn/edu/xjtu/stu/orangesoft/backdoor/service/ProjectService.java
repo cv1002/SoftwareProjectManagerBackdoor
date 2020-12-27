@@ -21,10 +21,10 @@ public class ProjectService {
     RBACService rbacService;
     @Autowired
     ProjectMapper projectMapper;
-    @Autowired
-    ResultInfo resultInfo;
-    @Autowired
-    Project project;
+//    @Autowired
+//    ResultInfo resultInfo;
+//    @Autowired
+//    Project project;
 
     /**
      * 查询所有项目，只有老师有权限
@@ -62,6 +62,8 @@ public class ProjectService {
      * @return ResultInfo
      */
     public ResultInfo BulidNewProject(String ProjectName, String Description) {
+        ResultInfo resultInfo = new ResultInfo();
+        Project project = new Project();
         project.setProjectID(0);
         project.setProjectName(ProjectName);
         project.setProjectDescription(Description);
