@@ -8,9 +8,47 @@
         from Files
         where FileID = #{fileid}
     </select>
+    <select id="GetFileContentByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        select *
+        from FileContent
+        where FileID = #{fileid}
+    </select>
     <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
         select *
         from Files
-        where TeamID = #{teamid}
+        where TeamID = #{TeamID}
     </select>
+    <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files" useGeneratedKeys="true" keyProperty="FileID">
+        INSERT INTO Files( FileRealName , FileType , FileLocation , TeamID , StudentUserID , UploadTime)
+        value ( #{FileRealName} , #{FileType} , #{FileLocation} , #{TeamID} , #{StudentUserID} , str_to_date(#{UpLoadTime} , '%Y-%m-%d %H:%i:%s'))
+    </insert>
+    <insert id="PostFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent" useGeneratedKeys="true" keyProperty="FileID">
+        INSERT INTO FileContent( FileID , FileContent)
+            value ( #{FileID} , #{FileContent})
+    </insert>
+    <update id="PutFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        update  Files set
+        FileRealName = #{FileRealName},
+        FileType = #{FileType},
+        FileLocation = #{FileLocation},
+        TeamID = #{TeamID},
+        StudentUSerID = #{StudentUserID},
+        UploadTime = #{UpLoadTime}
+        where FileID = #{FileID}
+    </update>
+    <update id="PutFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        update  FileContent set
+        FileContent = #{FileContent}
+        where FileID = #{FileID}
+    </update>
+    <delete id="DeleteFileContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        delete FROM FileContent
+        WHERE  FileID = #{FileID}
+    </delete>
+    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+        delete from Files
+        WHERE  FileID = #{FileID}
+    </delete>
+
+
 </mapper>
