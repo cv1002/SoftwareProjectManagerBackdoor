@@ -7,7 +7,7 @@ formdata = {
     "TeamID": "1"
 }
 
-response = requests.post(r'http://localhost:8080/login', data=formdata)
+response = requests.post(r'http://39.99.195.120:18080/login', data=formdata)
 # response = requests.get(r'http://localhost:8080/login)
 # response = requests.put(r'http://localhost:8080/login', data=formdata)
 # response = requests.delete(r'http://localhost:8080/login', data=formdata)
