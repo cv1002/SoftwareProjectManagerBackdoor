@@ -5,7 +5,7 @@
 - core：不用改，这是spring的启动类
 - pojo：这是使用到的POJO类
 - mapper：这是供mybatis使用的interface
-- controller：这是java程序接收到网络请求，需要使用的类。spring接收到各种请求，分类发送到各个controller，而controller调用service进行深度操作
+- controller：这是java程序接收到网络请求，需要使用的类。spring接收到各种请求，分类发送到各个controller，而controller调用service进行深度操作。controller是处理网络问题的模块，所以网络相关业务依旧需要由controller处理：如文件上传下载依旧需要controller处理，由业务层处理不太现实。
 - service：controller只定义各个请求应该调用什么service，具体业务由service的方法执行
 
 ## 本项目的分工安排
