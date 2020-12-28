@@ -10,7 +10,7 @@ import java.util.List;
 @Scope("prototype")
 @Data
 public class FileResult {
-    private List<Files> files;
+    private List<FileInfo> files;
     private List<FileContent> fileContents;
     private String Finish;
 }

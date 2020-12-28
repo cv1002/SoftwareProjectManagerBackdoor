@@ -1,7 +1,7 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
@@ -46,14 +46,14 @@ public class FileAssessController {
     public String BulidNewFileAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
                                      @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                      @RequestParam(name = "Assess") String assess,
-                                     @RequestParam(name = "Files") Files files) {
+                                     @RequestParam(name = "fileInfo") FileInfo fileInfo) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("fileAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            resultInfo.setResultInfo(gson.toJson(fileAssessService.BulidNewFileAssess(files, UserID, assess)));
+            resultInfo.setResultInfo(gson.toJson(fileAssessService.BulidNewFileAssess(fileInfo, UserID, assess)));
         } else {
             resultInfo.setResultInfo("无权评价！！");
         }

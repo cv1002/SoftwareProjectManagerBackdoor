@@ -34,8 +34,8 @@ public class LoginService {
      * }
      */
     public LoginResult login(Integer UserID, String UserPassword) {
-        User user = null;
-        Role role = null;
+        User user;
+        Role role;
         Team team = null;
 
         LoginResult loginResult = DIUtil.getBean(LoginResult.class);

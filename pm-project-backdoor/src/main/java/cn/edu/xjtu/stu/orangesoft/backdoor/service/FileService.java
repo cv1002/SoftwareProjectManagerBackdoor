@@ -1,53 +1,111 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileResult;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-//todo
 @Service
 public class FileService {
     @Autowired
     UserMapper userMapper;
     @Autowired
+    StudentMapper studentMapper;
+    @Autowired
     FileMapper fileMapper;
 
-    public  FileResult getFilesByID(Integer FileID) {
-        if( FileID == null ) {
-            return null;
+    public ResultInfo deleteFile(Integer FileID) {
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        int affectedRows = fileMapper.DeleteFileContent(FileID);
+
+        if (affectedRows == 0) {
+            resultInfo.setResultInfo("不存在该文件！！");
+        } else if (fileMapper.DeleteFiles(FileID) != 0) {
+            resultInfo.setResultInfo("成功！！");
+        } else {
+            resultInfo.setResultInfo("未知错误！！");
         }
-        else{
-            FileResult fileResult = new FileResult();
-            List<Files> files = fileMapper.GetFileByID(FileID);
+        return resultInfo;
+    }
+
+    public ResultInfo postFile(Integer userID, MultipartFile file) {
+        return putFile(userID, 0, file);
+    }
+
+    public ResultInfo putFile(Integer userID, Integer fileID, MultipartFile file) {
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.setFileRealName(file.getOriginalFilename());
+        fileInfo.setFileLocation("database/");
+        fileInfo.setFileType(file.getContentType());
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        fileInfo.setUpLoadTime(dateFormat.format(date));
+        fileInfo.setStudentUserID(userID);
+        Student student = studentMapper.GetStudentDataByUserID(userID);
+        fileInfo.setTeamID(student.getTeamID());
+        fileInfo.setFileID(fileID);
+
+
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        try {
+            byte[] bytes = file.getBytes();
+            int affectedRows = fileMapper.PutFiles(fileInfo);
+            if (affectedRows == 0) {
+                resultInfo.setResultInfo("无此ID的文件");
+            } else {
+                FileContent fileContent = new FileContent();
+                fileContent.setFileContent(bytes);
+                fileContent.setFileID(fileInfo.getFileID());
+                affectedRows = fileMapper.PutFilesContent(fileContent);
+                if (affectedRows == 0) {
+                    resultInfo.setResultInfo("fail when trying to put file content");
+                } else {
+                    resultInfo.setResultInfo("update file success");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            resultInfo.setResultInfo("IO Exception..");
+        }
+        return resultInfo;
+    }
+
+    public FileResult getFileByFileID(Integer FileID) {
+        if (FileID == null) {
+            return null;
+        } else {
+            FileResult fileResult = DIUtil.getBean(FileResult.class);
+            List<FileInfo> files = fileMapper.GetFileByID(FileID);
             List<FileContent> fileContents = fileMapper.GetFileContentByID(FileID);
             fileResult.setFiles(files);
             fileResult.setFileContents(fileContents);
             fileResult.setFinish("get file success");
             return fileResult;
         }
-
     }
-    public FileResult getFileByTeamID(Integer TeamID){
-        FileResult filesResult = new FileResult();
-        Integer j;
-        if(TeamID == null){
+
+    public FileResult getFileByTeamID(Integer TeamID) {
+        FileResult filesResult = DIUtil.getBean(FileResult.class);
+        if (TeamID == null) {
             filesResult.setFinish("teamID not found");
-        }
-        else{
+        } else {
             filesResult.setFinish("success");
-            List<Files> files = fileMapper.GetFileByTeamID(TeamID);
+            List<FileInfo> files = fileMapper.GetFileByTeamID(TeamID);
             List<FileContent> fileContents = new ArrayList<FileContent>();
-            for(int i = 0; i<files.size(); i++) {
-                j = files.get(i).getFileID();
-                fileContents.addAll(fileMapper.GetFileContentByID(j));
+            for (FileInfo file : files) {
+                int fileID;
+                fileID = file.getFileID();
+                fileContents.addAll(fileMapper.GetFileContentByID(fileID));
             }
             filesResult.setFiles(files);
             filesResult.setFileContents(fileContents);
@@ -56,62 +114,4 @@ public class FileService {
         }
         return filesResult;
     }
-    public String postFile(Files file, byte[] bytes) {
-        int k;
-        if(file == null){
-            return "file not found";
-        }
-        else{
-            k= fileMapper.PostFiles(file);
-            if(k == 0) {
-                return "fail when trying to post file";
-            }
-            else{
-                FileContent fileContent = new FileContent();
-                fileContent.setFileContent(bytes);
-                fileContent.setFileID(file.getFileID());
-                k = fileMapper.PostFilesContent(fileContent);
-                if(k == 0){
-                    return "fail when trying to post filecontent";
-                }
-                return "post file success";
-            }
-        }
-    }
-    public String putFile(Files file, byte[] bytes) {
-        int k;
-        if(file == null){
-            return "file not found";
-        }
-        else{
-            k= fileMapper.PutFiles(file);
-            if(k == 0) {
-                return "update file failed";
-            }
-            else{
-                FileContent fileContent = new FileContent();
-                fileContent.setFileContent(bytes);
-                fileContent.setFileID(file.getFileID());
-                k = fileMapper.PutFilesContent(fileContent);
-                if(k == 0){
-                    return "fail when trying to put filecontent";
-                }
-                return "update file success";
-            }
-        }
-    }
-    public String deleteFile(Integer FileID) {
-        int k;
-        k = fileMapper.DeleteFileContent(FileID);
-
-        if(k == 0) {
-            return "no such file or delete error";
-        }
-        else{
-            k = fileMapper.DeleteFiles(FileID);
-            return "delete file success";
-        }
-    }
-
-
 }
