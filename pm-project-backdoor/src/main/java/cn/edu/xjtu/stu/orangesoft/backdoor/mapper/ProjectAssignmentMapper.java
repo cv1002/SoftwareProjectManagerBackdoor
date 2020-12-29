@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ProjectAssignmentMapper {
     List<ProjectAssignment> getProjectAssignmentByProjectID(@Param("ProjectID") Integer ProjectID);
+
+    Integer addProjectAssignment(@Param("ProjectAssignment") ProjectAssignment Assignment);
 }

@@ -10,4 +10,10 @@
         from ProjectAssignment
         where #{ProjectID} = ProjectID
     </select>
+    <insert id="addProjectAssignment">
+        insert into ProjectAssignment
+            (ProjectID, TeamID, ProjectStartTime, ProjectDeadline)
+        values (ProjectAssignment.ProjectID, ProjectAssignment.TeamID,
+                ProjectAssignment.ProjectStartTime, ProjectAssignment.ProjectDeadline)
+    </insert>
 </mapper>

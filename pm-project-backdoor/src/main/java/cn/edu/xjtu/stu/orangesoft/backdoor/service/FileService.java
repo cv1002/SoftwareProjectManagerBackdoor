@@ -101,7 +101,7 @@ public class FileService {
         } else {
             filesResult.setFinish("success");
             List<FileInfo> files = fileMapper.GetFileByTeamID(TeamID);
-            List<FileContent> fileContents = new ArrayList<FileContent>();
+            List<FileContent> fileContents = new ArrayList<>();
             for (FileInfo file : files) {
                 int fileID;
                 fileID = file.getFileID();

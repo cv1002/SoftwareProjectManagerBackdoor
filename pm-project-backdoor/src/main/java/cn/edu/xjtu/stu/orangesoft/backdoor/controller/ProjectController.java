@@ -26,7 +26,7 @@ public class ProjectController {
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
-        objects.setObjectName("FindAllProjects");
+        objects.setObjectName("projects");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
             if (projectService.FindAllProjects().size() == 0) {
                 resultInfo.setResultInfo("查不到项目！！");
@@ -48,7 +48,7 @@ public class ProjectController {
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
-        objects.setObjectName("FindTeamByProject");
+        objects.setObjectName("project");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
             if (projectService.FindTeamByProject(ProjectID).size() == 0) {
                 resultInfo.setResultInfo("没有选择该项目的小组！！");
@@ -69,7 +69,7 @@ public class ProjectController {
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
-        objects.setObjectName("FindProjectByUser");
+        objects.setObjectName("project");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             if (projectService.FindProjectByUser(UserID) == null) {
                 resultInfo.setResultInfo("该用户不属于任何项目！！");
@@ -92,9 +92,29 @@ public class ProjectController {
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
-        objects.setObjectName("BuildNewProject");
+        objects.setObjectName("project");
         if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
-            resultInfo.setResultInfo(gson.toJson(projectService.BulidNewProject(ProjectName, Description)));
+            resultInfo.setResultInfo(gson.toJson(projectService.BuildNewProject(ProjectName, Description)));
+        } else {
+            resultInfo.setResultInfo("无权访问！！");
+        }
+        return gson.toJson(resultInfo);
+    }
+
+    @PostMapping(value = "/projectAssignment", produces = "application/json;charset=UTF-8")
+    public String AssignProjectAssignment(@RequestParam(value = "UserID", defaultValue = "0") String UserID,
+                                          @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
+                                          @RequestParam(value = "ProjectID") Integer ProjectID,
+                                          @RequestParam(value = "TeamID") Integer TeamID,
+                                          @RequestParam(value = "DeadLine") String DeadLine) {
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        operation.setOperationDescription("POST");
+        objects.setObjectName("projectAssignment");
+
+        if (rbacService.CheckPermission(Integer.parseInt(UserID), UserPassword, objects, operation)) {
+            resultInfo.setResultInfo(gson.toJson(projectService.BuildNewProjectAssignment(ProjectID, TeamID, DeadLine)));
         } else {
             resultInfo.setResultInfo("无权访问！！");
         }
