@@ -38,20 +38,39 @@ public class FileService {
     }
 
     public ResultInfo postFile(Integer userID, MultipartFile file) {
-        return putFile(userID, 0, file);
+        FileInfo fileInfo = new FileInfo();
+        initializeFileInfo(userID, file, fileInfo);
+        fileInfo.setFileID(0);
+
+
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        try {
+            byte[] bytes = file.getBytes();
+            int affectedRows = fileMapper.PostFiles(fileInfo);
+            if (affectedRows == 0) {
+                resultInfo.setResultInfo("失败！！");
+            } else {
+                FileContent fileContent = DIUtil.getBean(FileContent.class);
+                fileContent.setFileID(fileInfo.getFileID());
+                fileContent.setFileContent(bytes);
+                fileContent.setFileID(fileInfo.getFileID());
+                affectedRows = fileMapper.PostFilesContent(fileContent);
+                if (affectedRows == 0) {
+                    resultInfo.setResultInfo("fail when trying to put file content");
+                } else {
+                    resultInfo.setResultInfo("update file success");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            resultInfo.setResultInfo("IO Exception..");
+        }
+        return resultInfo;
     }
 
     public ResultInfo putFile(Integer userID, Integer fileID, MultipartFile file) {
-        FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileRealName(file.getOriginalFilename());
-        fileInfo.setFileLocation("database/");
-        fileInfo.setFileType(file.getContentType());
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        fileInfo.setUpLoadTime(dateFormat.format(date));
-        fileInfo.setStudentUserID(userID);
-        Student student = studentMapper.GetStudentDataByUserID(userID);
-        fileInfo.setTeamID(student.getTeamID());
+        FileInfo fileInfo = DIUtil.getBean(FileInfo.class);
+        initializeFileInfo(userID, file, fileInfo);
         fileInfo.setFileID(fileID);
 
 
@@ -77,6 +96,18 @@ public class FileService {
             resultInfo.setResultInfo("IO Exception..");
         }
         return resultInfo;
+    }
+
+    private void initializeFileInfo(Integer userID, MultipartFile file, FileInfo fileInfo) {
+        fileInfo.setFileRealName(file.getOriginalFilename());
+        fileInfo.setFileLocation("database/");
+        fileInfo.setFileType(file.getContentType());
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        fileInfo.setUpLoadTime(dateFormat.format(date));
+        fileInfo.setStudentUserID(userID);
+        Student student = studentMapper.GetStudentDataByUserID(userID);
+        fileInfo.setTeamID(student.getTeamID());
     }
 
     public FileResult getFileByFileID(Integer FileID) {

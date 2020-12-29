@@ -6,12 +6,12 @@
     <select id="GetFileByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         select *
         from FileInfo
-        where FileID = #{fileid}
+        where FileID = #{FileID}
     </select>
     <select id="GetFileContentByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
         select *
         from FileContent
-        where FileID = #{fileid}
+        where FileID = #{FileID}
     </select>
     <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         select *
@@ -20,9 +20,12 @@
     </select>
     <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo" useGeneratedKeys="true"
             keyProperty="FileID">
-        INSERT INTO FileInfo(FileRealName, FileType, FileLocation, TeamID, StudentUserID, UploadTime)
-            value (#{FileRealName}, #{FileType}, #{FileLocation}, #{TeamID}, #{StudentUserID},
-                   str_to_date(#{UpLoadTime}, '%Y-%m-%d %H:%i:%s'))
+        insert into FileInfo(FileRealName, FileType, FileLocation, TeamID, StudentUserID, UploadTime)
+        value (#{FileRealName}, #{FileType}, #{FileLocation}, #{TeamID}, #{StudentUserID},
+        str_to_date(#{UpLoadTime}, '%Y-%m-%d %H:%i:%s'))
+        <selectKey keyProperty="FileID" order="AFTER" resultType="int">
+            SELECT @@IDENTITY as FileID
+        </selectKey>
     </insert>
     <insert id="PostFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent"
             useGeneratedKeys="true" keyProperty="FileID">

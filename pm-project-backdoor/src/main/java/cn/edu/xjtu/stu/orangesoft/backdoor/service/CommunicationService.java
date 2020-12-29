@@ -30,11 +30,11 @@ public class CommunicationService {
         communication.setTeamID(teamID);
         communication.setContext(context);
         communication.setFileID(fileID);
-        communicationMapper.PostCommunication(communication);
-        if (communication.getCommunicationID() != 0)
+        if (communicationMapper.PostCommunication(communication) != 0) {
             resultInfo.setResultInfo("成功！！");
-        else
+        } else {
             resultInfo.setResultInfo("失败！！");
+        }
         return resultInfo;
     }
 }

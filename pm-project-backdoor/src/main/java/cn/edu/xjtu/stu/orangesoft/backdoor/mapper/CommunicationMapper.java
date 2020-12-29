@@ -13,6 +13,6 @@ import java.util.List;
 public interface CommunicationMapper {
     List<String> GetCommunication(@Param("TeamID") Integer TeamID);
 
-    String PostCommunication(@Param("Communication") Communication Communication);
+    int PostCommunication(@Param("Communication") Communication Communication);
 
 }
