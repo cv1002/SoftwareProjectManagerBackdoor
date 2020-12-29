@@ -12,4 +12,5 @@ public class Student {
     private String StudentClass;
     private long StudentID;
     private int TeamID;
+    private String Job;
 }
