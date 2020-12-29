@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Data
-public class RolePowerAssignment {
-    private int AssignmentID;
-    private int RoleID;
-    private String ConfigID;
-    private int Permission;
+public class RBACQueryResult {
+    int AssignmentID;
+    int ConfigID;
+    int Permission;
+    String ObjectName;
+    String OperationDescription;
 }

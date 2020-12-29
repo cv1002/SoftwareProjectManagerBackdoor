@@ -2,10 +2,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RBACMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.PermissionConfig;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,7 @@ public class RBACService {
     }
 
     public boolean CheckPermission(Integer roleID, Objects objects, Operation operation) {
-        PermissionConfig config = rbacMapper.CheckPermission(roleID, objects.getObjectName(), operation.getOperationDescription());
-        return config != null && config.getPermission() != 0;
+        RolePowerAssignment assignment = rbacMapper.CheckPermission(roleID, objects.getObjectName(), operation.getOperationDescription());
+        return assignment != null && assignment.getPermission() != 0;
     }
 }

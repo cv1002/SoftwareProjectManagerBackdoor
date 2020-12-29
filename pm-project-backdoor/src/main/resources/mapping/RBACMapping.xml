@@ -3,8 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RBACMapper">
-    <select id="GetPermissionConfigsByRoleID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.PermissionConfig">
-        select *
+    <select id="GetAssignmentConfigsByRoleID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.RBACQueryResult">
+        select AssignmentID,
+               PermissionConfig.ConfigID,
+               Permission,
+               ObjectName,
+               OperationDescription
         from (select *
               from RolePowerAssignment
               where RoleID = #{RoleID}) as tempRolePowerAssigmentTable,
@@ -12,15 +16,18 @@
         where PermissionConfig.ConfigID = tempRolePowerAssigmentTable.ConfigID
     </select>
     <select id="CheckPermission"
-            resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.PermissionConfig">
+            resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.RolePowerAssignment">
         select *
-        from (select PermissionConfig.*
-              from (select *
-                    from RolePowerAssignment
-                    where RoleID = #{RoleID}) as tempRolePowerAssigmentTable,
-                   PermissionConfig
-              where PermissionConfig.ConfigID = tempRolePowerAssigmentTable.ConfigID) as tempPermissionConfigTable
-        where tempPermissionConfigTable.ObjectName = #{Object}
-          and tempPermissionConfigTable.OperationDescription = #{Operation}
+        from (select *
+              from (select PermissionConfig.*
+                    from (select *
+                          from RolePowerAssignment
+                          where RoleID = #{RoleID}) as tempRolePowerAssigmentTable,
+                         PermissionConfig
+                    where PermissionConfig.ConfigID = tempRolePowerAssigmentTable.ConfigID) as tempPermissionConfigTableOriginal
+              where tempPermissionConfigTableOriginal.ObjectName = #{Object}
+                and tempPermissionConfigTableOriginal.OperationDescription = #{Operation}) as tempPermissionConfigTable,
+             RolePowerAssignment
+        where RolePowerAssignment.ConfigID = tempPermissionConfigTable.ConfigID
     </select>
 </mapper>
