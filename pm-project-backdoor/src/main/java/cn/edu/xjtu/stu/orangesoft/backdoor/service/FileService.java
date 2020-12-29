@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,20 +96,12 @@ public class FileService {
     public FileResult getFileByTeamID(Integer TeamID) {
         FileResult filesResult = DIUtil.getBean(FileResult.class);
         if (TeamID == null) {
-            filesResult.setFinish("teamID not found");
+            filesResult.setFinish("不存在该TeamID的Team");
         } else {
-            filesResult.setFinish("success");
             List<FileInfo> files = fileMapper.GetFileByTeamID(TeamID);
-            List<FileContent> fileContents = new ArrayList<>();
-            for (FileInfo file : files) {
-                int fileID;
-                fileID = file.getFileID();
-                fileContents.addAll(fileMapper.GetFileContentByID(fileID));
-            }
             filesResult.setFiles(files);
-            filesResult.setFileContents(fileContents);
-            filesResult.setFinish("get file success");
-            System.out.println(filesResult);
+            filesResult.setFileContents(null);
+            filesResult.setFinish("获取文件成功！！");
         }
         return filesResult;
     }

@@ -20,6 +20,21 @@ public class StudentAssessController {
     @Autowired
     Gson gson;
 
+    /**
+     * 根据StudentID获取Score
+     *
+     * @param StudentUserID 用户的UserID
+     * @param UserID        用户ID，用于RBAC
+     * @param UserPassword  用户密码，用于RBAC
+     * @return if (无评分 || 无权访问) return ResultInfo: {
+     * "resultInfo": String
+     * } else return StudentAssess {
+     * "Score": int,
+     * "Assess": String,
+     * "StudentUserID": int,
+     * "AssessorID": int
+     * }
+     */
     @GetMapping(value = "/studentAssess", produces = "application/json;charset=UTF-8")
     public String FindStudentScoreByStudentID(@RequestParam(name = "StudentUserID") Integer StudentUserID,
                                               @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
@@ -42,6 +57,18 @@ public class StudentAssessController {
         }
     }
 
+    /**
+     * 创建新的StudentAssess
+     *
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @param assess       评价内容
+     * @param score        评价分数
+     * @param studentInfo  json格式的pojo.Student
+     * @return ResultInfo {
+     * "resultInfo": String
+     * }
+     */
     @PostMapping(value = "/studentAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewStudentAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
                                         @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,

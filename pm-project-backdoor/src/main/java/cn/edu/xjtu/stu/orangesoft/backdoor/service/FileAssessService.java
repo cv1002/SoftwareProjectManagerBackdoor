@@ -28,17 +28,15 @@ public class FileAssessService {
         return fileAssessMapper.GetFileAssessByFileID(FileID);
     }
 
-    //    FileID,UserID,UserPassword,一个FileAssess
-    public ResultInfo BulidNewFileAssess(FileInfo fileInfo, Integer UserID, String Assess) {
+    public ResultInfo BuildNewFileAssess(FileInfo fileInfo, Integer UserID, String Assess) {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String assessTime = sdf.format(d);
         fileAssess.setAssessTime(assessTime);
         fileAssess.setFileID(fileInfo.getFileID());
-        fileAssess.setAssesserID(UserID);
+        fileAssess.setAssessorID(UserID);
         fileAssess.setFileAssess(Assess);
-        fileAssessMapper.BuildNewFileAssess(fileAssess);
-        if (fileAssess.getFileID() != 0) {
+        if (fileAssessMapper.BuildNewFileAssess(fileAssess) != 0) {
             resultInfo.setResultInfo("成功！！");
         }
         return resultInfo;

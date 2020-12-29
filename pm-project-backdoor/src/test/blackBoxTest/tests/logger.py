@@ -19,7 +19,7 @@ def log(fileName, response):
     if fileName.split('\\')[-1] == fileName:
         fileName = './tests/log/' + fileName.split('/')[-1]
     else:
-        fileName = './log/' + fileName.split('\\')[-1]
+        fileName = '.\\log\\' + fileName.split('\\')[-1]
     with open(fileName + '.log', 'a') as log:
         (year, month, day, hour, min) = formatTime()
         log.write('request when: \n')

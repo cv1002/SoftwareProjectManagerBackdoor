@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class FileAssess {
     private int FileID;
     private String FileAssess;
-    private int AssesserID;
+    private int AssessorID;
     private String AssessTime;
 }

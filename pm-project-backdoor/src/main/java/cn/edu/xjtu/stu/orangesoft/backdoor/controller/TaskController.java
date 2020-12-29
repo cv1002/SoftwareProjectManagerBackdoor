@@ -98,7 +98,7 @@ public class TaskController {
      * @param UserID       用户名
      * @param UserPassword 密码
      * @param taskID       被删除的任务的ID
-     * @return ResultType: {
+     * @return ResultInfo: {
      * "resultInfo": String
      * }
      */

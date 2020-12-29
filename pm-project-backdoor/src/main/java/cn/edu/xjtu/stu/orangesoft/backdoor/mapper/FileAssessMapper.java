@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileAssessMapper {
     FileAssess GetFileAssessByFileID(
-            @Param("Fileid") Integer FileID);
+            @Param("FileID") Integer FileID);
 
     Integer BuildNewFileAssess(FileAssess fileAssess);
 }

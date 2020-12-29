@@ -23,8 +23,8 @@ public class MilestoneController {
     /**
      * 查看小组完成情况
      *
-     * @param UserID       账号
-     * @param UserPassword 密码
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
      * @param TeamID       小组ID
      * @return ResultInfo: {
      * "resultInfo": String
@@ -50,8 +50,8 @@ public class MilestoneController {
     /**
      * 新建小组完成情况
      *
-     * @param UserID       账号
-     * @param UserPassword 密码
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
      * @param MilestoneID  里程碑ID
      * @param FileID       文件ID
      * @return ResultInfo: {
@@ -80,8 +80,8 @@ public class MilestoneController {
     /**
      * 更改小组完成情况
      *
-     * @param UserID                账号
-     * @param UserPassword          密码
+     * @param UserID                用户ID，用于RBAC
+     * @param UserPassword          用户密码，用于RBAC
      * @param CompletionID          完成情况ID（原）
      * @param ProjectCompletionInfo 新增完成情况
      * @return ResultInfo: {
@@ -111,8 +111,8 @@ public class MilestoneController {
     /**
      * 删除小组完成情况
      *
-     * @param UserID       账号
-     * @param UserPassword 密码
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
      * @param CompletionID 完成情况ID
      * @return ResultInfo: {
      * "resultInfo": String

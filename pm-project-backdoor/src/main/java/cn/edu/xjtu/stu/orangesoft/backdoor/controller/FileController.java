@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,6 +27,17 @@ public class FileController {
     @Autowired
     RBACService rbacService;
 
+    /**
+     * 根据文件ID获取文件
+     *
+     * @param response     用于传输文件的HTTPServletResponse
+     * @param fileID       需要获取的文件
+     * @param userID       用户ID，用于RBAC
+     * @param userPassword 用户密码，用于RBAC
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
     @GetMapping(value = "/file/{FileID}", produces = "application/force-download;charset=UTF-8")
     public String getFileByFileID(HttpServletResponse response,
                                   @PathVariable("FileID") Integer fileID,
@@ -66,14 +76,25 @@ public class FileController {
         return gson.toJson(resultInfo);
     }
 
+    /**
+     * 获取整个队伍的文档列表
+     *
+     * @param TeamID       队伍ID
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @return FileResult: {
+     * "files": List[FileInfo],
+     * "fileContents": null,
+     * "Finish": String
+     * }
+     */
     @GetMapping(value = "/files", produces = "application/json;charset=UTF-8")
-    public String getFileInfosByTeamID(HttpServletRequest request,
+    public String getFileInfosByTeamID(@RequestParam("TeamID") Integer TeamID,
                                        @CookieValue("userID") String UserID,
                                        @CookieValue("userPassword") String UserPassword) {
         int userID = Integer.parseInt(UserID);
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        int TeamID = Integer.parseInt(request.getParameter("TeamID"));
         object.setObjectName("file");
         operation.setOperationDescription("GET");
 
@@ -81,11 +102,21 @@ public class FileController {
         if (rbacService.CheckPermission(userID, UserPassword, object, operation)) {
             return gson.toJson(fileService.getFileByTeamID(TeamID));
         } else {
-            fileResult.setFinish("no permission");
+            fileResult.setFinish("无权访问！！");
             return gson.toJson(fileResult);
         }
     }
 
+    /**
+     * 删除文件
+     *
+     * @param FileID       被删除的文件的ID
+     * @param UserID       用户名，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
     @DeleteMapping(path = "/file", produces = "application/json;charset=UTF-8")
     public String deleteFile(@RequestParam("FileID") Integer FileID,
                              @CookieValue("UserID") String UserID,
@@ -104,9 +135,20 @@ public class FileController {
         }
     }
 
+    /**
+     * 更新文件
+     *
+     * @param fileID       被更新的文档的ID
+     * @param file         文件本体
+     * @param UserID       用户名，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
     @PutMapping(path = "/file", produces = "application/json;charset=UTF-8")
-    public String putFile(HttpServletRequest request,
-                          @RequestParam(name = "files") MultipartFile file,
+    public String putFile(@RequestParam("FileID") Integer fileID,
+                          @RequestParam("files") MultipartFile file,
                           @CookieValue("UserID") String UserID,
                           @CookieValue("UserPassword") String UserPassword) {
         Objects object = DIUtil.getBean(Objects.class);
@@ -116,7 +158,6 @@ public class FileController {
         operation.setOperationDescription("PUT");
 
         if (rbacService.CheckPermission(userID, UserPassword, object, operation)) {
-            int fileID = Integer.parseInt(request.getParameter("FileID"));
             return gson.toJson(fileService.putFile(Integer.valueOf(UserID), fileID, file));
         } else {
             ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
@@ -125,8 +166,17 @@ public class FileController {
         }
     }
 
-    public String postFile(HttpServletRequest request,
-                           @RequestParam(name = "files") MultipartFile file,
+    /**
+     * 上传文件
+     *
+     * @param file         文件本体
+     * @param userID       用户名，用于RBAC
+     * @param userPassword 用户名，用于RBAC
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
+    public String postFile(@RequestParam(name = "files") MultipartFile file,
                            @CookieValue("UserID") String userID,
                            @CookieValue("UserPassword") String userPassword) {
         Objects objects = DIUtil.getBean(Objects.class);

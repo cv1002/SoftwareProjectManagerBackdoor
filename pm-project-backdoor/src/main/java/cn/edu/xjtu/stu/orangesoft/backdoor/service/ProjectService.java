@@ -47,6 +47,7 @@ public class ProjectService {
     /**
      * 根据UserID查找所属项目
      *
+     * @param UserID 用户ID
      * @return 项目对象
      */
     public Project FindProjectByUser(Integer UserID) {
@@ -77,14 +78,15 @@ public class ProjectService {
      *
      * @param ProjectID 项目ID
      * @param TeamID    项目指派给某个小组
+     * @param DeadLine  项目的DeadLine
      * @return ResultInfo 完成情况
      */
     public ResultInfo BuildNewProjectAssignment(int ProjectID, int TeamID, String DeadLine) {
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
-        Project project = DIUtil.getBean(Project.class);
         ProjectAssignment projectAssignment = DIUtil.getBean(ProjectAssignment.class);
 
         projectAssignment.setProjectID(ProjectID);
+        projectAssignment.setTeamID(TeamID);
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         projectAssignment.setProjectStartTime(dateFormat.format(date));
