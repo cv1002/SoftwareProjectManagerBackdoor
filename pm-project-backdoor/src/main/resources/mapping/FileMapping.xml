@@ -21,16 +21,18 @@
     <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo" useGeneratedKeys="true"
             keyProperty="FileID">
         insert into FileInfo(FileRealName, FileType, FileLocation, TeamID, StudentUserID, UploadTime)
-        value (#{FileRealName}, #{FileType}, #{FileLocation}, #{TeamID}, #{StudentUserID},
-        str_to_date(#{UpLoadTime}, '%Y-%m-%d %H:%i:%s'))
-        <selectKey keyProperty="FileID" order="AFTER" resultType="int">
-            SELECT @@IDENTITY as FileID
+        value (#{file.FileRealName}, #{file.FileType},
+        #{file.FileLocation}, #{file.TeamID},
+        #{file.StudentUserID},
+        str_to_date(#{file.UpLoadTime}, '%Y-%m-%d %H:%i:%s'))
+        <selectKey keyProperty="file.FileID" order="AFTER" resultType="int">
+            select @@IDENTITY as FileID
         </selectKey>
     </insert>
-    <insert id="PostFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent"
+    <insert id="PostFileContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent"
             useGeneratedKeys="true" keyProperty="FileID">
-        INSERT INTO FileContent(FileID, FileContent)
-            value (#{FileID}, #{FileContent})
+        insert into FileContent(FileID, FileContent)
+            value (#{fileContent.FileID}, #{fileContent.FileContent})
     </insert>
     <update id="PutFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         update FileInfo

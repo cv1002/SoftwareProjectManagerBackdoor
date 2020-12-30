@@ -8,10 +8,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.service.CommunicationService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CommunicationController {
@@ -33,8 +30,8 @@ public class CommunicationController {
      * }
      */
     @GetMapping(value = "/communication", produces = "application/json;charset=UTF-8")
-    public String GetCommunication(@RequestParam(name = "UserID") Integer UserID,
-                                   @RequestParam(name = "UserPassword") String UserPassword,
+    public String GetCommunication(@CookieValue(name = "UserID") Integer UserID,
+                                   @CookieValue(name = "UserPassword") String UserPassword,
                                    @RequestParam(name = "TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
@@ -62,8 +59,8 @@ public class CommunicationController {
      * }
      */
     @PostMapping(value = "/communication", produces = "application/json;charset=UTF-8")
-    public String PostCommunication(@RequestParam(name = "UserID") Integer UserID,
-                                    @RequestParam(name = "UserPassword") String UserPassword,
+    public String PostCommunication(@CookieValue(name = "UserID") Integer UserID,
+                                    @CookieValue(name = "UserPassword") String UserPassword,
                                     @RequestParam(name = "TeamID") Integer TeamID,
                                     @RequestParam(name = "Context") String Context,
                                     @RequestParam(name = "FileID") Integer FileID) {

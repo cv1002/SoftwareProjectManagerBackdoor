@@ -51,10 +51,9 @@ public class FileService {
                 resultInfo.setResultInfo("失败！！");
             } else {
                 FileContent fileContent = DIUtil.getBean(FileContent.class);
-                fileContent.setFileID(fileInfo.getFileID());
                 fileContent.setFileContent(bytes);
                 fileContent.setFileID(fileInfo.getFileID());
-                affectedRows = fileMapper.PostFilesContent(fileContent);
+                affectedRows = fileMapper.PostFileContent(fileContent);
                 if (affectedRows == 0) {
                     resultInfo.setResultInfo("fail when trying to put file content");
                 } else {

@@ -69,8 +69,8 @@ public class FileAssessController {
      * }
      */
     @PostMapping(value = "/fileAccess", produces = "application/json;charset=UTF-8")
-    public String BuildNewFileAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
-                                     @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
+    public String BuildNewFileAssess(@CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
+                                     @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword,
                                      @RequestParam(name = "Assess") String assess,
                                      @RequestParam(name = "fileInfo") FileInfo fileInfo) {
         Operation operation = DIUtil.getBean(Operation.class);
