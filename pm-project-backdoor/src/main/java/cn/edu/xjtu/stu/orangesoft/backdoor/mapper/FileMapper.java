@@ -19,11 +19,11 @@ public interface FileMapper {
 
     Integer PostFiles(@Param("file") FileInfo file);
 
-    Integer PostFilesContent(@Param("fileContent") FileContent fileContent);
+    Integer PostFileContent(@Param("fileContent") FileContent fileContent);
 
     Integer PutFiles(@Param("file") FileInfo file);
 
-    Integer PutFilesContent(@Param("FileContent") FileContent fileContent);
+    Integer PutFilesContent(FileContent fileContent);
 
     Integer DeleteFiles(@Param("FileID") Integer FileID);
 

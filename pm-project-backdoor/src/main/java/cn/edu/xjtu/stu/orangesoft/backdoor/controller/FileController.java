@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.URLEncoder;
 
 @RestController
 public class FileController {
@@ -38,7 +36,7 @@ public class FileController {
      * "resultInfo": String
      * }
      */
-    @GetMapping(value = "/file/{FileID}", produces = "application/force-download;charset=UTF-8")
+    @GetMapping(value = "/file/{FileID}", produces = "application/json;charset=UTF-8")
     public String getFileByFileID(HttpServletResponse response,
                                   @PathVariable("FileID") Integer fileID,
                                   @CookieValue("UserID") String userID,
@@ -54,17 +52,20 @@ public class FileController {
             FileContent fileContent = fileResult.getFileContents().get(0);
             FileInfo fileInfo = fileResult.getFiles().get(0);
 
-            byte[] buffer = new byte[1024];
-            response.setContentType("application/force-download");
-            response.addHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFileRealName());
-
-            String len = String.valueOf(fileContent.getFileContent().length);
-            response.setHeader("Content-Length", len);
-            try (OutputStream out = response.getOutputStream();
+            // 设置Header里应该带有的文件长度
+            response.setHeader("Content-Length",
+                    String.valueOf(fileContent.getFileContent().length));
+            // 这里使用自带buffer的OutputStream，默认buffer大小为8192Bytes，也就是8kB
+            try (BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
                  InputStream in = new ByteArrayInputStream(fileContent.getFileContent())) {
-                int iter;
-                while ((iter = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, iter);
+                response.setContentType("application/force-download");
+                // 设置文件名，需要改成UTF-8格式
+                response.addHeader("Content-Disposition",
+                        "attachment;filename=" + URLEncoder.encode(fileInfo.getFileRealName(), "UTF-8"));
+                // 读取文件并返回，这里使用InputStream偷懒
+                int buf;
+                while ((buf = in.read()) != -1) {
+                    out.write(buf);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -119,8 +120,8 @@ public class FileController {
      */
     @DeleteMapping(path = "/file", produces = "application/json;charset=UTF-8")
     public String deleteFile(@RequestParam("FileID") Integer FileID,
-                             @CookieValue("UserID") String UserID,
-                             @CookieValue("UserPassword") String UserPassword) {
+                             @RequestParam("UserID") String UserID,
+                             @RequestParam("UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         operation.setOperationDescription("DELETE");
@@ -149,8 +150,8 @@ public class FileController {
     @PutMapping(path = "/file", produces = "application/json;charset=UTF-8")
     public String putFile(@RequestParam("FileID") Integer fileID,
                           @RequestParam("files") MultipartFile file,
-                          @CookieValue("UserID") String UserID,
-                          @CookieValue("UserPassword") String UserPassword) {
+                          @RequestParam("UserID") String UserID,
+                          @RequestParam("UserPassword") String UserPassword) {
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         object.setObjectName("file");
@@ -176,9 +177,10 @@ public class FileController {
      * "resultInfo": String
      * }
      */
+    @PostMapping(path = "/file", produces = "application/json;charset=UTF-8")
     public String postFile(@RequestParam(name = "files") MultipartFile file,
-                           @CookieValue("UserID") String userID,
-                           @CookieValue("UserPassword") String userPassword) {
+                           @RequestParam("UserID") String userID,
+                           @RequestParam("UserPassword") String userPassword) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         objects.setObjectName("file");

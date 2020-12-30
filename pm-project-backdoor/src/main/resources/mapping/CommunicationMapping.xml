@@ -12,7 +12,8 @@
     <insert id="PostCommunication">
         insert into Communication
             (CommunicationID, UserID, TeamID, Context, FileID)
-        values (#{Communication.CommunicationID}, #{Communication.UserID}, #{Communication.TeamID},
+        values (#{Communication.CommunicationID},
+                #{Communication.UserID}, #{Communication.TeamID},
                 #{Communication.Context}, #{Communication.FileID})
     </insert>
 </mapper>

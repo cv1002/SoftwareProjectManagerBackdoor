@@ -13,9 +13,7 @@ formdata = {
         "TeamID": 1
     }'''
 }
-jsondata = {
 
-}
 response = requests.post(r'http://localhost:8080/studentAssess', data=formdata, json=jsondata)
 # response = requests.get(r'http://localhost:8080/studentAssess')
 # response = requests.put(r'http://localhost:8080/login', data=formdata)

@@ -71,14 +71,14 @@ public class TaskController {
      * @param UserPassword 密码
      * @return if(无权访问) return ResultInfo: {
      * "resultInfo": String
-     * } else if(修改成功) return FindTaskResult: {
+     * } else return FindTaskResult: {
      * "Finish": String,
      * "Tasks": List[Tasks]
      * }
      */
     @GetMapping(value = "/task", produces = "application/json;charset=UTF-8")
     public String GetTaskByUserID(@RequestParam(name = "UserID") Integer UserID,
-                                  @RequestParam(name = "UserPassword") String UserPassword) {
+                                  @CookieValue(name = "UserPassword") String UserPassword) {
         Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
         Operation operation = DIUtil.getBean(Operation.class);
