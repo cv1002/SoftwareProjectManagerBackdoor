@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface GroupAssessMapper {
-    GroupAssess GetGroupScoreBySTeamID(
-            @Param("Teamid") Integer TeamID);
+    GroupAssess GetGroupScoreByTeamID(
+            @Param("TeamID") Integer TeamID);
 
-    Integer BuildNewGroupAssess(GroupAssess groupAssess);
+    Integer BuildNewGroupAssess(@Param("groupAssess") GroupAssess groupAssess);
 }

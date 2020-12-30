@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Data
-public class FileAssess {
-    private int FileID;
-    private String FileAssess;
-    private int AssessorID;
-    private String AssessTime;
+public class RBACQueryResult {
+    int AssignmentID;
+    int ConfigID;
+    int Permission;
+    String ObjectName;
+    String OperationDescription;
 }

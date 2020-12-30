@@ -3,14 +3,60 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.FileMapper">
-    <select id="GetFileByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+    <select id="GetFileByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         select *
-        from Files
-        where FileID = #{fileid}
+        from FileInfo
+        where FileID = #{FileID}
     </select>
-    <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Files">
+    <select id="GetFileContentByID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
         select *
-        from Files
-        where TeamID = #{teamid}
+        from FileContent
+        where FileID = #{FileID}
     </select>
+    <select id="GetFileByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
+        select *
+        from FileInfo
+        where TeamID = #{TeamID}
+    </select>
+    <insert id="PostFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo" useGeneratedKeys="true"
+            keyProperty="FileID">
+        insert into FileInfo(FileRealName, FileType, FileLocation, TeamID, StudentUserID, UploadTime)
+        value (#{FileRealName}, #{FileType}, #{FileLocation}, #{TeamID}, #{StudentUserID},
+        str_to_date(#{UpLoadTime}, '%Y-%m-%d %H:%i:%s'))
+        <selectKey keyProperty="FileID" order="AFTER" resultType="int">
+            SELECT @@IDENTITY as FileID
+        </selectKey>
+    </insert>
+    <insert id="PostFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent"
+            useGeneratedKeys="true" keyProperty="FileID">
+        INSERT INTO FileContent(FileID, FileContent)
+            value (#{FileID}, #{FileContent})
+    </insert>
+    <update id="PutFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
+        update FileInfo
+        set FileRealName  = #{FileRealName},
+            FileType      = #{FileType},
+            FileLocation  = #{FileLocation},
+            TeamID        = #{TeamID},
+            StudentUSerID = #{StudentUserID},
+            UploadTime    = #{UpLoadTime}
+        where FileID = #{FileID}
+    </update>
+    <update id="PutFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
+        update FileContent
+        set FileContent = #{FileContent}
+        where FileID = #{FileID}
+    </update>
+    <delete id="DeleteFileContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
+        delete
+        FROM FileContent
+        WHERE FileID = #{FileID}
+    </delete>
+    <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
+        delete
+        from FileInfo
+        WHERE FileID = #{FileID}
+    </delete>
+
+
 </mapper>

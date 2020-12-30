@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Data
-public class FileAssess {
-    private int FileID;
-    private String FileAssess;
-    private int AssessorID;
-    private String AssessTime;
+public class FileContent {
+    private Integer FileID;
+    private byte[] FileContent;
 }

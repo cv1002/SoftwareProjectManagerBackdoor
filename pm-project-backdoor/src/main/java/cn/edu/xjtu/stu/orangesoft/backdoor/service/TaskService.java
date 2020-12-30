@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
@@ -20,8 +21,8 @@ public class TaskService {
     StudentMapper studentmapper;
 
     public FindTaskResult GetTaskByUserID(Integer userID) {
-        Tasks tasks = new Tasks();
-        FindTaskResult findTaskResult = new FindTaskResult();
+        Tasks tasks = DIUtil.getBean(Tasks.class);
+        FindTaskResult findTaskResult = DIUtil.getBean(FindTaskResult.class);
 
         List<Task> taskResult = taskmapper.GetTaskByUserID(userID);
         List<Tasks> tasksResult = new ArrayList<>();
@@ -50,7 +51,7 @@ public class TaskService {
     }
 
     public ResultInfo AddTask(int userID, String taskName, int taskFinishType, String taskDeadline, String taskStartTime, int taskHandlerID, int taskPublisherID, String taskDescription) {
-        Task newTask = new Task();
+        Task newTask = DIUtil.getBean(Task.class);
         newTask.setTaskName(taskName);
         newTask.setTaskID(0);
         newTask.setTaskHandlerID(taskHandlerID);
@@ -60,7 +61,7 @@ public class TaskService {
         newTask.setTaskPublisherID(taskPublisherID);
         newTask.setTaskStartTime(taskStartTime);
 
-        ResultInfo resultInfo = new ResultInfo();
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         if (taskmapper.AddTask(newTask.getTaskID(), newTask.getTaskName(), userID,
                 newTask.getTaskFinishType(), newTask.getTaskDeadline(),
                 newTask.getTaskStartTime(), newTask.getTaskHandlerID(),
@@ -73,7 +74,7 @@ public class TaskService {
     }
 
     public ResultInfo TaskUpdate(int taskID, String taskName, int taskFinishType, String taskDeadline, String taskStartTime, int taskHandlerID, int taskPublisherID, String taskDescription) {
-        Task newTask = new Task();
+        Task newTask = DIUtil.getBean(Task.class);
         newTask.setTaskName(taskName);
         newTask.setTaskID(taskID);
         newTask.setTaskHandlerID(taskHandlerID);

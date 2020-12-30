@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RoleMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper;
@@ -33,11 +34,11 @@ public class LoginService {
      * }
      */
     public LoginResult login(Integer UserID, String UserPassword) {
-        User user = null;
-        Role role = null;
+        User user;
+        Role role;
         Team team = null;
 
-        LoginResult loginResult = new LoginResult();
+        LoginResult loginResult = DIUtil.getBean(LoginResult.class);
         user = usermapper.GetUserByIDAndPassword(UserID, null);
         if (user == null) {
             loginResult.setFinish("user not found");//找不到用户

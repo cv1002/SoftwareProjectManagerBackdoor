@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectAssignmentMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.ProjectMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
@@ -9,6 +10,8 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,6 +47,7 @@ public class ProjectService {
     /**
      * 根据UserID查找所属项目
      *
+     * @param UserID 用户ID
      * @return 项目对象
      */
     public Project FindProjectByUser(Integer UserID) {
@@ -57,15 +61,40 @@ public class ProjectService {
      * @param Description 项目描述
      * @return ResultInfo
      */
-    public ResultInfo BulidNewProject(String ProjectName, String Description) {
-        ResultInfo resultInfo = new ResultInfo();
-        Project project = new Project();
+    public ResultInfo BuildNewProject(String ProjectName, String Description) {
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        Project project = DIUtil.getBean(Project.class);
         project.setProjectID(0);
         project.setProjectName(ProjectName);
         project.setProjectDescription(Description);
-        projectMapper.BuildNewProject(project);
-        if (project.getProjectID() != 0) {
+        if (projectMapper.BuildNewProject(project) != 0) {
             resultInfo.setResultInfo("成功！！");
+        }
+        return resultInfo;
+    }
+
+    /**
+     * 新建项目指派
+     *
+     * @param ProjectID 项目ID
+     * @param TeamID    项目指派给某个小组
+     * @param DeadLine  项目的DeadLine
+     * @return ResultInfo 完成情况
+     */
+    public ResultInfo BuildNewProjectAssignment(int ProjectID, int TeamID, String DeadLine) {
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        ProjectAssignment projectAssignment = DIUtil.getBean(ProjectAssignment.class);
+
+        projectAssignment.setProjectID(ProjectID);
+        projectAssignment.setTeamID(TeamID);
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        projectAssignment.setProjectStartTime(dateFormat.format(date));
+        projectAssignment.setProjectDeadline(DeadLine);
+        if (projectAssignmentMapper.addProjectAssignment(projectAssignment) != 0) {
+            resultInfo.setResultInfo("成功！！");
+        } else {
+            resultInfo.setResultInfo("失败！！");
         }
         return resultInfo;
     }

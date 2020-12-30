@@ -4,12 +4,15 @@ import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Scope("prototype")
 @Data
-public class FileAssess {
-    private int FileID;
-    private String FileAssess;
-    private int AssessorID;
-    private String AssessTime;
+public class FileResult {
+    private List<FileInfo> files;
+    private List<FileContent> fileContents;
+    private String Finish;
 }
+
+

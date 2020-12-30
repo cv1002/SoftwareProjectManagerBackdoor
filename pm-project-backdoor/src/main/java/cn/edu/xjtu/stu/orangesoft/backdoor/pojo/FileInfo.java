@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Data
-public class Files {
+public class FileInfo {
     private int FileID;
     private String FileRealName;
     private String FileType;

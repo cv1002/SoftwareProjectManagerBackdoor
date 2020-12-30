@@ -6,12 +6,13 @@
     <select id="GetFileAssessByFileID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileAssess">
         select *
         from FileAssess
-        where FileID = #{Fileid}
+        where FileID = #{FileID}
     </select>
 
     <insert id="BuildNewFileAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileAssess"
             useGeneratedKeys="true">
-        insert into FileAssess(FileAssess)
-        values (#{FileAssess.FileAssess})
+        insert into FileAssess(FileID, FileAssess, AssessorID, AssessTime)
+        values (#{FileAssess.FileID}, #{FileAssess.FileAssess},
+                #{FileAssess.AssessorID}, #{FileAssess.AssessTime})
     </insert>
 </mapper>

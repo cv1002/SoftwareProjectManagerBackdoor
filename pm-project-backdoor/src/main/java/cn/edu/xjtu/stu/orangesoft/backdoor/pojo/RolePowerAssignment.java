@@ -11,4 +11,5 @@ public class RolePowerAssignment {
     private int AssignmentID;
     private int RoleID;
     private String ConfigID;
+    private int Permission;
 }

@@ -6,12 +6,13 @@
     <select id="GetGroupScoreBySTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess">
         select *
         from GroupAssess
-        where TeamID = #{Teamid}
+        where TeamID = #{TeamID}
     </select>
 
     <insert id="BuildGroupAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess"
             useGeneratedKeys="true">
-        insert into GroupAssess(teamAssess)
-        values (#{teamAssess})
+        insert into GroupAssess(TeamID, TeamAssess, Score, AssessorID)
+        values (#{groupAssess.TeamID}, #{groupAssess.TeamAssess},
+                #{groupAssess.Score}, #{groupAssess.AssessorID})
     </insert>
 </mapper>

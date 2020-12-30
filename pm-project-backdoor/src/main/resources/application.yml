@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 18080
 
 spring:
   datasource:
@@ -7,9 +7,14 @@ spring:
     url: jdbc:mysql://39.100.13.87:3306/pmcore?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: orangesoft
     password: orangesoft
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
 
 mybatis:
-  type-aliases-package: cn.edu.xjtu.stu.orangesoft.backdoor.bean
+  type-aliases-package: cn.edu.xjtu.stu.orangesoft.backdoor.pojo
   mapper-locations: classpath:mapping/*Mapping.xml
 
 

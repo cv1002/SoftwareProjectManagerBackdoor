@@ -1,5 +1,6 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
+import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
@@ -19,13 +20,28 @@ public class StudentAssessController {
     @Autowired
     Gson gson;
 
+    /**
+     * 根据StudentID获取Score
+     *
+     * @param StudentUserID 用户的UserID
+     * @param UserID        用户ID，用于RBAC
+     * @param UserPassword  用户密码，用于RBAC
+     * @return if (无评分 || 无权访问) return ResultInfo: {
+     * "resultInfo": String
+     * } else return StudentAssess {
+     * "Score": int,
+     * "Assess": String,
+     * "StudentUserID": int,
+     * "AssessorID": int
+     * }
+     */
     @GetMapping(value = "/studentAssess", produces = "application/json;charset=UTF-8")
     public String FindStudentScoreByStudentID(@RequestParam(name = "StudentUserID") Integer StudentUserID,
                                               @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                               @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("studentAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -41,15 +57,27 @@ public class StudentAssessController {
         }
     }
 
+    /**
+     * 创建新的StudentAssess
+     *
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @param assess       评价内容
+     * @param score        评价分数
+     * @param studentInfo  json格式的pojo.Student
+     * @return ResultInfo {
+     * "resultInfo": String
+     * }
+     */
     @PostMapping(value = "/studentAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewStudentAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
                                         @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                         @RequestParam(name = "Assess") String assess,
                                         @RequestParam(name = "Score") Integer score,
                                         @RequestParam(name = "Student") String studentInfo) {
-        Operation operation = new Operation();
-        Objects objects = new Objects();
-        ResultInfo resultInfo = new ResultInfo();
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("studentAssess");
         Student student = gson.fromJson(studentInfo, Student.class);

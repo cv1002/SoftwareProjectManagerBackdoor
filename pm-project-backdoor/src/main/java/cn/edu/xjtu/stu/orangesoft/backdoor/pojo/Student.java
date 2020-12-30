@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class Student {
     private int StudentUserID;
     private String StudentClass;
-    private int StudentID;
+    private long StudentID;
     private int TeamID;
+    private String Job;
 }

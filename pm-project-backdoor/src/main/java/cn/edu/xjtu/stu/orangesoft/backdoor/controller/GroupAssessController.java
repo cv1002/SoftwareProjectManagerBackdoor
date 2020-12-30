@@ -4,7 +4,6 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Objects;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Operation;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.GroupAssessService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import com.google.gson.Gson;
@@ -20,21 +19,31 @@ public class GroupAssessController {
     @Autowired
     Gson gson;
 
+    /**
+     * 根据队伍ID，查询队伍成绩
+     *
+     * @param teamID       队伍ID
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
     @GetMapping(value = "/groupAccess", produces = "application/json;charset=UTF-8")
-    public String FindGroupScoreBySTeamID(@RequestParam(name = "TeamID") Integer teamID,
-                                          @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
-                                          @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+    public String FindGroupScoreByTeamID(@RequestParam(name = "TeamID") Integer teamID,
+                                         @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
+                                         @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("GET");
         objects.setObjectName("groupAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            if (groupAssessService.FindGroupScoreBySTeamID(teamID) == null) {
+            if (groupAssessService.FindGroupScoreByTeamID(teamID) == null) {
                 resultInfo.setResultInfo("小组无评分！！");
                 return gson.toJson(resultInfo);
             } else {
-                return gson.toJson(groupAssessService.FindGroupScoreBySTeamID(teamID));
+                return gson.toJson(groupAssessService.FindGroupScoreByTeamID(teamID));
             }
         } else {
             resultInfo.setResultInfo("无权访问！！");
@@ -42,12 +51,23 @@ public class GroupAssessController {
         }
     }
 
-    //Team team, Integer UserID, String Assess, Integer Score
+    /**
+     * 创建新的项目评价
+     *
+     * @param UserID       用户ID，用于RBAC
+     * @param UserPassword 用户密码，用于RBAC
+     * @param assess       评价内容
+     * @param teamID       小组ID
+     * @param score        小组成绩
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
     @PostMapping(value = "/groupAccess", produces = "application/json;charset=UTF-8")
     public String BuildNewGroupAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
                                       @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                       @RequestParam(name = "Assess") String assess,
-                                      @RequestParam(name = "Team") Team team,
+                                      @RequestParam(name = "TeamID") Integer teamID,
                                       @RequestParam(name = "Score") Integer score) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
@@ -55,7 +75,7 @@ public class GroupAssessController {
         operation.setOperationDescription("POST");
         objects.setObjectName("groupAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            resultInfo.setResultInfo(gson.toJson(groupAssessService.BuildNewGroupAssess(team, UserID, assess, score)));
+            resultInfo.setResultInfo(gson.toJson(groupAssessService.BuildNewGroupAssess(teamID, UserID, assess, score)));
         } else {
             resultInfo.setResultInfo("无权评价！！");
         }
