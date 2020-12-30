@@ -35,7 +35,7 @@ public class FileAssessController {
      * "AssessTime": String
      * }
      */
-    @GetMapping(value = "/fileAccess", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/fileAssess", produces = "application/json;charset=UTF-8")
     public String FindFileAssessByFileID(@RequestParam(name = "FileID") Integer fileID,
                                          @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                          @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
@@ -68,7 +68,7 @@ public class FileAssessController {
      * "resultInfo": String
      * }
      */
-    @PostMapping(value = "/fileAccess", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/fileAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewFileAssess(@CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                      @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword,
                                      @RequestParam(name = "Assess") String assess,

@@ -25,9 +25,9 @@ public class CommunicationController {
      * @param UserID       账号
      * @param UserPassword 密码
      * @param TeamID       小组ID
-     * @return ResultInfo: {
+     * @return if (无权访问) return ResultInfo: {
      * "resultInfo": String
-     * }
+     * } else return List[String]
      */
     @GetMapping(value = "/communication", produces = "application/json;charset=UTF-8")
     public String GetCommunication(@CookieValue(name = "UserID") Integer UserID,
@@ -47,7 +47,7 @@ public class CommunicationController {
     }
 
     /**
-     * 查看交流信息
+     * 发送交流信息
      *
      * @param UserID       账号
      * @param UserPassword 密码
