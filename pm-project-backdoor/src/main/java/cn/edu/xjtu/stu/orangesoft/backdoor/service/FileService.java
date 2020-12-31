@@ -55,9 +55,9 @@ public class FileService {
                 fileContent.setFileID(fileInfo.getFileID());
                 affectedRows = fileMapper.PostFileContent(fileContent);
                 if (affectedRows == 0) {
-                    resultInfo.setResultInfo("fail when trying to put file content");
+                    resultInfo.setResultInfo("失败！！");
                 } else {
-                    resultInfo.setResultInfo("update file success");
+                    resultInfo.setResultInfo("上传文件成功！！");
                 }
             }
         } catch (IOException e) {

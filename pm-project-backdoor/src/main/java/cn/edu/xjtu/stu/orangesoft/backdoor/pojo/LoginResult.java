@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class LoginResult {
     private String Finish;
     private String LoginType;
+    private String UserName;
     private int TeamID;
     private String TeamName;
     private String RoleName;
