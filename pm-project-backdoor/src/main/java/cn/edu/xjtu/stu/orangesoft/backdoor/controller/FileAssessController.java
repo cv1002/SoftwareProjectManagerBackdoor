@@ -36,10 +36,10 @@ public class FileAssessController {
      * "AssessTime": String
      * }
      */
-    @GetMapping(value = "/fileAssess", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/fileAssess", produces = "application/json;charset=UTF-8")
     public String FindFileAssessByFileID(@RequestParam(name = "FileID") Integer fileID,
-                                         @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
-                                         @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+                                         @RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
+                                         @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
