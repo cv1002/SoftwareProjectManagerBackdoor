@@ -60,8 +60,8 @@ public class CommunicationController {
      * }
      */
     @PostMapping(value = "/communication", produces = "application/json;charset=UTF-8")
-    public String PostCommunication(@CookieValue(name = "UserID") Integer UserID,
-                                    @CookieValue(name = "UserPassword") String UserPassword,
+    public String PostCommunication(@RequestParam(name = "UserID") Integer UserID,
+                                    @RequestParam(name = "UserPassword") String UserPassword,
                                     @RequestParam(name = "TeamID") Integer TeamID,
                                     @RequestParam(name = "Context") String Context,
                                     @RequestParam(name = "FileID") Integer FileID) {

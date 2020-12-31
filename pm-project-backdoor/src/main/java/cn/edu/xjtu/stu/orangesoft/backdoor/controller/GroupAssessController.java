@@ -37,8 +37,8 @@ public class GroupAssessController {
      */
     @GetMapping(value = "/groupAssess", produces = "application/json;charset=UTF-8")
     public String FindGroupScoreByTeamID(@RequestParam(name = "TeamID") Integer teamID,
-                                         @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
-                                         @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+                                         @RequestParam(value = "UserID") Integer UserID,
+                                         @RequestParam(value = "UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);

@@ -182,7 +182,7 @@ public class FileController {
      * }
      */
     @PostMapping(path = "/file", produces = "application/json;charset=UTF-8")
-    public String postFile(@RequestParam(name = "files") MultipartFile file,
+    public String postFile(@RequestParam("files") MultipartFile file,
                            @RequestParam("UserID") String userID,
                            @RequestParam("UserPassword") String userPassword) {
         Objects objects = DIUtil.getBean(Objects.class);

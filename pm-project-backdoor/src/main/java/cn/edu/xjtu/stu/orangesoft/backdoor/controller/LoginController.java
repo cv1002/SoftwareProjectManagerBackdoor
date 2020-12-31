@@ -28,8 +28,8 @@ public class LoginController {
      * }
      */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
-    public LoginResult login(@RequestParam(name = "UserID") Integer UserID,
+    public LoginResult login(@RequestParam(name = "UserID") String UserID,
                              @RequestParam(name = "UserPassword") String UserPassword) {
-        return loginService.login(UserID, UserPassword);
+        return loginService.login(Integer.valueOf(UserID), UserPassword);
     }
 }

@@ -60,6 +60,9 @@ public class LoginService {
                 if (role != null) {
                     loginResult.setRoleName(role.getRoleName());
                 }
+                if (user.getUserName() != null) {
+                    loginResult.setUserName(user.getUserName());
+                }
                 loginResult.setFinish("success");
             }
 
