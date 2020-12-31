@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class StudentAssessController {
     @Autowired
     StudentAssessService studentAssessService;
@@ -21,7 +22,7 @@ public class StudentAssessController {
     Gson gson;
 
     /**
-     * 根据StudentID获取Score
+     * 根据StudentUserID获取Score
      *
      * @param StudentUserID 用户的UserID
      * @param UserID        用户ID，用于RBAC

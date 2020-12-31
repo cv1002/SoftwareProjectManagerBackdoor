@@ -15,6 +15,7 @@ import java.io.*;
 import java.net.URLEncoder;
 
 @RestController
+@CrossOrigin
 public class FileController {
     @Autowired
     FileService fileService;
@@ -32,8 +33,11 @@ public class FileController {
      * @param fileID       需要获取的文件
      * @param userID       用户ID，用于RBAC
      * @param userPassword 用户密码，用于RBAC
-     * @return ResultInfo: {
+     * @return if (文件不存在 || 无权访问 || IOException) return ResultInfo: {
      * "resultInfo": String
+     * } else {
+     * BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+     * out.write(file);
      * }
      */
     @GetMapping(value = "/file/{FileID}", produces = "application/json;charset=UTF-8")
@@ -69,7 +73,7 @@ public class FileController {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                resultInfo.setResultInfo("文件上传失败！！");
+                resultInfo.setResultInfo("文件下载失败！！");
             }
         } else {
             resultInfo.setResultInfo("无权访问！！");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class GroupAssessController {
     @Autowired
     GroupAssessService groupAssessService;
@@ -25,11 +26,16 @@ public class GroupAssessController {
      * @param teamID       队伍ID
      * @param UserID       用户ID，用于RBAC
      * @param UserPassword 用户密码，用于RBAC
-     * @return ResultInfo: {
+     * @return if (无评分 || 无权访问) return ResultInfo: {
      * "resultInfo": String
+     * } else return GroupAssess: {
+     * "TeamID": int,
+     * "Score": int,
+     * "TeamAssess": String,
+     * "AssessorID": int
      * }
      */
-    @GetMapping(value = "/groupAccess", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/groupAssess", produces = "application/json;charset=UTF-8")
     public String FindGroupScoreByTeamID(@RequestParam(name = "TeamID") Integer teamID,
                                          @CookieValue(value = "UserID", defaultValue = "0") Integer UserID,
                                          @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
@@ -63,7 +69,7 @@ public class GroupAssessController {
      * "resultInfo": String
      * }
      */
-    @PostMapping(value = "/groupAccess", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/groupAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewGroupAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
                                       @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
                                       @RequestParam(name = "Assess") String assess,
