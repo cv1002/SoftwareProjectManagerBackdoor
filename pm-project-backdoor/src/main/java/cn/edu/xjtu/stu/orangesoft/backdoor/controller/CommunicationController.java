@@ -30,9 +30,9 @@ public class CommunicationController {
      * "resultInfo": String
      * } else return List[String]
      */
-    @GetMapping(value = "/communication", produces = "application/json;charset=UTF-8")
-    public String GetCommunication(@CookieValue(name = "UserID") Integer UserID,
-                                   @CookieValue(name = "UserPassword") String UserPassword,
+    @PostMapping(value = "/get/communication", produces = "application/json;charset=UTF-8")
+    public String GetCommunication(@RequestParam(name = "UserID") Integer UserID,
+                                   @RequestParam(name = "UserPassword") String UserPassword,
                                    @RequestParam(name = "TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);

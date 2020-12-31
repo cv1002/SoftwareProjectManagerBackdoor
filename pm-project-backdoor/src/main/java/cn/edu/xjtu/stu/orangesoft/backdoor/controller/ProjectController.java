@@ -31,9 +31,9 @@ public class ProjectController {
      * List[Project]
      * }
      */
-    @GetMapping(value = "/projects", produces = "application/json;charset=UTF-8")
-    public String FindAllProjects(@CookieValue(value = "UserID", defaultValue = "0") String UserID,
-                                  @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+    @PostMapping(value = "/get/projects", produces = "application/json;charset=UTF-8")
+    public String FindAllProjects(@RequestParam(value = "UserID") String UserID,
+                                  @RequestParam(value = "UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
@@ -63,10 +63,10 @@ public class ProjectController {
      * } else return
      * List[ProjectAssignment]
      */
-    @GetMapping(value = "/projectAssignment/", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/projectAssignment/", produces = "application/json;charset=UTF-8")
     public String FindTeamByProject(@RequestParam(name = "ProjectID") Integer ProjectID,
-                                    @CookieValue(value = "UserID", defaultValue = "0") String UserID,
-                                    @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+                                    @RequestParam(value = "UserID") String UserID,
+                                    @RequestParam(value = "UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
@@ -98,9 +98,9 @@ public class ProjectController {
      * "ProjectDescription": String
      * }
      */
-    @GetMapping(value = "/project", produces = "application/json;charset=UTF-8")
-    public String FindProjectByUser(@RequestParam(name = "UserID") Integer UserID,
-                                    @CookieValue(value = "UserPassword", defaultValue = "") String UserPassword) {
+    @PostMapping(value = "/get/project", produces = "application/json;charset=UTF-8")
+    public String FindProjectByUser(@RequestParam("UserID") Integer UserID,
+                                    @RequestParam("UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);

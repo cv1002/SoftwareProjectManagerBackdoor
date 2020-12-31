@@ -31,9 +31,9 @@ public class MilestoneController {
      * "resultInfo": String
      * }
      */
-    @GetMapping(value = "/completion", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/completion", produces = "application/json;charset=UTF-8")
     public String GetCompletionByTeamID(@RequestParam(name = "UserID") Integer UserID,
-                                        @CookieValue(name = "UserPassword") String UserPassword,
+                                        @RequestParam(name = "UserPassword") String UserPassword,
                                         @RequestParam(name = "TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);

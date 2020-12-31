@@ -35,7 +35,7 @@ public class GroupAssessController {
      * "AssessorID": int
      * }
      */
-    @GetMapping(value = "/groupAssess", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/groupAssess", produces = "application/json;charset=UTF-8")
     public String FindGroupScoreByTeamID(@RequestParam(name = "TeamID") Integer teamID,
                                          @RequestParam(value = "UserID") Integer UserID,
                                          @RequestParam(value = "UserPassword") String UserPassword) {

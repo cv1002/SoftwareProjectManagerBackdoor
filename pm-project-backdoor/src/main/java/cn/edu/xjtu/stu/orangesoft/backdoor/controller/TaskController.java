@@ -77,9 +77,9 @@ public class TaskController {
      * "Tasks": List[Tasks]
      * }
      */
-    @GetMapping(value = "/task", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/task", produces = "application/json;charset=UTF-8")
     public String GetTaskByUserID(@RequestParam(name = "UserID") Integer UserID,
-                                  @CookieValue(name = "UserPassword") String UserPassword) {
+                                  @RequestParam(name = "UserPassword") String UserPassword) {
         Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
         Operation operation = DIUtil.getBean(Operation.class);
