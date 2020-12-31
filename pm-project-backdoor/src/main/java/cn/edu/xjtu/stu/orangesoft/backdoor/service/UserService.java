@@ -14,10 +14,11 @@ public class UserService {
 
     /**
      * 查询用户的待办事项，包括已完成的
+     *
      * @param UserID 用户ID
      * @return 用户待办事项列表
      */
-    public List<TodoList> GetTodoListByUserID(int UserID){
+    public List<TodoList> GetTodoListByUserID(int UserID) {
         return todoListMapper.GetTodoListByUserID(UserID);
     }
 }

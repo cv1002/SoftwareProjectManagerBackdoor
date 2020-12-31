@@ -32,9 +32,9 @@ public class MilestoneController {
      * }
      */
     @PostMapping(value = "/get/completion", produces = "application/json;charset=UTF-8")
-    public String GetCompletionByTeamID(@RequestParam(name = "UserID") Integer UserID,
-                                        @RequestParam(name = "UserPassword") String UserPassword,
-                                        @RequestParam(name = "TeamID") Integer TeamID) {
+    public String GetCompletionByTeamID(@RequestParam("UserID") Integer UserID,
+                                        @RequestParam("UserPassword") String UserPassword,
+                                        @RequestParam("TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         objects.setObjectName("completion");
@@ -60,10 +60,10 @@ public class MilestoneController {
      * }
      */
     @PostMapping(value = "/completion", produces = "application/json;charset=UTF-8")
-    public String PostCompletion(@RequestParam(name = "UserID") Integer UserID,
-                                 @RequestParam(name = "UserPassword") String UserPassword,
-                                 @RequestParam(name = "MileStoneID") Integer MilestoneID,
-                                 @RequestParam(name = "FileID") Integer FileID) {
+    public String PostCompletion(@RequestParam("UserID") Integer UserID,
+                                 @RequestParam("UserPassword") String UserPassword,
+                                 @RequestParam("MileStoneID") Integer MilestoneID,
+                                 @RequestParam("FileID") Integer FileID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         ResultInfo resultInfo;
@@ -90,10 +90,10 @@ public class MilestoneController {
      * }
      */
     @PutMapping(value = "/completion", produces = "application/json;charset=UTF-8")
-    public String PutCompletion(@RequestParam(name = "UserID") Integer UserID,
-                                @RequestParam(name = "UserPassword") String UserPassword,
-                                @RequestParam(name = "CompletionID") Integer CompletionID,
-                                @RequestParam(name = "ProjectCompletion") String ProjectCompletionInfo) {
+    public String PutCompletion(@RequestParam("UserID") Integer UserID,
+                                @RequestParam("UserPassword") String UserPassword,
+                                @RequestParam("CompletionID") Integer CompletionID,
+                                @RequestParam("ProjectCompletion") String ProjectCompletionInfo) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         objects.setObjectName("completion");
@@ -120,9 +120,9 @@ public class MilestoneController {
      * }
      */
     @DeleteMapping(value = "/completion", produces = "application/json;charset=UTF-8")
-    public String DeleteCompletion(@RequestParam(name = "UserID") Integer UserID,
-                                   @RequestParam(name = "UserPassword") String UserPassword,
-                                   @RequestParam(name = "CompletionID") Integer CompletionID) {
+    public String DeleteCompletion(@RequestParam("UserID") Integer UserID,
+                                   @RequestParam("UserPassword") String UserPassword,
+                                   @RequestParam("CompletionID") Integer CompletionID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         objects.setObjectName("completion");
