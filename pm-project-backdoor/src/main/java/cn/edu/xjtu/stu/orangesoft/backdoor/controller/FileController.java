@@ -15,6 +15,7 @@ import java.io.*;
 import java.net.URLEncoder;
 
 @RestController
+@CrossOrigin
 public class FileController {
     @Autowired
     FileService fileService;
