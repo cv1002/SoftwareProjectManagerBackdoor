@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TodoListMapper">
+    <select id="GetTodoListByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.TodoList">
+        select *
+        from TodoList
+        where UserID = #{UserID}
+    </select>
+</mapper>
