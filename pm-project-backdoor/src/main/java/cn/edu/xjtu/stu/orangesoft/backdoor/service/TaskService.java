@@ -40,7 +40,6 @@ public class TaskService {
 
     private List<Tasks> PackTasksResult(List<Task> taskResult) {
         List<Tasks> tasksResult = new ArrayList<>();
-        System.out.println(taskResult.size());
         // 遍历查出来的Task，加入TaskHandlerName以及TaskPublisherName，构造成Tasks，再返回
         for (Task tempTask : taskResult) {
             Tasks tasks = DIUtil.getBean(Tasks.class);
