@@ -8,7 +8,10 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.service.GroupAssessService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -70,11 +73,11 @@ public class GroupAssessController {
      * }
      */
     @PostMapping(value = "/groupAssess", produces = "application/json;charset=UTF-8")
-    public String BuildNewGroupAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
-                                      @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
-                                      @RequestParam(name = "Assess") String assess,
-                                      @RequestParam(name = "TeamID") Integer teamID,
-                                      @RequestParam(name = "Score") Integer score) {
+    public String BuildNewGroupAssess(@RequestParam("UserID") Integer UserID,
+                                      @RequestParam("UserPassword") String UserPassword,
+                                      @RequestParam("Assess") String assess,
+                                      @RequestParam("TeamID") Integer teamID,
+                                      @RequestParam("Score") Integer score) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);

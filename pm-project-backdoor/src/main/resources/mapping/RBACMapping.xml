@@ -17,7 +17,7 @@
     </select>
     <select id="CheckPermission"
             resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.RolePowerAssignment">
-        select *
+        select RolePowerAssignment.*
         from (select *
               from (select PermissionConfig.*
                     from (select *
@@ -29,5 +29,6 @@
                 and tempPermissionConfigTableOriginal.OperationDescription = #{Operation}) as tempPermissionConfigTable,
              RolePowerAssignment
         where RolePowerAssignment.ConfigID = tempPermissionConfigTable.ConfigID
+          and RolePowerAssignment.RoleID = #{RoleID}
     </select>
 </mapper>

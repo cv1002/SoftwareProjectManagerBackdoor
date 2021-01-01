@@ -9,7 +9,10 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.StudentAssessService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -37,9 +40,9 @@ public class StudentAssessController {
      * }
      */
     @PostMapping(value = "/get/studentAssess", produces = "application/json;charset=UTF-8")
-    public String FindStudentScoreByStudentID(@RequestParam(name = "StudentUserID") Integer StudentUserID,
-                                              @RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
-                                              @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword) {
+    public String FindStudentScoreByStudentID(@RequestParam("StudentUserID") Integer StudentUserID,
+                                              @RequestParam("UserID") Integer UserID,
+                                              @RequestParam("UserPassword") String UserPassword) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
@@ -71,11 +74,11 @@ public class StudentAssessController {
      * }
      */
     @PostMapping(value = "/studentAssess", produces = "application/json;charset=UTF-8")
-    public String BuildNewStudentAssess(@RequestParam(value = "UserID", defaultValue = "0") Integer UserID,
-                                        @RequestParam(value = "UserPassword", defaultValue = "") String UserPassword,
-                                        @RequestParam(name = "Assess") String assess,
-                                        @RequestParam(name = "Score") Integer score,
-                                        @RequestParam(name = "Student") String studentInfo) {
+    public String BuildNewStudentAssess(@RequestParam("UserID") Integer UserID,
+                                        @RequestParam("UserPassword") String UserPassword,
+                                        @RequestParam("Assess") String assess,
+                                        @RequestParam("Score") Integer score,
+                                        @RequestParam("Student") String studentInfo) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);

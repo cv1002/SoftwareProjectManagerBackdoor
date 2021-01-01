@@ -8,4 +8,12 @@
         from Team
         where TeamID = #{id}
     </select>
+    <select id="GetTeamMembers" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User">
+        select *
+        from (select TeamID
+              from Student
+              where StudentUserID = #{UserID}) as tempTeamIDTable,
+             Student
+        where Student.TeamID = tempTeamIDTable.TeamID
+    </select>
 </mapper>
