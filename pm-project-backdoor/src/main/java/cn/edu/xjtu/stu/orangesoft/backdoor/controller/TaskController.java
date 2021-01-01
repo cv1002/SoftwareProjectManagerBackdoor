@@ -77,15 +77,15 @@ public class TaskController {
      * "Tasks": List[Tasks]
      * }
      */
-    @PostMapping(value = "/get/task", produces = "application/json;charset=UTF-8")
-    public String GetTaskByUserID(@RequestParam(name = "UserID") Integer UserID,
-                                  @RequestParam(name = "UserPassword") String UserPassword) {
+    @PostMapping(value = "/get/task/ByPublisherID", produces = "application/json;charset=UTF-8")
+    public String GetTaskByPublisherID(@RequestParam(name = "UserID") Integer UserID,
+                                       @RequestParam(name = "UserPassword") String UserPassword) {
         Objects objects = DIUtil.getBean(Objects.class);
         objects.setObjectName("task");
         Operation operation = DIUtil.getBean(Operation.class);
         operation.setOperationDescription("GET");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            return gson.toJson(taskService.GetTaskByUserID(UserID));
+            return gson.toJson(taskService.GetTaskByPublisherID(UserID));
         } else {
             ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
             resultInfo.setResultInfo("无权访问！！");
@@ -93,6 +93,33 @@ public class TaskController {
         }
     }
 
+    /**
+     * 通过用户名、密码来获取任务
+     *
+     * @param UserID       用户名
+     * @param UserPassword 密码
+     * @return if(无权访问) return ResultInfo: {
+     * "resultInfo": String
+     * } else return FindTaskResult: {
+     * "Finish": String,
+     * "Tasks": List[Tasks]
+     * }
+     */
+    @PostMapping(value = "/get/task/ByHandlerID", produces = "application/json;charset=UTF-8")
+    public String GetTaskByHandlerID(@RequestParam(name = "UserID") Integer UserID,
+                                     @RequestParam(name = "UserPassword") String UserPassword) {
+        Objects objects = DIUtil.getBean(Objects.class);
+        objects.setObjectName("task");
+        Operation operation = DIUtil.getBean(Operation.class);
+        operation.setOperationDescription("GET");
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            return gson.toJson(taskService.GetTaskByHandlerID(UserID));
+        } else {
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+            resultInfo.setResultInfo("无权访问！！");
+            return gson.toJson(resultInfo);
+        }
+    }
     /**
      * 删除一个任务
      *
