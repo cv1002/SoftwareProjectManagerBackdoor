@@ -8,4 +8,19 @@
         from TodoList
         where UserID = #{UserID}
     </select>
+    <insert id="AddTodoListItem" useGeneratedKeys="true">
+        insert into TodoList(TodoListID, UserID, TodoThings, FinishState)
+        value (0, #{id}, #{todoThigns}, 0)
+    </insert>
+    <update id="UpdateTodoListItem">
+        update TodoList
+        set TodoThings = #{todoThings},
+            FinishState = #{finishState}
+        where TodoList.TodoListID = #{todoListID}
+    </update>
+    <delete id="DeleteTodoListItem">
+        delete
+        from TodoList
+        where TodoList.TodoListID = #{todoListID}
+    </delete>
 </mapper>
