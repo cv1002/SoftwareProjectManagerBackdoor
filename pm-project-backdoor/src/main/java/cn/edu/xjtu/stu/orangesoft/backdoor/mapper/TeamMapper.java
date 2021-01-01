@@ -14,4 +14,8 @@ public interface TeamMapper {
     Team GetTeamByTeamID(@Param("id") Integer TeamID);
 
     List<Student> GetTeamMembers(@Param("UserID") Integer UserID);
+
+    List<Student> GetTeamMembersByTeamID(@Param("TeamID") Integer TeamID);
+
+    List<Team> GetAllTeams();
 }
