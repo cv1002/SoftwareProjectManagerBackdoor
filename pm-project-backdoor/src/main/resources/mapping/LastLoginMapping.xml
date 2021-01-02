@@ -10,7 +10,7 @@
     </select>
     <update id="refreshLastLogin" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin">
         update LastLogin
-        set LastLoginDay = #{lastLogin.LastLoginDate},
+        set LastLoginDay   = #{lastLogin.LastLoginDate},
             LastLoginPlace = #{lastLogin.LastLoginPlace}
         where UserID = #{lastLogin.UserID}
     </update>

@@ -18,6 +18,6 @@ public interface MilestoneMapper {
 
     int DeleteCompletion(@Param("id") Integer CompletionID);
 
-    int updateCompletion(@Param("CompletionID") Integer CompletionID,
-                            @Param("Completion") ProjectCompletion Completion);
+    int UpdateCompletion(@Param("CompletionID") Integer CompletionID,
+                         @Param("Completion") ProjectCompletion Completion);
 }

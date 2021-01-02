@@ -47,7 +47,7 @@ public class MilestoneService {
 
     public ResultInfo PutCompletion(Integer CompletionID, ProjectCompletion completion) {
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
-        if (milestonemapper.updateCompletion(CompletionID, completion) != 0) {
+        if (milestonemapper.UpdateCompletion(CompletionID, completion) != 0) {
             resultInfo.setResultInfo("成功！！");
         } else {
             resultInfo.setResultInfo("失败！！");
@@ -56,9 +56,8 @@ public class MilestoneService {
     }
 
     public ResultInfo DeleteCompletion(Integer CompletionID) {
-        milestonemapper.DeleteCompletion(CompletionID);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
-        if (milestonemapper.GetCompletionByID(CompletionID) != null) {
+        if (milestonemapper.DeleteCompletion(CompletionID) != 0) {
             resultInfo.setResultInfo("成功！！");
         } else {
             resultInfo.setResultInfo("失败！！");

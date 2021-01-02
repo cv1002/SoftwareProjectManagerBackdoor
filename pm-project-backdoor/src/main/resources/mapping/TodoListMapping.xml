@@ -10,11 +10,11 @@
     </select>
     <insert id="AddTodoListItem" useGeneratedKeys="true">
         insert into TodoList(TodoListID, UserID, TodoThings, FinishState)
-        value (0, #{id}, #{todoThings}, 1)
+            value (0, #{id}, #{todoThings}, 1)
     </insert>
     <update id="UpdateTodoListItem">
         update TodoList
-        set TodoThings = #{todoThings},
+        set TodoThings  = #{todoThings},
             FinishState = #{finishState}
         where TodoList.TodoListID = #{todoListID}
     </update>
