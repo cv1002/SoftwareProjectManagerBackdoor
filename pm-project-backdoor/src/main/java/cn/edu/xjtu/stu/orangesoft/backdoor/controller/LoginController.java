@@ -1,7 +1,5 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.controller;
 
-import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
-import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LoginResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
