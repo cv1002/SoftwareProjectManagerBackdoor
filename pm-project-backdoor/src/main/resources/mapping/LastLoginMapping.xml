@@ -8,10 +8,11 @@
         from LastLogin
         where UserID = #{UserID}
     </select>
-    <update id="refreshLastLogin" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin">
-        update LastLogin
-        set LastLoginDay = #{lastLogin.LastLoginDate},
-            LastLoginPlace = #{lastLogin.LastLoginPlace}
-        where UserID = #{lastLogin.UserID}
-    </update>
+    <insert id="refreshLastLogin" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin"
+            keyColumn="UserID" keyProperty="UserID">
+        insert into LastLogin(UserID, LastLoginDate, LastLoginPlace)
+        values (#{lastLogin.UserID}, #{lastLogin.LastLoginDate}, #{lastLogin.LastLoginPlace})
+        on duplicate key
+            update UserID = #{lastLogin.UserID}
+    </insert>
 </mapper>
