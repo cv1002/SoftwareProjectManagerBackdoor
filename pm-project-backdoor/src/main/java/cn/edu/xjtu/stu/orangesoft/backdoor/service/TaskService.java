@@ -20,15 +20,29 @@ public class TaskService {
     @Autowired
     StudentMapper studentmapper;
 
-    public FindTaskResult GetTaskByUserID(Integer userID) {
-        Tasks tasks = DIUtil.getBean(Tasks.class);
+    public FindTaskResult GetTaskByPublisherID(Integer userID) {
         FindTaskResult findTaskResult = DIUtil.getBean(FindTaskResult.class);
+        List<Task> taskResult = taskmapper.GetTaskByPublisherID(userID);
+        List<Tasks> tasksResult = PackTasksResult(taskResult);
+        findTaskResult.setFinish("成功！！");
+        findTaskResult.setTasks(tasksResult);
+        return findTaskResult;
+    }
 
-        List<Task> taskResult = taskmapper.GetTaskByUserID(userID);
+    public FindTaskResult GetTaskByHandlerID(Integer userID) {
+        FindTaskResult findTaskResult = DIUtil.getBean(FindTaskResult.class);
+        List<Task> taskResult = taskmapper.GetTaskByHandlerID(userID);
+        List<Tasks> tasksResult = PackTasksResult(taskResult);
+        findTaskResult.setFinish("成功！！");
+        findTaskResult.setTasks(tasksResult);
+        return findTaskResult;
+    }
+
+    private List<Tasks> PackTasksResult(List<Task> taskResult) {
         List<Tasks> tasksResult = new ArrayList<>();
-
         // 遍历查出来的Task，加入TaskHandlerName以及TaskPublisherName，构造成Tasks，再返回
         for (Task tempTask : taskResult) {
+            Tasks tasks = DIUtil.getBean(Tasks.class);
             tasks.setTaskID(tempTask.getTaskID());
             tasks.setTaskName(tempTask.getTaskName());
             tasks.setTaskHandlerID(tempTask.getTaskHandlerID());
@@ -41,13 +55,10 @@ public class TaskService {
             if (user != null) {
                 tasks.setTaskHandlerName(user.getUserName());
             }
-            tasks.setTaskHandlerName(usermapper.GetUserByUserID(tempTask.getTaskPublisherID()).getUserName());
+            tasks.setTaskPublisherName(usermapper.GetUserByUserID(tempTask.getTaskPublisherID()).getUserName());
             tasksResult.add(tasks);
         }
-        findTaskResult.setFinish("成功！！");
-        findTaskResult.setTasks(tasksResult);
-        System.out.println(findTaskResult.getFinish());
-        return findTaskResult;
+        return tasksResult;
     }
 
     public ResultInfo AddTask(int userID, String taskName, int taskFinishType, String taskDeadline, String taskStartTime, int taskHandlerID, int taskPublisherID, String taskDescription) {

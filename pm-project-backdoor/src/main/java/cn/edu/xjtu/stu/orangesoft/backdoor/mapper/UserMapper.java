@@ -13,4 +13,5 @@ public interface UserMapper {
                                 @Param("password") String UserPassword);
 
     User GetUserByUserID(@Param("id") Integer UserID);
+
 }

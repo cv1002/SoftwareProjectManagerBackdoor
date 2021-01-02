@@ -10,7 +10,7 @@
     </select>
     <insert id="BuildStudentAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.StudentAssess"
             useGeneratedKeys="true">
-        insert into StudentAssess(Assess)
-        values (#{Assess})
+        insert into StudentAssess(StudentUserID, Assess)
+        values (0, #{Assess})
     </insert>
 </mapper>
