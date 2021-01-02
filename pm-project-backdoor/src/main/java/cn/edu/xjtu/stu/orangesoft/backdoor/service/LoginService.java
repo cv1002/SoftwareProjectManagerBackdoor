@@ -1,7 +1,10 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
-import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.*;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RoleMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
