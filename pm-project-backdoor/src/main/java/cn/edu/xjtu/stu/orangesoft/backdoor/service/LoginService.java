@@ -1,7 +1,10 @@
 package cn.edu.xjtu.stu.orangesoft.backdoor.service;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
-import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.*;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.RoleMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.StudentMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TeamMapper;
+import cn.edu.xjtu.stu.orangesoft.backdoor.mapper.UserMapper;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +19,6 @@ public class LoginService {
     TeamMapper teammapper;
     @Autowired
     StudentMapper studentmapper;
-    @Autowired
-    LastLoginMapper lastLoginMapper;
 
     /**
      * LoginService的主要方法，输入UserID、UserPassword，返回user、role、team相关的信息
@@ -68,13 +69,5 @@ public class LoginService {
         }
 
         return loginResult;
-    }
-
-    /**
-     * 刷新用户最后登录信息
-     * @param lastLogin 最后登录信息类
-     */
-    public void refreshLastLogin(LastLogin lastLogin){
-        lastLoginMapper.refreshLastLogin(lastLogin);
     }
 }
