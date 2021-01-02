@@ -21,8 +21,6 @@ public class LoginController {
      *
      * @param UserID       用户ID，用于RBAC
      * @param UserPassword 用户密码，用于RBAC
-     * @param LastLoginDate 当前登录日期
-     * @param LastLoginPlace 当前登陆地点
      * @return LoginResult: {
      * "Finish": String,
      * "LoginType": String,
@@ -33,14 +31,7 @@ public class LoginController {
      */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
     public LoginResult login(@RequestParam("UserID") int UserID,
-                             @RequestParam("UserPassword") String UserPassword,
-                             @RequestParam("LastLoginDate") String LastLoginDate,
-                             @RequestParam("LastLoginPlcae") String LastLoginPlace) {
-        LastLogin lastLogin = DIUtil.getBean(LastLogin.class);
-        lastLogin.setUserID(UserID);
-        lastLogin.setLastLoginDate(LastLoginDate);
-        lastLogin.setLastLoginPlace(LastLoginPlace);
-        loginService.refreshLastLogin(lastLogin);
-        return loginService.login(Integer.valueOf(UserID), UserPassword);
+                             @RequestParam("UserPassword") String UserPassword) {
+        return loginService.login(UserID, UserPassword);
     }
 }
