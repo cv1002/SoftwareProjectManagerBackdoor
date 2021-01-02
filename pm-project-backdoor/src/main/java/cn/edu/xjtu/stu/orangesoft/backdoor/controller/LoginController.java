@@ -4,9 +4,11 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.core.DIUtil;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LoginResult;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.LoginService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -39,7 +41,6 @@ public class LoginController {
         lastLogin.setLastLoginDate(LastLoginDate);
         lastLogin.setLastLoginPlace(LastLoginPlace);
         loginService.refreshLastLogin(lastLogin);
-        return loginService.login(UserID, UserPassword);
+        return loginService.login(Integer.valueOf(UserID), UserPassword);
     }
-
 }
