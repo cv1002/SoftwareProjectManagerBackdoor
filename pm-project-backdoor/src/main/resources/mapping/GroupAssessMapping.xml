@@ -3,13 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.GroupAssessMapper">
-    <select id="GetGroupScoreBySTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess">
+    <select id="GetGroupScoreByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess">
         select *
         from GroupAssess
         where TeamID = #{TeamID}
     </select>
 
-    <insert id="BuildGroupAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess"
+    <insert id="BuildNewGroupAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess"
             useGeneratedKeys="true">
         insert into GroupAssess(TeamID, TeamAssess, Score, AssessorID)
         values (#{groupAssess.TeamID}, #{groupAssess.TeamAssess},
