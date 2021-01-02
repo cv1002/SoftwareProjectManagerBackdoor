@@ -3,21 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper">
-    <select id="GetTasksByUserID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Tasks">
+    <select id="GetTaskByPublisherID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         select Task.TaskID,
                Task.TaskName,
                Task.TaskDeadline,
-               TaskFinishType,
+               Task.TaskFinishType,
                Task.TaskStartTime,
                Task.TaskHandlerID,
                Task.TaskPublisherID,
-               Task.TaskDescription,
-               User.UserName,
-               User.UserName
-        from Task,
-             Student,
-             User
+               Task.TaskDescription
+        from Task
         where (Task.TaskPublisherID = #{id})
+    </select>
+    <select id="GetTaskByHandlerID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        select Task.TaskID,
+               Task.TaskName,
+               Task.TaskDeadline,
+               Task.TaskFinishType,
+               Task.TaskStartTime,
+               Task.TaskHandlerID,
+               Task.TaskPublisherID,
+               Task.TaskDescription
+        from Task
+        where (Task.TaskHandlerID = #{id})
     </select>
     <select id="GetTaskByTaskID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         select *

@@ -51,13 +51,13 @@
     </update>
     <delete id="DeleteFileContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         delete
-        FROM FileContent
-        WHERE FileID = #{FileID}
+        from FileContent
+        where FileID = #{FileID}
     </delete>
     <delete id="DeleteFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         delete
         from FileInfo
-        WHERE FileID = #{FileID}
+        where FileID = #{FileID}
     </delete>
 
 
