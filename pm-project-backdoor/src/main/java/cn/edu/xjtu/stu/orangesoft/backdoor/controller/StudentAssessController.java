@@ -62,13 +62,17 @@ public class StudentAssessController {
     }
 
     /**
-     * 创建新的StudentAssess
+     * 发表新的对学生的评价
      *
-     * @param UserID       用户ID，用于RBAC
-     * @param UserPassword 用户密码，用于RBAC
-     * @param assess       评价内容
-     * @param score        评价分数
-     * @param studentInfo  json格式的pojo.Student
+     * @param UserID        用户ID，用于RBAC
+     * @param UserPassword  用户密码，用于RBAC
+     * @param assess        评价内容
+     * @param score         评价分数
+     * @param StudentUserID 评价学生对象
+     * @param StudentClass  对象学生班级
+     * @param StudentID     对象学生学号
+     * @param TeamID        对象学生所在小组ID
+     * @param Job           对象学生分工
      * @return ResultInfo {
      * "resultInfo": String
      * }
@@ -78,14 +82,23 @@ public class StudentAssessController {
                                         @RequestParam("UserPassword") String UserPassword,
                                         @RequestParam("Assess") String assess,
                                         @RequestParam("Score") Integer score,
-                                        @RequestParam("Student") String studentInfo) {
+                                        @RequestParam("StudentUserID") int StudentUserID,
+                                        @RequestParam("StudentClass") String StudentClass,
+                                        @RequestParam("StudentID") long StudentID,
+                                        @RequestParam("TeamID") int TeamID,
+                                        @RequestParam("Job") String Job) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("studentAssess");
-        Student student = gson.fromJson(studentInfo, Student.class);
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            Student student = DIUtil.getBean(Student.class);
+            student.setStudentUserID(StudentUserID);
+            student.setStudentClass(StudentClass);
+            student.setStudentID(StudentID);
+            student.setTeamID(TeamID);
+            student.setJob(Job);
             resultInfo.setResultInfo(gson.toJson(studentAssessService.BuildNewStudentAssess(student, UserID, assess, score)));
         } else {
             resultInfo.setResultInfo("无权访问！！");

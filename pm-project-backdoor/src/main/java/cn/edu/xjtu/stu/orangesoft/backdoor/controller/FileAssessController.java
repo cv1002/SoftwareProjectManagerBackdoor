@@ -63,26 +63,42 @@ public class FileAssessController {
 
     /**
      * 更新文件评价
-     *
-     * @param UserID       用户名，用于RBAC
+     * @param UserID 用户名，用于RBAC
      * @param UserPassword 用户密码，用于RBAC
-     * @param assess       评价，用于更新评价
-     * @param fileInfo     文件信息，用于确定更新哪个文件的评价
+     * @param assess 评价，用于更新评价
+     * @param FileID 更新文件的id
+     * @param FileRealName 文件名
+     * @param FileType 文件类型
+     * @param FileLocation 文件位置
+     * @param TeamID 文件所属小组id
+     * @param StudentUserID 上传人id
      * @return ResultInfo: {
-     * "resultInfo": String
-     * }
+     *      * "resultInfo": String
+     *      * }
      */
     @PostMapping(value = "/fileAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewFileAssess(@RequestParam("UserID") Integer UserID,
                                      @RequestParam("UserPassword") String UserPassword,
                                      @RequestParam("Assess") String assess,
-                                     @RequestParam("fileInfo") FileInfo fileInfo) {
+                                     @RequestParam("FileID") int FileID,
+                                     @RequestParam("FileRealName") String FileRealName,
+                                     @RequestParam("FileType") String FileType,
+                                     @RequestParam("FileLocation") String FileLocation,
+                                     @RequestParam("TeamID") int TeamID,
+                                     @RequestParam("StudentUserID") int StudentUserID) {
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         operation.setOperationDescription("POST");
         objects.setObjectName("fileAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            FileInfo fileInfo = DIUtil.getBean(FileInfo.class);
+            fileInfo.setFileID(FileID);
+            fileInfo.setFileRealName(FileRealName);
+            fileInfo.setFileType(FileType);
+            fileInfo.setFileLocation(FileLocation);
+            fileInfo.setTeamID(TeamID);
+            fileInfo.setStudentUserID(StudentUserID);
             resultInfo.setResultInfo(gson.toJson(fileAssessService.BuildNewFileAssess(fileInfo, UserID, assess)));
         } else {
             resultInfo.setResultInfo("无权评价！！");
