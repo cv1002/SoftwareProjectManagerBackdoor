@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.LastLoginMapper">
+    <select id="GetLastLoginInfo" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin">
+        select *
+        from LastLogin
+        where UserID = #{UserID}
+    </select>
+    <update id="refreshLastLogin" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.LastLogin">
+        update LastLogin
+        set LastLoginDay = #{lastLogin.LastLoginDate},
+            LastLoginPlace = #{lastLogin.LastLoginPlace}
+        where UserID = #{lastLogin.UserID}
+    </update>
+</mapper>
