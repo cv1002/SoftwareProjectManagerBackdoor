@@ -14,10 +14,10 @@ public interface MilestoneMapper {
 
     ProjectCompletion GetCompletionByID(@Param("id") Integer CompletionID);
 
-    String InsertCompletion(@Param("Completion") ProjectCompletion completion);
+    int InsertCompletion(@Param("Completion") ProjectCompletion completion);
 
-    String DeleteCompletion(@Param("id") Integer CompletionID);
+    int DeleteCompletion(@Param("id") Integer CompletionID);
 
-    String updateCompletion(@Param("CompletionID") Integer CompletionID,
+    int updateCompletion(@Param("CompletionID") Integer CompletionID,
                             @Param("Completion") ProjectCompletion Completion);
 }
