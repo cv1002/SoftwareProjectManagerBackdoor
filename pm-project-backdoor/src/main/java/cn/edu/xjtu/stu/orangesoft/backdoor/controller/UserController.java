@@ -38,19 +38,14 @@ public class UserController {
 
     @PostMapping(value = "/get/lastLogin", produces = "application/json;charset=UTF-8")
     public String GetLastLoginInfo(@RequestParam("UserID") Integer UserID,
-                                   @RequestParam("UserPassword") String UserPassword) {
+                                   @RequestParam("UserPassword") String UserPassword){
         Operation operation = DIUtil.getBean(Operation.class);
         Objects objects = DIUtil.getBean(Objects.class);
         ResultInfo resultInfo = DIUtil.getBean((ResultInfo.class));
         operation.setOperationDescription("GET");
         objects.setObjectName("LastLogin");
-        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+        if(rbacService.CheckPermission(UserID,UserPassword,objects,operation)){
             return gson.toJson(userService.GetLastLoginInfo(UserID));
-        } else {
-            resultInfo.setResultInfo("无权访问!!");
-            return gson.toJson(resultInfo);
-        }
-    }
     @PostMapping(value = "/todoList", produces = "application/json;charset=UTF-8")
     public String AddTodoListItem(@RequestParam("UserID") Integer UserID,
                                   @RequestParam("UserPassword") String UserPassword,

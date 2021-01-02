@@ -36,9 +36,9 @@ public class UserService {
      * @param UserID 查询的用户的id
      * @return 最后登录信息类
      */
-    public LastLogin GetLastLoginInfo(int UserID) {
+    public LastLogin GetLastLoginInfo(int UserID){
         return lastLoginMapper.GetLastLoginInfo(UserID);
-    }
+
     public ResultInfo AddTodoListItem(Integer UserID, String TodoThings) {
         ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
         if (todoListMapper.AddTodoListItem(UserID, TodoThings) != 0) {
