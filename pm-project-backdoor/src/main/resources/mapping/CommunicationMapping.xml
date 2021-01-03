@@ -8,7 +8,10 @@
         from Communication
         where Communication.TeamID = #{TeamID}
     </select>
-
+    <select id="GetAllCommunication" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Communication">
+        select *
+        from Communication
+    </select>
     <insert id="PostCommunication">
         insert into Communication
             (CommunicationID, UserID, TeamID, Context, FileID)

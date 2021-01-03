@@ -18,6 +18,10 @@ public class CommunicationService {
     @Autowired
     StudentMapper studentmapper;
 
+    public List<Communication> GetAllCommunication() {
+        return communicationMapper.GetAllCommunication();
+    }
+
     public List<Communication> GetCommunication(Integer TeamID) {
         return communicationMapper.GetCommunication(TeamID);
     }
@@ -29,7 +33,9 @@ public class CommunicationService {
         communication.setUserID(userID);
         communication.setTeamID(teamID);
         communication.setContext(context);
-        communication.setFileID(fileID);
+        if (fileID != null) {
+            communication.setFileID(fileID);
+        }
         if (communicationMapper.PostCommunication(communication) != 0) {
             resultInfo.setResultInfo("成功！！");
         } else {

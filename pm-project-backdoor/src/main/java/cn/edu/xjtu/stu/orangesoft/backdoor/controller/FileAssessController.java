@@ -63,18 +63,19 @@ public class FileAssessController {
 
     /**
      * 更新文件评价
-     * @param UserID 用户名，用于RBAC
-     * @param UserPassword 用户密码，用于RBAC
-     * @param assess 评价，用于更新评价
-     * @param FileID 更新文件的id
-     * @param FileRealName 文件名
-     * @param FileType 文件类型
-     * @param FileLocation 文件位置
-     * @param TeamID 文件所属小组id
+     *
+     * @param UserID        用户名，用于RBAC
+     * @param UserPassword  用户密码，用于RBAC
+     * @param assess        评价，用于更新评价
+     * @param FileID        更新文件的id
+     * @param FileRealName  文件名
+     * @param FileType      文件类型
+     * @param FileLocation  文件位置
+     * @param TeamID        文件所属小组id
      * @param StudentUserID 上传人id
      * @return ResultInfo: {
-     *      * "resultInfo": String
-     *      * }
+     * * "resultInfo": String
+     * * }
      */
     @PostMapping(value = "/fileAssess", produces = "application/json;charset=UTF-8")
     public String BuildNewFileAssess(@RequestParam("UserID") Integer UserID,
