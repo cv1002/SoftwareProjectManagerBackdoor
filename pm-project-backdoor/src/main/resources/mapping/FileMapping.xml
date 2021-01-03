@@ -36,13 +36,13 @@
     </insert>
     <update id="PutFiles" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileInfo">
         update FileInfo
-        set FileRealName  = #{FileRealName},
-            FileType      = #{FileType},
-            FileLocation  = #{FileLocation},
-            TeamID        = #{TeamID},
-            StudentUSerID = #{StudentUserID},
-            UploadTime    = #{UpLoadTime}
-        where FileID = #{FileID}
+        set FileRealName  = #{file.FileRealName},
+            FileType      = #{file.FileType},
+            FileLocation  = #{file.FileLocation},
+            TeamID        = #{file.TeamID},
+            StudentUSerID = #{file.StudentUserID},
+            UploadTime    = #{file.UpLoadTime}
+        where FileID = #{file.FileID}
     </update>
     <update id="PutFilesContent" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.FileContent">
         update FileContent

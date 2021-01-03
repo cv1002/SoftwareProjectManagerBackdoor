@@ -20,10 +20,10 @@
         values (#{Completion.FileID}, #{Completion.CompletionID}, #{Completion.TeamID}, #{Completion.MilestoneID});
     </insert>
 
-    <delete id="DeleteMilestone">
+    <delete id="DeleteCompletion">
         delete
         from ProjectCompletion
-        where MilestoneID = #{MilestoneID}
+        where MilestoneID = #{id}
     </delete>
 
     <update id="UpdateMilestone">
