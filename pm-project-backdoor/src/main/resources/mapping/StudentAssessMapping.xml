@@ -8,7 +8,7 @@
         from StudentAssess
         where StudentUserID = #{StudentUserid}
     </select>
-    <insert id="BuildStudentAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.StudentAssess"
+    <insert id="BuildNewStudentAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.StudentAssess"
             useGeneratedKeys="true">
         insert into StudentAssess(StudentUserID, Assess)
         values (0, #{Assess})

@@ -8,10 +8,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.service.CommunicationService;
 import cn.edu.xjtu.stu.orangesoft.backdoor.service.RBACService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -63,11 +60,43 @@ public class CommunicationController {
      * }
      */
     @PostMapping(value = "/communication", produces = "application/json;charset=UTF-8")
+    public String PostCommunicationWithoutFileID(@RequestParam("UserID") Integer UserID,
+                                    @RequestParam("UserPassword") String UserPassword,
+                                    @RequestParam("TeamID") Integer TeamID,
+                                    @RequestParam("Context") String Context,
+                                    @RequestParam(value = "FileID") Integer FileID) {
+        Objects objects = DIUtil.getBean(Objects.class);
+        Operation operation = DIUtil.getBean(Operation.class);
+        ResultInfo resultInfo;
+        objects.setObjectName("communication");
+        operation.setOperationDescription("POST");
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            resultInfo = communicationService.PostCommunication(UserID, TeamID, Context, null);
+        } else {
+            resultInfo = DIUtil.getBean(ResultInfo.class);
+            resultInfo.setResultInfo("无权访问！！");
+        }
+        return gson.toJson(resultInfo);
+    }
+
+    /**
+     * 发送交流信息
+     *
+     * @param UserID       账号
+     * @param UserPassword 密码
+     * @param TeamID       小组ID
+     * @param Context      交流内容
+     * @param FileID       文件ID（nullable）
+     * @return ResultInfo: {
+     * "resultInfo": String
+     * }
+     */
+    @PostMapping(value = "/communication/{FileID}", produces = "application/json;charset=UTF-8")
     public String PostCommunication(@RequestParam("UserID") Integer UserID,
                                     @RequestParam("UserPassword") String UserPassword,
                                     @RequestParam("TeamID") Integer TeamID,
                                     @RequestParam("Context") String Context,
-                                    @RequestParam("FileID") Integer FileID) {
+                                    @PathVariable("FileID") Integer FileID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
         ResultInfo resultInfo;

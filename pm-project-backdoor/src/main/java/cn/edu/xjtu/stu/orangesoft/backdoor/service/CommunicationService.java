@@ -18,7 +18,7 @@ public class CommunicationService {
     @Autowired
     StudentMapper studentmapper;
 
-    public List<String> GetCommunication(Integer TeamID) {
+    public List<Communication> GetCommunication(Integer TeamID) {
         return communicationMapper.GetCommunication(TeamID);
     }
 
