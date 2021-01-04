@@ -8,18 +8,24 @@
         from Team
         where TeamID = #{id}
     </select>
-    <select id="GetTeamMembers" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student">
-        select *
-        from (select TeamID
-              from Student
-              where StudentUserID = #{UserID}) as tempTeamIDTable,
-             Student
-        where Student.TeamID = tempTeamIDTable.TeamID
+    <select id="GetTeamMembers" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User">
+        select User.*
+        from (select StudentUserID
+              from (select TeamID
+                    from Student
+                    where StudentUserID = #{UserID}) as tempTeamIDTable,
+                   Student
+              where Student.TeamID = tempTeamIDTable.TeamID) as tempStudentTable,
+             User
+        where User.UserID = tempStudentTable.StudentUserID
     </select>
-    <select id="GetTeamMembersByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student">
-        select *
-        from Student
-        where TeamID = #{TeamID};
+    <select id="GetTeamMembersByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User">
+        select User.*
+        from (select *
+              from Student
+              where TeamID = #{TeamID}) as tempStudentTable,
+             User
+        where User.UserID = tempStudentTable.StudentUserID
     </select>
     <select id="GetAllTeams" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team">
         select *

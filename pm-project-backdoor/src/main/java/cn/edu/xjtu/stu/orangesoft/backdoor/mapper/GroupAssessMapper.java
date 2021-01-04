@@ -12,4 +12,6 @@ public interface GroupAssessMapper {
             @Param("TeamID") Integer TeamID);
 
     Integer BuildNewGroupAssess(@Param("groupAssess") GroupAssess groupAssess);
+
+    Integer UpdateGroupAssess(@Param("groupAssess") GroupAssess groupAssess);
 }

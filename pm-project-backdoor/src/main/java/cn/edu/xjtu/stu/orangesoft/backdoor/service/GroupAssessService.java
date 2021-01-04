@@ -34,4 +34,15 @@ public class GroupAssessService {
         }
         return resultInfo;
     }
+
+    public ResultInfo UpdateGroupAssess(Integer TeamID, Integer UserID, String Assess, Integer Score) {
+        groupAssess.setTeamID(TeamID);
+        groupAssess.setAssessorID(UserID);
+        groupAssess.setTeamAssess(Assess);
+        groupAssess.setScore(Score);
+        if (groupAssessMapper.UpdateGroupAssess(groupAssess) != 0) {
+            resultInfo.setResultInfo("成功！！");
+        }
+        return resultInfo;
+    }
 }

@@ -182,4 +182,25 @@ public class ProjectController {
         }
         return gson.toJson(resultInfo);
     }
+
+    @PostMapping(value = "/buildAndAssign/projectAssignment", produces = "application/json;charset=UTF-8")
+    public String BuildAndAssignProjectAssignment(@RequestParam("UserID") Integer UserID,
+                                                  @RequestParam("UserPassword") String UserPassword,
+                                                  @RequestParam("TeamID") Integer TeamID,
+                                                  @RequestParam("DeadLine") String DeadLine,
+                                                  @RequestParam("ProjectName") String ProjectName,
+                                                  @RequestParam("Description") String Description) {
+        Operation operation = DIUtil.getBean(Operation.class);
+        Objects objects = DIUtil.getBean(Objects.class);
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        operation.setOperationDescription("POST");
+        objects.setObjectName("projectAssignment");
+
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            resultInfo.setResultInfo(projectService.BuildAndAssignProjectAssignment(TeamID, DeadLine, ProjectName, Description).getResultInfo());
+        } else {
+            resultInfo.setResultInfo("无权访问！！");
+        }
+        return gson.toJson(resultInfo);
+    }
 }

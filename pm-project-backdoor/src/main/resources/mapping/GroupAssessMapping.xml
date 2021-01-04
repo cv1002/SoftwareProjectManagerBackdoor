@@ -15,4 +15,12 @@
         values (#{groupAssess.TeamID}, #{groupAssess.TeamAssess},
                 #{groupAssess.Score}, #{groupAssess.AssessorID})
     </insert>
+
+    <update id="UpdateGroupAssess" parameterType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.GroupAssess">
+        update GroupAssess
+        set TeamAssess = #{groupAssess.TeamAssess},
+            Score      = #{groupAssess.Score},
+            AssessorID = #{groupAssess.AssessorID}
+        where TeamID = #{groupAssess.TeamID}
+    </update>
 </mapper>

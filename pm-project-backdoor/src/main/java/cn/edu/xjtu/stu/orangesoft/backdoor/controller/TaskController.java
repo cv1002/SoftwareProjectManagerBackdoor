@@ -195,4 +195,21 @@ public class TaskController {
             return gson.toJson(resultInfo);
         }
     }
+
+    @PostMapping("/get/tasks")
+    public String GetTasksByTeamID(@RequestParam("UserID") Integer UserID,
+                                   @RequestParam("UserPassword") String UserPassword,
+                                   @RequestParam("TeamID") Integer TeamID) {
+        Objects objects = DIUtil.getBean(Objects.class);
+        objects.setObjectName("task");
+        Operation operation = DIUtil.getBean(Operation.class);
+        operation.setOperationDescription("GET");
+        if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
+            return gson.toJson(taskService.GetTaskByTeamID(TeamID));
+        } else {
+            ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+            resultInfo.setResultInfo("无权访问！！");
+            return gson.toJson(resultInfo);
+        }
+    }
 }

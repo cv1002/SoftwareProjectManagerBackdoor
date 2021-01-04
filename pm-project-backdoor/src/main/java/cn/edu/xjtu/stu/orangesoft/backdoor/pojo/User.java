@@ -16,4 +16,5 @@ public class User {
     private String EMail;
     private String UserIconLocation;
     private String Sex;
+    private String Job;
 }

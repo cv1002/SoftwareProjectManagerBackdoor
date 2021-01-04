@@ -20,6 +20,15 @@ public class TaskService {
     @Autowired
     StudentMapper studentmapper;
 
+    public FindTaskResult GetTaskByTeamID(Integer TeamID) {
+        FindTaskResult findTaskResult = DIUtil.getBean(FindTaskResult.class);
+        List<Task> taskResult = taskmapper.GetAllTasksByTeamID(TeamID);
+        List<Tasks> tasksResult = PackTasksResult(taskResult);
+        findTaskResult.setFinish("成功！！");
+        findTaskResult.setTasks(tasksResult);
+        return findTaskResult;
+    }
+
     public FindTaskResult GetTaskByPublisherID(Integer userID) {
         FindTaskResult findTaskResult = DIUtil.getBean(FindTaskResult.class);
         List<Task> taskResult = taskmapper.GetTaskByPublisherID(userID);

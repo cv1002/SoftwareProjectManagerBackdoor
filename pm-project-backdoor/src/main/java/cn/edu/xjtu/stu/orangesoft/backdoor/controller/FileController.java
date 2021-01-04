@@ -43,7 +43,7 @@ public class FileController {
      * out.write(file);
      * }
      */
-    @PostMapping(value = "/get/file/{FileID}", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/get/file/{FileID}", produces = "application/pdf;charset=UTF-8")
     public String getFileByFileID(HttpServletResponse response,
                                   @PathVariable("FileID") Integer fileID,
                                   @RequestParam("UserID") String userID,
@@ -98,8 +98,8 @@ public class FileController {
      */
     @PostMapping(value = "/get/files", produces = "application/json;charset=UTF-8")
     public String getFileInfosByTeamID(@RequestParam("TeamID") Integer TeamID,
-                                       @RequestParam("userID") String UserID,
-                                       @RequestParam("userPassword") String UserPassword) {
+                                       @RequestParam("UserID") String UserID,
+                                       @RequestParam("UserPassword") String UserPassword) {
         int userID = Integer.parseInt(UserID);
         Objects object = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);

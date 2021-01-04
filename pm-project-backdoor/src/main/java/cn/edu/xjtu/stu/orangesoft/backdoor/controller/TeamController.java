@@ -47,7 +47,7 @@ public class TeamController {
                                  @RequestParam("TeamID") Integer TeamID) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        objects.setObjectName("team/teacher");
+        objects.setObjectName("team");
         operation.setOperationDescription("GET");
 
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
@@ -64,7 +64,7 @@ public class TeamController {
                                     @RequestParam("UserPassword") String UserPassword) {
         Objects objects = DIUtil.getBean(Objects.class);
         Operation operation = DIUtil.getBean(Operation.class);
-        objects.setObjectName("team/teacher");
+        objects.setObjectName("team");
         operation.setOperationDescription("GET");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
             //使用以下方法初始化的gson可以解码等号等符号，默认的gson等号会转成\u003d

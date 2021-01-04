@@ -2,6 +2,7 @@ package cn.edu.xjtu.stu.orangesoft.backdoor.mapper;
 
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Student;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Team;
+import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ public interface TeamMapper {
 
     List<Student> GetTeamMembers(@Param("UserID") Integer UserID);
 
-    List<Student> GetTeamMembersByTeamID(@Param("TeamID") Integer TeamID);
+    List<User> GetTeamMembersByTeamID(@Param("TeamID") Integer TeamID);
 
     List<Team> GetAllTeams();
 }

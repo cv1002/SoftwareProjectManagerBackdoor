@@ -3,6 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.xjtu.stu.orangesoft.backdoor.mapper.TaskMapper">
+    <select id="GetAllTasksByTeamID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
+        select Task.*
+        from (select * from Student where StudentUserID = #{TeamID}) as tempStudentTable,
+             Task
+        where Task.TaskPublisherID = tempStudentTable.StudentUserID
+    </select>
     <select id="GetTaskByPublisherID" resultType="cn.edu.xjtu.stu.orangesoft.backdoor.pojo.Task">
         select Task.TaskID,
                Task.TaskName,

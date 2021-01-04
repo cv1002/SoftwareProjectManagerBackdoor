@@ -9,6 +9,7 @@ import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ProjectAssignment;
 import cn.edu.xjtu.stu.orangesoft.backdoor.pojo.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,6 +90,34 @@ public class ProjectService {
         projectAssignment.setTeamID(TeamID);
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        projectAssignment.setProjectStartTime(dateFormat.format(date));
+        projectAssignment.setProjectDeadline(DeadLine);
+        if (projectAssignmentMapper.addProjectAssignment(projectAssignment) != 0) {
+            resultInfo.setResultInfo("成功！！");
+        } else {
+            resultInfo.setResultInfo("失败！！");
+        }
+        return resultInfo;
+    }
+
+    public ResultInfo BuildAndAssignProjectAssignment(@RequestParam("TeamID") Integer TeamID,
+                                                      @RequestParam("DeadLine") String DeadLine,
+                                                      @RequestParam("ProjectName") String ProjectName,
+                                                      @RequestParam("Description") String Description) {
+        ResultInfo resultInfo = DIUtil.getBean(ResultInfo.class);
+        Project project = DIUtil.getBean(Project.class);
+        project.setProjectID(0);
+        project.setProjectName(ProjectName);
+        project.setProjectDescription(Description);
+        if (projectMapper.BuildNewProject(project) == 0) {
+            resultInfo.setResultInfo("失败！！");
+            return resultInfo;
+        }
+        ProjectAssignment projectAssignment = DIUtil.getBean(ProjectAssignment.class);
+        projectAssignment.setProjectID(project.getProjectID());
+        projectAssignment.setTeamID(TeamID);
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         projectAssignment.setProjectStartTime(dateFormat.format(date));
         projectAssignment.setProjectDeadline(DeadLine);
         if (projectAssignmentMapper.addProjectAssignment(projectAssignment) != 0) {

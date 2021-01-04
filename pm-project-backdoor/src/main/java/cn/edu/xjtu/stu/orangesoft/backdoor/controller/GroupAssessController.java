@@ -84,7 +84,15 @@ public class GroupAssessController {
         operation.setOperationDescription("POST");
         objects.setObjectName("groupAssess");
         if (rbacService.CheckPermission(UserID, UserPassword, objects, operation)) {
-            resultInfo.setResultInfo(gson.toJson(groupAssessService.BuildNewGroupAssess(teamID, UserID, assess, score)));
+            if (groupAssessService.FindGroupScoreByTeamID(teamID) == null) {
+                resultInfo.setResultInfo(
+                        groupAssessService.BuildNewGroupAssess(teamID, UserID, assess, score).getResultInfo()
+                );
+            } else {
+                resultInfo.setResultInfo(
+                        groupAssessService.UpdateGroupAssess(teamID, UserID, assess, score).getResultInfo()
+                );
+            }
         } else {
             resultInfo.setResultInfo("无权评价！！");
         }

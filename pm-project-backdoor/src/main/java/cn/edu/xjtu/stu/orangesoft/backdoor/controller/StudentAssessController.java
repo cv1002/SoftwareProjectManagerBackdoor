@@ -98,7 +98,6 @@ public class StudentAssessController {
             student.setStudentClass(StudentClass);
             student.setStudentID(StudentID);
             student.setTeamID(TeamID);
-            student.setJob(Job);
             resultInfo.setResultInfo(gson.toJson(studentAssessService.BuildNewStudentAssess(student, UserID, assess, score)));
         } else {
             resultInfo.setResultInfo("无权访问！！");

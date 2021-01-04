@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface TaskMapper {
+    List<Task> GetAllTasksByTeamID(@Param("TeamID") Integer TeamID);
+
     List<Task> GetTaskByPublisherID(@Param("id") Integer UserID);
 
     List<Task> GetTaskByHandlerID(@Param("id") Integer UserID);
